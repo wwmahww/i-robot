@@ -1,0 +1,17 @@
+extends admin_base
+
+mixin botcard(bot)
+  .card.shadow.mb-4
+    .card-header.py-3
+      h6.m-0.font-weight-bold.text-primary= bot.pageName
+    .card-body
+      a.btn.btn-info.btn-icon-split.ml-2(href=`/bot/${bot.pageName}` name='manage')
+        span.icon.text-white-50 manage
+
+block content
+  .d-sm-flex.align-items-center.justify-content-between.mb-4
+    h1.h3.mb-4.text-gray-800 Bots
+    a.btn.btn-danger.btn-icon-split.ml-2(href='/newbot' name='newbot')
+      span.icon.text-white-50 new bot
+  each bot in user.bots
+    +botcard(bot)

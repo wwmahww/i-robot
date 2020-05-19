@@ -1,0 +1,46 @@
+form.user
+  .input-group.mb-3
+    input.bg-light.border-1.form-control(name='pageName' aria-label="With textarea" value=bot?bot.pageName:'')
+    .input-group-prepend
+      span.input-group-text :یوزرنیم/ ایمیل
+  .input-group.mb-3
+    input.bg-light.border-1.form-control(type= "password" name='pagePassword' aria-label="With textarea" value=bot?bot.pagePassword:'')
+    .input-group-prepend
+      span.input-group-text :پسورد
+  .input-group.mb-3
+    textarea.bg-light.border-1.form-control(name='targetPages' aria-label="With textarea")= bot?bot.targetPages.join(' '):'' 
+    .input-group-prepend
+      span.input-group-text :پیج‌های هدف
+  .input-group.mb-3
+    textarea.bg-light.border-1.form-control(name='targetTags' aria-label="With textarea" )= bot?bot.targetTags.join(' '):'' 
+    .input-group-prepend
+      span.input-group-text :تگ‌های هدف
+  .input-group.mb-3
+    textarea.bg-light.border-1.form-control(name='comments' aria-label="With textarea" height= "150px" dir="rtl" )= bot?bot.comments.join('*'):'' 
+    .input-group-prepend
+      span.input-group-text :کامنت‌ها
+  .input-group.mb-3
+    textarea.bg-light.border-1.form-control(name='directTexts' aria-label="With textarea" height= "150px" dir="rtl" )= bot?bot.directTexts.join('*'):'' 
+    .input-group-prepend
+      span.input-group-text :متن‌های دایرکت
+  .input-group.mb-3
+    textarea.bg-light.border-1.form-control(name='whitelist' aria-label="With textarea")= bot?bot.whiteList.join(' '):'' 
+    .input-group-prepend
+      span.input-group-text لیست سفید:
+  .row
+    .col-xl-3.col-md-1.mb-5
+      .small.mb-1 سرعت فعالیت ربات
+      .dropdown.mb-4
+        button#botpace.btn.btn-primary.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')= bot?bot.botPace:'slow' 
+        .dropdown-menu.animated--fade-in(aria-labelledby='dropdownMenuButton')
+          a.dropdown-item slow
+          a.dropdown-item midiem
+          a.dropdown-item fast
+    .col-xl-3.col-md-1.mb-5
+      .form-check.mb-4
+        input#followPrivate.form-check-input(type='checkbox' checked= bot?bot.followPrivate:false)
+        label.form-check-label :فالو کردن پیج‌های پرایوت
+    .col-xl-3.col-md-1.mb-5
+      .form-check.mb-4
+        input#likeLastPost.form-check-input(type='checkbox' checked= bot?bot.likeLastPost:true)
+        label.form-check-label :لایک کردن اخرین پست

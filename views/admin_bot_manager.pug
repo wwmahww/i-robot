@@ -1,0 +1,97 @@
+extends admin_base
+
+block content
+  h1.h3.mb-4.text-gray-800= bot.pageName
+  .card.shadow.mb-4
+    .card-header.py-3
+      h6.m-0.font-weight-bold.text-primary امار ربات
+    .card-body
+      div
+        if bot.active
+          a#trigger.btn.btn-danger.btn-icon-split.ml-2.float-right(href=`/api/v1/bot/stop/${bot.pageName}` name='stop')
+            span.icon.text-white-100 توقف
+            .rotator(style="display:none")
+        else
+          a#trigger.btn.btn-success.btn-icon-split.ml-2.float-right(href=`/api/v1/bot/start/${bot.pageName}` name='start')
+            span.icon.text-white-100 شروع
+            .rotator(style="display:none")
+
+      .row
+        .col-xl-2.col-md-1.mb-5
+          .card.border-left-success.shadow.h-100.py-2
+            .card-body
+              .row.no-gutters.align-items-center
+                .col.mr-2
+                  .text-xs.font-weight-bold.text-primary.text-uppercase.mb-1 دنبال شده
+                  .h5.mb-0.font-weight-bold.text-gray-800= bot.details?bot.details.hasFollowed:0
+        .col-xl-2.col-md-1.mb-5
+          .card.border-left-danger.shadow.h-100.py-2
+            .card-body
+              .row.no-gutters.align-items-center
+                .col.mr-2
+                  .text-xs.font-weight-bold.text-primary.text-uppercase.mb-1 آنفالو شده
+                  .h5.mb-0.font-weight-bold.text-gray-800= bot.details?bot.details.hasUnfollowed:0
+        .col-xl-2.col-md-1.mb-5
+          .card.border-left-primary.shadow.h-100.py-2
+            .card-body
+              .row.no-gutters.align-items-center
+                .col.mr-2
+                  .text-xs.font-weight-bold.text-primary.text-uppercase.mb-1 لایک شده
+                  .h5.mb-0.font-weight-bold.text-gray-800= bot.details?bot.details.hasLiked:0
+        .col-xl-2.col-md-1.mb-5
+          .card.border-left-warning.shadow.h-100.py-2
+            .card-body
+              .row.no-gutters.align-items-center
+                .col.mr-2
+                  .text-xs.font-weight-bold.text-primary.text-uppercase.mb-1 ارسال کامنت
+                  .h5.mb-0.font-weight-bold.text-gray-800= bot.details?bot.details.hasCommented:0
+        .col-xl-2.col-md-1.mb-5
+          .card.border-left-info.shadow.h-100.py-2
+            .card-body
+              .row.no-gutters.align-items-center
+                .col.mr-2
+                  .text-xs.font-weight-bold.text-primary.text-uppercase.mb-1 ارسال دایرکت
+                  .h5.mb-0.font-weight-bold.text-gray-800= bot.details?bot.details.hasDirected:0
+
+  .card.shadow.mb-4
+    .card-header.py-3
+      h6.m-0.font-weight-bold.text-primary امار پیج
+    .card-body
+      .row
+        .col-xl-2.col-md-1.mb-5
+          .card.border-left-success.shadow.h-100.py-2
+            .card-body
+              .row.no-gutters.align-items-center
+                .col.mr-2
+                  .text-xs.font-weight-bold.text-primary.text-uppercase.mb-1 تعداد پست
+                  .h5.mb-0.font-weight-bold.text-gray-800= bot.pageInfo?bot.pageInfo.posts:0
+        .col-xl-2.col-md-1.mb-5
+          .card.border-left-danger.shadow.h-100.py-2
+            .card-body
+              .row.no-gutters.align-items-center
+                .col.mr-2
+                  .text-xs.font-weight-bold.text-primary.text-uppercase.mb-1 دنبال کننده‌ها
+                  .h5.mb-0.font-weight-bold.text-gray-800= bot.pageInfo?bot.pageInfo.followrs:0
+        .col-xl-2.col-md-1.mb-5
+          .card.border-left-primary.shadow.h-100.py-2
+            .card-body
+              .row.no-gutters.align-items-center
+                .col.mr-2
+                  .text-xs.font-weight-bold.text-primary.text-uppercase.mb-1 دنبال شونده‌ها
+                  .h5.mb-0.font-weight-bold.text-gray-800= bot.pageInfo?bot.pageInfo.following:0
+        .col-xl-2.col-md-1.mb-5
+          .card.border-left-warning.shadow.h-100.py-2
+            .card-body
+              .row.no-gutters.align-items-center
+                .col.mr-2
+                  .text-xs.font-weight-bold.text-primary.text-uppercase.mb-1 میزان افزایش فالوور
+                  .h5.mb-0.font-weight-bold.text-gray-800= bot.pageInfo?bot.pageInfo.followIncreasRate:0
+
+  .card.shadow.mb-4
+    .card-header.py-3
+      h6.m-0.font-weight-bold.text-primary تنظیمات روبات
+    .card-body
+      include botData
+      button#updatebot.btn.btn-primary.btn-icon-split
+        span.icon.text-white-100 ذخیره
+        .rotator(style="display:none")
