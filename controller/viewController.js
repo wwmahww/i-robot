@@ -24,6 +24,11 @@ exports.botManager = (req, res, next) => {
   const bot = req.user.bots.find(b => {
     return b.pageName === id;
   });
+  if(!bot) {
+    return next(
+      new AppError('you do not have a bot with this name.', 401)
+    );
+  }
   res.status(200).render('admin_bot_manager', { bot });
 };
 

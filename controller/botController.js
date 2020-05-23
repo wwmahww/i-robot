@@ -19,6 +19,12 @@ exports.start = catchAsync(async (req, res, next) => {
     return b.pageName === id;
   });
 
+  if(!bot){
+    return next(
+      new AppError('you do not have a bot with this name.', 401)
+    );
+  }
+
   await botLauncher.launch(bot);
 
   bot.active = true;
@@ -57,9 +63,6 @@ exports.create = catchAsync(async (req, res, next) => {
     return res.status(400).json({
       status: 'success',
       message: 'نمیتوانید بیشتر از یک ربات داشته باشید.',
-      date: {
-        // newBot
-      },
     });
   }
   const newBot = await Bot.create(req.body);
@@ -82,6 +85,12 @@ exports.updateMyBot = catchAsync(async (req, res, next) => {
   const bot = req.user.bots.find((b) => {
     return b.pageName === id;
   });
+
+  if(!bot){
+    return next(
+      new AppError('you do not have a bot with this name.', 401)
+    );
+  }
 
   bot.pageName = req.body.pageName;
   bot.pagePassword = req.body.pagePassword;

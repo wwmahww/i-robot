@@ -52,6 +52,25 @@ const UserSchema = new mongoose.Schema({
       ref: 'Bot'
     }
   ],
+  bills: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Bill'
+    }
+  ],
+  botInService:{
+    type:Number,
+    default:0
+  },
+  activeBot:{
+    type:Number,
+    default:0
+  },
+  credit:{
+    type:Number,
+    default:0
+  },
+  offCode: String,
   createdAt: {
     type: Date,
     default: Date.now()
@@ -121,7 +140,18 @@ UserSchema.pre(/^find/, function(next) {
 });
 
 UserSchema.pre(/^find/, function(next) {
-  this.populate('bots');
+  this.populate({
+    path:'bots',
+    select: 'pageName'
+  });
+  next();
+});
+
+UserSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'bills',
+    select: ['code', 'amount', 'description', 'isPayed']
+  });
   next();
 });
 

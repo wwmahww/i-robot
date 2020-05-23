@@ -4,6 +4,6 @@ const botLauncher = require('./utils/botLauncher');
 
 (async () => {
   await dbConnect();
-  // await botLauncher.launcher();
+  await botLauncher.launcher();
   server.start();
 })();

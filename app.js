@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser');
 
 const userRouter = require('./routs/userRouter');
 const botRouter = require('./routs/botRouter');
+const billRouter = require('./routs/billRouter');
 const viewRouter = require('./routs/viewRouter');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorController');
@@ -34,7 +35,7 @@ const limiter = rateLimit({
 app.use('/api', limiter);
 
 // Body parser, reading data from body to req.body
-app.use(express.json({ limit: '10kb' }));
+app.use(express.json({ limit: '50kb' }));
 app.use(cookieParser());
 
 // Data sanitizing against noSQl qurey injection
@@ -59,6 +60,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ROUTES
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/bots', botRouter);
+app.use('/api/v1/bills', billRouter);
 app.use('/', viewRouter);
 
 // Takeing care of unhandled routes
