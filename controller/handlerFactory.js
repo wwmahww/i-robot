@@ -19,11 +19,11 @@ exports.deleteOne = Model =>
 exports.updateOne = Model =>
   catchAsync(async (req, res, next) => {
     let items
-    if(Model === Bill) {
-      items = {
-        payAt: 
-      }
-    }
+    // if(Model === Bill) {
+    //   items = {
+    //     payAt: 
+    //   }
+    // }
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true

@@ -6,11 +6,19 @@ const bcrypt = require('bcryptjs');
 const catchAsync = require('./../utils/catchAsync');
 
 const UserSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'a user most have a name'],
+    trim: true,
+    minlength: [3, 'name must have more or equal than 3 characters.'],
+    maxlength: [15, 'name must have less or equal than 15 characters.']
+  },
   username: {
     type: String,
     require: [true, 'A user must have a name.'],
+    unique: true,
     trim: true,
-    minlength: [3, 'name must have more or equal than 3 characters.'],
+    minlength: [3, 'username must have more or equal than 3 characters.'],
     maxlength: [40, 'name must have less or equal than 40 characters.']
   },
   password: {
@@ -46,6 +54,7 @@ const UserSchema = new mongoose.Schema({
       message: 'role can be user or admin.'
     }
   },
+  introducer: String,
   bots: [
     {
       type: mongoose.Schema.ObjectId,
@@ -70,7 +79,7 @@ const UserSchema = new mongoose.Schema({
     type:Number,
     default:0
   },
-  offCode: String,
+  firstTime: Boolean,
   createdAt: {
     type: Date,
     default: Date.now()
@@ -99,6 +108,7 @@ UserSchema.pre('save', async function(next) {
   this.passwordChangeAt = Date.now() - 1000;
   next();
 });
+
 
 UserSchema.methods.correctPassword = async function(
   condidatePassword,

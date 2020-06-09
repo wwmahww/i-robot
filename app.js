@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 const userRouter = require('./routs/userRouter');
 const botRouter = require('./routs/botRouter');
 const billRouter = require('./routs/billRouter');
+const discountRouter = require('./routs/discountRouter')
 const viewRouter = require('./routs/viewRouter');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorController');
@@ -61,6 +62,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/bots', botRouter);
 app.use('/api/v1/bills', billRouter);
+app.use('/api/v1/discounts', discountRouter);
 app.use('/', viewRouter);
 
 // Takeing care of unhandled routes

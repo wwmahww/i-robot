@@ -6,7 +6,7 @@ const BillSchema = new mongoose.Schema({
         default: 1000000 + Math.floor(Math.random() * 9000000 - 1000000)
     },
     user: {
-        type:mongoose.Schema.objectId,
+        type: mongoose.Schema.ObjectId,
         ref: 'user'
     },
     amount: Number,

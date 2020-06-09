@@ -7,7 +7,9 @@ const Router = express.Router();
 Router.use(authController.isLoggedIn);
 
 Router.get('/signin', viewController.signIn);
-Router.get('/signup', viewController.signUp);
+Router.get('/signup', viewController.signIn);
+Router.get('/pricing', viewController.pricing)
+Router.get('/service/:type', viewController.service)
 Router.get('/', viewController.getIntroduction);
 
 Router.use(authController.protect);
