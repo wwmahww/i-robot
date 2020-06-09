@@ -13677,7 +13677,7 @@ module.exports = require('./lib/axios');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updatebot = exports.newbot = exports.botStop = exports.botStart = exports.logout = exports.login = exports.signUp = exports.hideValidate = exports.showValidate = exports.validate = void 0;
+exports.checkDiscount = exports.updatebot = exports.newbot = exports.botStop = exports.botStart = exports.logout = exports.login = exports.signUp = exports.hideValidate = exports.showValidate = exports.validate = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -13720,7 +13720,7 @@ var hideValidate = function hideValidate(input) {
 exports.hideValidate = hideValidate;
 
 var signUp = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(username, email, password, passwordConfirm) {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(user) {
     var res;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
@@ -13731,12 +13731,7 @@ var signUp = /*#__PURE__*/function () {
             return (0, _axios.default)({
               method: 'post',
               url: 'http://localhost:3000/api/v1/users/signup',
-              data: {
-                username: username,
-                email: email,
-                password: password,
-                passwordConfirm: passwordConfirm
-              }
+              data: user
             });
 
           case 3:
@@ -13770,7 +13765,7 @@ var signUp = /*#__PURE__*/function () {
     }, _callee, null, [[0, 7]]);
   }));
 
-  return function signUp(_x, _x2, _x3, _x4) {
+  return function signUp(_x) {
     return _ref.apply(this, arguments);
   };
 }();
@@ -13830,7 +13825,7 @@ var login = /*#__PURE__*/function () {
     }, _callee2, null, [[0, 8]]);
   }));
 
-  return function login(_x5, _x6) {
+  return function login(_x2, _x3) {
     return _ref2.apply(this, arguments);
   };
 }();
@@ -13937,7 +13932,7 @@ var botStart = /*#__PURE__*/function () {
     }, _callee4, null, [[0, 7]]);
   }));
 
-  return function botStart(_x7) {
+  return function botStart(_x4) {
     return _ref4.apply(this, arguments);
   };
 }(); //---------------------------------------------
@@ -13991,7 +13986,7 @@ var botStop = /*#__PURE__*/function () {
     }, _callee5, null, [[0, 7]]);
   }));
 
-  return function botStop(_x8) {
+  return function botStop(_x5) {
     return _ref5.apply(this, arguments);
   };
 }(); //---------------------------------------------
@@ -14047,7 +14042,7 @@ var newbot = /*#__PURE__*/function () {
     }, _callee6, null, [[0, 8]]);
   }));
 
-  return function newbot(_x9) {
+  return function newbot(_x6) {
     return _ref6.apply(this, arguments);
   };
 }(); //---------------------------------------------
@@ -14064,15 +14059,14 @@ var updatebot = /*#__PURE__*/function () {
         switch (_context7.prev = _context7.next) {
           case 0:
             _context7.prev = 0;
-            console.log('bot: ', bot);
-            _context7.next = 4;
+            _context7.next = 3;
             return (0, _axios.default)({
               method: 'patch',
               url: "http://localhost:3000/api/v1/bots/update-My-Bot/".concat(id),
               data: bot
             });
 
-          case 4:
+          case 3:
             res = _context7.sent;
 
             if (res.data.status === 'success') {
@@ -14082,32 +14076,89 @@ var updatebot = /*#__PURE__*/function () {
               }, 1500);
             }
 
-            _context7.next = 11;
+            _context7.next = 10;
             break;
 
-          case 8:
-            _context7.prev = 8;
+          case 7:
+            _context7.prev = 7;
             _context7.t0 = _context7["catch"](0);
             alert('خطا در اپدیت ربات.');
 
-          case 11:
+          case 10:
             $('#updatebot').prop('disabled', false);
             $('#updatebot .rotator').hide();
 
-          case 13:
+          case 12:
           case "end":
             return _context7.stop();
         }
       }
-    }, _callee7, null, [[0, 8]]);
+    }, _callee7, null, [[0, 7]]);
   }));
 
-  return function updatebot(_x10, _x11) {
+  return function updatebot(_x7, _x8) {
     return _ref7.apply(this, arguments);
+  };
+}(); //---------------------------------------------
+//[discount check]
+
+
+exports.updatebot = updatebot;
+
+var checkDiscount = /*#__PURE__*/function () {
+  var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(code, price) {
+    var res;
+    return regeneratorRuntime.wrap(function _callee8$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            _context8.prev = 0;
+            _context8.next = 3;
+            return (0, _axios.default)({
+              method: 'post',
+              url: 'http://localhost:3000/api/v1/discounts/check',
+              data: {
+                code: code,
+                price: price
+              }
+            });
+
+          case 3:
+            res = _context8.sent;
+
+            if (res.data.status === 'success') {
+              $('#price').css('textDecoration', 'line-through');
+              $('#price2').text(" ".concat(res.data.newPrice, " \u062A\u0648\u0645\u0646"));
+              data.price = res.data.newPrice;
+            }
+
+            ;
+            _context8.next = 12;
+            break;
+
+          case 8:
+            _context8.prev = 8;
+            _context8.t0 = _context8["catch"](0);
+            console.log('error:', _context8.t0.response.data.message);
+            alert('این کد قابل استفاده نمیباشد.');
+
+          case 12:
+            ;
+
+          case 13:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, _callee8, null, [[0, 8]]);
+  }));
+
+  return function checkDiscount(_x9, _x10) {
+    return _ref8.apply(this, arguments);
   };
 }();
 
-exports.updatebot = updatebot;
+exports.checkDiscount = checkDiscount;
 },{"axios":"../node_modules/axios/index.js"}],"../node_modules/jquery/dist/jquery.js":[function(require,module,exports) {
 var global = arguments[3];
 var process = require("process");
@@ -25093,11 +25144,14 @@ console.log('heelllo form parcel');
   e.preventDefault();
   (0, _jquery.default)('#signup').prop('disabled', true);
   (0, _jquery.default)('.rotator').show();
-  var username = (0, _jquery.default)('input[name="username"]').val();
-  var email = (0, _jquery.default)('input[name="email"]').val();
-  var password = (0, _jquery.default)('input[name="password"]').val();
-  var passwordConfirm = (0, _jquery.default)('input[name="passwordConfirm"]').val();
-  funs.signUp(username, email, password, passwordConfirm);
+  var user = {};
+  user.name = (0, _jquery.default)('input[name="name"]').val();
+  user.username = (0, _jquery.default)('input[name="username"]').val();
+  user.email = (0, _jquery.default)('input[name="email"]').val();
+  user.password = (0, _jquery.default)('input[name="password"]').val();
+  user.passwordConfirm = (0, _jquery.default)('input[name="passwordConfirm"]').val();
+  user.introducer = (0, _jquery.default)('input[name="introducer"]').val();
+  funs.signUp(user);
 });
 /*==================================================================
     [ Login ]*/
@@ -25106,14 +25160,15 @@ console.log('heelllo form parcel');
   e.preventDefault();
   (0, _jquery.default)('#signin').prop('disabled', true);
   (0, _jquery.default)('.rotator').show();
-  var email = (0, _jquery.default)('input[name="email"]').val();
-  var password = (0, _jquery.default)('input[name="password"]').val();
+  var email = (0, _jquery.default)('input[name="email1"]').val();
+  var password = (0, _jquery.default)('input[name="password1"]').val();
   funs.login(email, password);
 });
 /*==================================================================
     [ Logout ]*/
 
-(0, _jquery.default)('a.logout-btn').on('click', function (e) {
+(0, _jquery.default)('.logout').click(function (e) {
+  console.log('its logout');
   e.preventDefault();
   funs.logout();
 });
@@ -25150,6 +25205,22 @@ console.log('heelllo form parcel');
   var bot = getBotData();
   funs.updatebot(id, bot);
 });
+/*==================================================================
+    [discount check ]*/
+
+(0, _jquery.default)('#discountCheck').click(function (e) {
+  e.preventDefault();
+  var code = (0, _jquery.default)('input[name="discountCode"]').val();
+  console.log(code);
+  funs.checkDiscount(code, data.price);
+});
+/*==================================================================
+  [pay ]*/
+
+(0, _jquery.default)('#pay').click(function (e) {
+  e.preventDefault();
+  console.log('new price:', data.price);
+});
 },{"core-js/stable":"../../node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"../../node_modules/regenerator-runtime/runtime.js","./funs":"funs.js","jquery":"../node_modules/jquery/dist/jquery.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -25178,7 +25249,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "6708" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "2601" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

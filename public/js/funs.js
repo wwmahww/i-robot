@@ -42,17 +42,12 @@ export const hideValidate = input => {
 // ======================================================
 // [sginUp]
 
-export const signUp = async (username, email, password, passwordConfirm) => {
+export const signUp = async (user) => {
   try {
     const res = await axios({
       method: 'post',
       url: 'http://localhost:3000/api/v1/users/signup',
-      data: {
-        username,
-        email,
-        password,
-        passwordConfirm
-      }
+      data: user
     });
 
     if (res.data.status === 'success') {
@@ -196,7 +191,6 @@ export const newbot = async bot => {
 
 export const updatebot = async (id, bot) => {
   try {
-    console.log('bot: ', bot);
     const res = await axios({
       method: 'patch',
       url: `http://localhost:3000/api/v1/bots/update-My-Bot/${id}`,
@@ -214,3 +208,24 @@ export const updatebot = async (id, bot) => {
   $('#updatebot').prop('disabled', false);
   $('#updatebot .rotator').hide();
 };
+
+//---------------------------------------------
+//[discount check]
+
+export const checkDiscount = async(code, price) => {
+  try{
+    const res = await axios({
+      method: 'post',
+      url: 'http://localhost:3000/api/v1/discounts/check',
+      data: {code, price}
+    });
+    if(res.data.status === 'success') {
+      $('#price').css('textDecoration', 'line-through');
+      $('#price2').text(` ${res.data.newPrice} تومن`)
+      data.price = res.data.newPrice
+    };
+  }catch(e){
+    console.log('error:', e.response.data.message)
+    alert('این کد قابل استفاده نمیباشد.')
+  };
+}

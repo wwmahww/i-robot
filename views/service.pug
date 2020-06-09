@@ -1,0 +1,49 @@
+extends base
+block content
+  - let price = data.price
+  script.
+    const data = !{jsStringify(data)};
+  .breadcrumb-section
+    .container
+      .row
+        .col-lg-12
+          .breadcrumb__option
+            a(href='/')
+              span.fa.fa-home
+              |  خانه
+            span سرویس
+  section.choose-plan-section.spad
+    .container
+      .row
+        .col-lg-6.col-md-6
+        .col-lg-6.col-md-6.text-right
+          .plan__text
+            h3= ` طرح ${data.name}`
+            ul
+              li
+                span.fa.fa-check
+                = `قابلیت راه اندازی ${data.number}‌ ربات`
+              li
+                span.fa.fa-check
+                | هر ربات میتواند به مدت یک ماه فعالیت کند
+              li
+                span.fa.fa-check
+                |  Plently of disk space
+              li
+                span.fa.fa-check
+                |  FREE Website Bullder
+              li
+                span.fa
+                = `مبلغ قابل پرداخت: `
+                span.fa
+                if(data.price2)
+                  del=  ` ${price} تومن`
+                else
+                  span#price=  ` ${price} تومن`
+                span#price2= data.price2? data.price2:''
+            .register__text
+              .register__form
+                form(action='#')
+                  input(type='text',name='discountCode', placeholder='کد تخفیف')
+                  button#discountCheck.site-btn(type='submit') اعمال
+            a#pay.primary-btn(href='#') پرداخت

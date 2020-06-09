@@ -1,124 +1,212 @@
 extends base
 
 block content
-  // Masthead
-  header.masthead
-    .container.h-100
-      .row.h-100.align-items-center.justify-content-center.text-center
-        .col-lg-10.align-self-end
-          h1.text-uppercase.text-white.font-weight-bold به سایت ما خوش امدید
-          hr.divider.my-4
-        .col-lg-8.align-self-baseline
-          p.text-white-75.font-weight-light.mb-5
-            | Start Bootstrap can help you build better websites using the Bootstrap framework! Just download a theme and start customizing, no strings attached!
-          a.btn.btn-primary.btn-xl.js-scroll-trigger(href='#about') Find Out More
-  // About Section
-  section#about.page-section.bg-primary
+  // Hero Section Begin
+  section.hero-section
+    .hero__slider.owl-carousel
+      .hero__item.set-bg(data-setbg='img/hero/hero-1.jpg')
+        .container
+          .row
+            .col-lg-6
+              .hero__text
+                h2
+                  | جذب ماهیانه بیشتر از ۱۰۰۰ فالوور
+                  br
+                  |  تضمینی و بدون بلاک شدن
+                a.primary-btn(href='#') شروع سرویس
+            .col-lg-6
+              .hero__img
+                img(src='img/hero/hero-right.png', alt='')
+      .hero__item.set-bg(data-setbg='img/hero/hero-1.jpg')
+        .container
+          .row
+            .col-lg-6
+              .hero__text
+                h2
+                  | اولین باشید i-robot با
+                a.primary-btn(href='#') شروع سرویس
+            .col-lg-6
+              .hero__img
+                img(src='img/hero/hero-right.png', alt='')
+  // Hero Section End
+  section.choose-plan-section.spad
     .container
-      .row.justify-content-center
-        .col-lg-8.text-center
-        h2.text-white.mt-0 We&apos;ve got what you need!
-        hr.divider.light.my-4
-        p.text-white-50.mb-4
-          | Start Bootstrap has everything you need to get your new website up and running in no time! Choose one of our open source, free to download, and easy to use themes! No strings attached!
-        a.btn.btn-light.btn-xl.js-scroll-trigger(href='#services') Get Started!
-  // Services Section
-  section#services.page-section
-    .container
-      h2.text-center.mt-0 At Your Service
-      hr.divider.my-4
       .row
-        .col-lg-3.col-md-6.text-center
-          .mt-5
-            i.fas.fa-4x.fa-gem.text-primary.mb-4
-            h3.h4.mb-2 Sturdy Themes
-            p.text-muted.mb-0 Our themes are updated regularly to keep them bug free!
-        .col-lg-3.col-md-6.text-center
-          .mt-5
-            i.fas.fa-4x.fa-laptop-code.text-primary.mb-4
-            h3.h4.mb-2 Up to Date
-            p.text-muted.mb-0 All dependencies are kept current to keep things fresh.
-        .col-lg-3.col-md-6.text-center
-          .mt-5
-            i.fas.fa-4x.fa-globe.text-primary.mb-4
-            h3.h4.mb-2 Ready to Publish
-            p.text-muted.mb-0 You can use this design as is, or you can make changes!
-        .col-lg-3.col-md-6.text-center
-          .mt-5
-            i.fas.fa-4x.fa-heart.text-primary.mb-4
-            h3.h4.mb-2 Made with Love
-            p.text-muted.mb-0 Is it really open source if it&apos;s not made with love?
-  // Portfolio Section
-  section#portfolio
-    .container-fluid.p-0
-      .row.no-gutters
-        .col-lg-4.col-sm-6
-          a.portfolio-box(href='img/portfolio/fullsize/1.jpg')
-            img.img-fluid(src='img/portfolio/thumbnails/1.jpg' alt='')
-            .portfolio-box-caption
-              .project-category.text-white-50
-                | Category
-              .project-name
-                | Project Name
-        .col-lg-4.col-sm-6
-          a.portfolio-box(href='img/portfolio/fullsize/2.jpg')
-            img.img-fluid(src='img/portfolio/thumbnails/2.jpg' alt='')
-            .portfolio-box-caption
-              .project-category.text-white-50
-                | Category
-              .project-name
-                | Project Name
-        .col-lg-4.col-sm-6
-          a.portfolio-box(href='img/portfolio/fullsize/3.jpg')
-            img.img-fluid(src='img/portfolio/thumbnails/3.jpg' alt='')
-            .portfolio-box-caption
-              .project-category.text-white-50
-                | Category
-              .project-name
-                | Project Name
-        .col-lg-4.col-sm-6
-          a.portfolio-box(href='img/portfolio/fullsize/4.jpg')
-            img.img-fluid(src='img/portfolio/thumbnails/4.jpg' alt='')
-            .portfolio-box-caption
-              .project-category.text-white-50
-                | Category
-              .project-name
-                | Project Name
-        .col-lg-4.col-sm-6
-          a.portfolio-box(href='img/portfolio/fullsize/5.jpg')
-            img.img-fluid(src='img/portfolio/thumbnails/5.jpg' alt='')
-            .portfolio-box-caption
-              .project-category.text-white-50
-                | Category
-              .project-name
-                | Project Name
-        .col-lg-4.col-sm-6
-          a.portfolio-box(href='img/portfolio/fullsize/6.jpg')
-            img.img-fluid(src='img/portfolio/thumbnails/6.jpg' alt='')
-            .portfolio-box-caption.p-3
-              .project-category.text-white-50
-                | Category
-              .project-name
-                | Project Name
-  // Call to Action Section
-  section.page-section.bg-dark.text-white
-    .container.text-center
-      h2.mb-4 Free Download at Start Bootstrap!
-      a.btn.btn-light.btn-xl(href='https://startbootstrap.com/themes/creative/') Download Now!
-  // Contact Section
-  section#contact.page-section
+        .col-lg-6.col-md-6
+          img(src='img/choose-plan.png', alt='')
+        .col-lg-6.col-md-6
+          .plan__text
+            h3 آی ربات" چیست؟"
+            p .آی ربات" یک ربات اینستاگرام هست که به شما کمک میکنه تا تعداد فالوور هاتون رو افزایش بدین"
+            p .از ویژگی های این ربات میتوان به فالوو کردن، انفالوو، لایک، ارسال کامنت، و ارسال دایرکت اشاره کرد
+            a.primary-btn(href='#') همین حالا شروع کنید
+  // Services Section Begin
+  section.services-section.spad
     .container
-      .row.justify-content-center
-        .col-lg-8.text-center
-          h2.mt-0 Let&apos;s Get In Touch!
-          hr.divider.my-4
-          p.text-muted.mb-5
-            | Ready to start your next project with us? Give us a call or send us an email and we will get back to you as soon as possible!
       .row
-        .col-lg-4.ml-auto.text-center.mb-5.mb-lg-0
-          i.fas.fa-phone.fa-3x.mb-3.text-muted
-          div +1 (202) 555-0149
-        .col-lg-4.mr-auto.text-center
-          i.fas.fa-envelope.fa-3x.mb-3.text-muted
-          // Make sure to change the email address in anchor text AND the link below!
-          a.d-block(href='mailto:contact@yourwebsite.com') contact@yourwebsite.com
+        .col-lg-12
+          .section-title
+            h3 Choose the right hosting solution
+      .row
+        .col-lg-4.col-md-4.col-sm-6
+          .services__item
+            h5 Shared Hosting
+            span Starts At $1.84
+            p Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        .col-lg-4.col-md-4.col-sm-6
+          .services__item
+            h5 Wordpress Hosting
+            span Starts At $1.84
+            p Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        .col-lg-4.col-md-4.col-sm-6
+          .services__item
+            h5 Dedicated Hosting
+            span Starts At $1.84
+            p Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        .col-lg-4.col-md-4.col-sm-6
+          .services__item
+            h5 SSL certificate
+            span Starts At $1.84
+            p Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        .col-lg-4.col-md-4.col-sm-6
+          .services__item
+            h5 Web Hosting
+            span Starts At $1.84
+            p Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        .col-lg-4.col-md-4.col-sm-6
+          .services__item
+            h5 Cloud server
+            span Starts At $1.84
+            p Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  // Services Section End
+  // Register Domain Section Begin
+  section.register-domain.spad
+    .container
+      .row.d-flex.justify-content-center
+        .col-lg-8
+          .register__text
+            .section-title
+              h3 Register Your Domain Now!
+            .register__form
+              form(action='#')
+                input(type='text', placeholder='ex: cloudhost')
+                .change__extension
+                  | .com
+                  ul
+                    li .net
+                    li .org
+                    li .me
+                button.site-btn(type='submit') Search
+            .register__result
+              ul
+                li
+                  | .com 
+                  span $1.95
+                li
+                  | .net 
+                  span $1.95
+                li
+                  | .org 
+                  span $1.95
+                li
+                  | .us 
+                  span $1.95
+                li
+                  | .in 
+                  span $1.95
+            p
+              | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+              | labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.
+  // Register Domain Section End
+  
+  // Pricing Section Begin
+  section.pricing-section.spad
+    .container
+      .row
+        .col-lg-7.col-md-7
+          .section-title.normal-title
+            h3 سرویس ها
+      .row.monthly__plans.active
+        .col-lg-4.col-md-6.col-sm-6
+          .pricing__item
+            h4 استاندارد
+            h3
+              span  ماه/
+              | 100,000 تومن
+            ul
+              li .توی این بسته شما میتونید یک ربات برای خودتون بسازید
+              li .مدت زمانی که ربات میتونه فعالیت داشته باشه یک ماه هست
+            a.primary-btn(href='/service/standard') خرید سرویس
+        .col-lg-4.col-md-6.col-sm-6
+          .pricing__item
+            h4 نقره‌ای
+            h3
+              span ماه/
+              | 200,000 تومن
+            ul
+              li .در این سرویس شما میتونید ۳ ربات بصورت هم زمان داشته باشید
+              li .مدت زمان که هر ربات میتونه فعالیت کنه ۳۰ روز هست
+              li .منطق این سرویس به این صورت هست که شما یک ربات را روی پیج اصلیتون فعال میکنید و دو ربات دیگه را روی پیج‌های فیکتون که پیج اصلی رو تبلیغ میکنن فعال میکنید
+            a.primary-btn(href='/service/silver') خرید سرویس
+        .col-lg-4.col-md-6.col-sm-6
+          .pricing__item
+            h4 طلایی
+            h3
+              span ماه/
+              | 300,000 تومن  
+            ul
+              li .در این سرویس شما میتونید ۵ ربات بصورت هم زمان داشته باشید
+              li .مدت زمان که هر ربات میتونه فعالیت کنه ۳۰ روز هست
+              li .منطق این سرویس به این صورت هست که شما یک ربات را روی پیج اصلیتون فعال میکنید و ۴ ربات دیگه را روی پیج‌های فیکتون که پیج اصلی رو تبلیغ میکنن فعال میکنید
+            a.primary-btn(href='/service/golden') خرید سرویس
+
+  // Achievement Section Begin
+  section.achievement-section.set-bg.spad(data-setbg='img/achievement-bg.jpg')
+    .container
+      .row
+        .col-lg-6.col-md-6.col-sm-6
+          .achievement__item
+            span.fa.fa-user-o
+            h2.achieve-counter 2468
+            p مشتری‌ها
+        .col-lg-6.col-md-6.col-sm-6
+          .achievement__item
+            span.fa.fa-cog
+            h2.achieve-counter 2468
+            p ربات‌های فعال
+  // Achievement Section End
+  // Work Section Begin
+  section.work-section.spad
+    .container
+      .row
+        .col-lg-12
+          .section-title
+            h3 از کجا باید شروع کنم؟
+          .work__text
+            .row
+              .col-lg-6
+                .work__item
+                  i.fa.fa-desktop
+                  span اولین اکانت خود را خریداری کنید
+                  h3 اکانت استاندارد
+                  p
+                    | .اکانت استاندارد شامل یک ربات میباشد که به مدت یک ماه میتواند فعالیت کند
+                    | .این ربات قادر به فالوو ، آنفالو،‌ لایک، ارسال کامنت و دایرکت میباشد
+                    br
+                    | .اگه پیج اینستا تون رو تازه راه انداختین و نمیخواین خیلی هزینه کنید این بهترین گزینه برای شماست
+                  a.primary-btn(href='#') انتخاب
+              .col-lg-6
+                .work__item
+                  i.fa.fa-shopping-bag
+                  span تازه با ما آشنا شدید. نگران نباشید
+                  h3 اکانت رایگان
+                  p
+                    | اگه این اولین بار هست که میخواین از ربات ما استفاده کنید و هنوز از کیفیت خدمات ما مطمئن نیستید
+                    | .میتونید از یک هفته اکانت رایگان ما استفاده کنید تا با خیال مطمئن خرید کنید
+                    br
+                    | .این اکانت درست مثل بقیه اکانت ها عمل میکنه فقط مدت زمانش یک هفته هست
+                  a.primary-btn(href='#') انتخاب
+  // Work Section End
+  // Choose Plan Section Begin
+
+  // Choose Plan Section End

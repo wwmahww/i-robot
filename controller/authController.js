@@ -63,11 +63,13 @@ exports.login = catchAsync(async (req, res, next) => {
 
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
+    name: req.user.name,
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
-    role: req.body.role
+    role: req.body.role,
+    introducer: req.body.introducer
   });
 
   createSendToken(newUser, 201, res);

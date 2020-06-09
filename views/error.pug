@@ -1,12 +1,15 @@
 extend base
 
 block content
-  main.main
-    .error.text-center
-      .error_title
-        h2.heading-second.heading-error there is something wrong
-      .error_msg= msg
-
-
-block head
-  link(href='/css/personal.css' rel='stylesheet' type='text/css')
+  section.section-404.spad
+    .container
+      .row
+        .col-lg-12
+          .text__404
+            img(src='img/404.png', alt='')
+            h3 Opps! This page Could Not Be Found!
+            p= msg
+            form(action='#')
+              input(type='text', placeholder='Enter your keyword')
+              button(type='submit')
+                i.fa.fa-search

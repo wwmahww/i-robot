@@ -120,11 +120,14 @@ $('#signup').click(e => {
   e.preventDefault();
   $('#signup').prop('disabled', true);
   $('.rotator').show();
-  const username = $('input[name="username"]').val();
-  const email = $('input[name="email"]').val();
-  const password = $('input[name="password"]').val();
-  const passwordConfirm = $('input[name="passwordConfirm"]').val();
-  funs.signUp(username, email, password, passwordConfirm);
+  const user = {};
+  user.name = $('input[name="name"]').val();
+  user.username = $('input[name="username"]').val();
+  user.email = $('input[name="email"]').val();
+  user.password = $('input[name="password"]').val();
+  user.passwordConfirm = $('input[name="passwordConfirm"]').val();
+  user.introducer = $('input[name="introducer"]').val();
+  funs.signUp(user);
 });
 
 /*==================================================================
@@ -133,14 +136,15 @@ $('#signin').click(e => {
   e.preventDefault();
   $('#signin').prop('disabled', true);
   $('.rotator').show();
-  const email = $('input[name="email"]').val();
-  const password = $('input[name="password"]').val();
+  const email = $('input[name="email1"]').val();
+  const password = $('input[name="password1"]').val();
   funs.login(email, password);
 });
 
 /*==================================================================
     [ Logout ]*/
-$('a.logout-btn').on('click', e => {
+$('.logout').click(e => {
+  console.log('its logout')
   e.preventDefault();
   funs.logout();
 });
@@ -176,3 +180,19 @@ $('#updatebot').click(e => {
   const bot = getBotData();
   funs.updatebot(id, bot);
 });
+
+/*==================================================================
+    [discount check ]*/
+    $('#discountCheck').click(e => {
+      e.preventDefault();
+      const code = $('input[name="discountCode"]').val();
+      console.log(code)
+      funs.checkDiscount(code, data.price);
+    });
+
+/*==================================================================
+  [pay ]*/
+  $('#pay').click(e => {
+    e.preventDefault();
+    console.log('new price:', data.price)
+  })

@@ -1,32 +1,106 @@
-nav#mainNav.navbar.navbar-expand-lg.navbar-light.fixed-top.py-3
-  .container
-    //- #navbarResponsive
-    if user
-      a.navbar-brand.js-scroll-trigger(href='/') Quiz
-      a.nav-link.js-scroll-trigger.logout-btn(href='/logout') Log Out
-      a.nav-link.js-scroll-trigger(href='/me')= user.username
-      button.navbar-toggler.navbar-toggler-right(type='button' data-toggle='collapse' data-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation')
-        span.navbar-toggler-icon
-      #navbarResponsive.collapse.navbar-collapse
-        ul.navbar-nav.ml-auto.my-2.my-lg-0
-          li.nav-item
-            a.nav-link.js-scroll-trigger(href='/#') my quizes
-          li.nav-item
-            a.nav-link.js-scroll-trigger(href='#portfolio') Portfolio
+// Offcanvas Menu Begin
+.offcanvas__menu__overlay
+.offcanvas__menu__wrapper
+  .canvas__close
+    span.fa.fa-times-circle-o
+  .offcanvas__logo
+    a(href='#')
+      img(src='img/logo.png', alt='')
+  nav.offcanvas__menu.mobile-menu
+    ul
+      li.active
+        a(href='/') خانه
+      li
+        a(href='./about.html') About
+      li
+        a(href='./hosting.html') Hosting
+      li
+        a(href='/pricing') سرویس ها
+      li
+        a(href='./contact.html') Contact
+  #mobile-menu-wrap
+  .offcanvas__auth
+    ul
+      if(user)
+        li
+          a(href='/me')
+            span.fa.fa-user= user.username
+        li
+          a.logout(href='')
+            span.fa logout
 
-    else  
-      a.navbar-brand.js-scroll-trigger(href='/') Quiz
-      a.nav-link.js-scroll-trigger(href='/signin') Sgin In
-      a.nav-link.js-scroll-trigger(href='/signup') Sgin Up
-      button.navbar-toggler.navbar-toggler-right(type='button' data-toggle='collapse' data-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation')
-        span.navbar-toggler-icon
-      #navbarResponsive.collapse.navbar-collapse
-        ul.navbar-nav.ml-auto.my-2.my-lg-0
-          li.nav-item
-            a.nav-link.js-scroll-trigger(href='#about') About
-          li.nav-item
-            a.nav-link.js-scroll-trigger(href='/myprofile') Services
-          li.nav-item
-            a.nav-link.js-scroll-trigger(href='#portfolio') Portfolio
-          li.nav-item
-            a.nav-link.js-scroll-trigger(href='#contact') Contact
+      else
+        li
+          a(href='/signin')
+            span.fa.fa-user Login / Register
+  .offcanvas__info
+    ul
+      li
+        span.icon_phone
+        |  +1 123-456-7890
+      li
+        span.fa.fa-envelope
+        |  Support@gmail.com
+// Offcanvas Menu End
+
+// Header Section Begin
+header.header-section.header-normal
+  .header__info
+    .container
+      .row
+        .col-lg-6.col-md-6
+          .header__info-left
+            ul
+              li
+                span.icon_phone
+                |  +1 123-456-7890
+              li
+                span.fa.fa-envelope
+                |  Support@gmail.com
+        .col-lg-6.col-md-6
+          .header__info-right
+            ul
+              if(user)
+                li
+                  a(href='/me')
+                    span.fa.fa-user
+                    = user.username
+                li
+                  a.logout(href='/logout')
+                    span.fa
+                    | logout
+              else
+                li
+                  a(href='/signin')
+                    span.fa.fa-user
+                    | Login / Register
+  .container
+    .row
+      .col-lg-3.col-md-3
+        .header__logo
+          a(href='./index.html')
+            img(src='img/logo.png', alt='')
+      .col-lg-9.col-md-9
+        nav.header__menu
+          ul
+            li.active
+              a(href='/') خانه
+            li
+              a(href='./about.html') About
+            li
+              a(href='./hosting.html') Hosting
+            li
+              a(href='#') Pages
+              ul.dropdown
+                li
+                  a(href='./pricing.html') Pricing
+                li
+                  a(href='./blog-details.html') Blog Details
+                li
+                  a(href='./404.html') 404
+            li
+              a(href='/pricing') سرویس ها
+            li
+              a(href='./contact.html') Contact
+    .canvas__open
+      span.fa.fa-bars

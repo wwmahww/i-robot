@@ -1,3 +1,13 @@
+@font-face{
+  font-family: yekan;
+  /* font-size: ; */
+  src: url(./../fonts/Yekan.ttf)
+}
+
+html *{
+  font-family: yekan;
+}
+
 .error_title {
   color: red;
   margin-bottom: 40px;
@@ -15,4 +25,12 @@
 
 .main {
   background-color: rgb(240, 196, 196);
+}
+
+::placeholder{
+  color: gray;
+}
+
+.rtl{
+  direction: rtl;
 }
