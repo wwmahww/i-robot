@@ -1,41 +1,89 @@
 extends base
+
+mixin items()
+  li.fa.fa-check 
+  | جذب فالوور واقعی
+  br
+  li.fa.fa-check 
+  | فقط جذب فالوور هدف ایرانی
+  br
+  li.fa.fa-check 
+  | کامنت اتوماتیک
+  br
+  li.fa.fa-check 
+  | لایک اتوماتیک
+  br
+  li.fa.fa-check 
+  | دایرکت اتوماتیک
+  br
+  li.fa.fa-check
+  | راه اندازی راحت و سریع
+  br
+  li.fa.fa-check 
+  |امار لحظه‌ای پیشرفت پیج شما
+
 block content
+  .breadcrumb-section
+    .container
+      .row
+        .col-lg-12
+          .breadcrumb__option
+            a(href='/')
+              span.fa.fa-home
+              |  خانه
+            span اشتراک‌ها
   section.pricing-section.spad
     .container
       .row
         .col-lg-7.col-md-7
           .section-title.normal-title
-            h3 سرویس ها
+            h3 اشتراک‌ها
       .row.monthly__plans.active
-        .col-lg-4.col-md-6.col-sm-6
+        .col-lg-3.col-md-6.col-sm-6
           .pricing__item
-            h4 استاندارد
+            h4 رایگان
+            h3
+              span
+              | بیشتر از ۲۰۰ فالوور
+            ul
+              +items()
+            h3
+              span  
+              | رایگان
+            a.primary-btn(href='/service/free') خرید سرویس
+        .col-lg-3.col-md-6.col-sm-6
+          .pricing__item
+            h4 یک ماهه
+            h3
+              span
+              | بیشتر از 1000 فالوور
+            ul
+              +items()
             h3
               span  ماه/
-              | 100,000 تومن
-            ul
-              li .توی این بسته شما میتونید یک ربات برای خودتون بسازید
-              li .مدت زمانی که ربات میتونه فعالیت داشته باشه یک ماه هست
+              | 49,000 تومن
             a.primary-btn(href='/service/standard') خرید سرویس
-        .col-lg-4.col-md-6.col-sm-6
+        .col-lg-3.col-md-6.col-sm-6
           .pricing__item
-            h4 نقره‌ای
+            h4 دو ماهه
+            h3
+              span 
+              | بیشتر از ۲۵۰۰ فالوور
+            ul
+              +items()
             h3
               span ماه/
-              | 200,000 تومن
-            ul
-              li .در این سرویس شما میتونید ۳ ربات بصورت هم زمان داشته باشید
-              li .مدت زمان که هر ربات میتونه فعالیت کنه ۳۰ روز هست
-              li .منطق این سرویس به این صورت هست که شما یک ربات را روی پیج اصلیتون فعال میکنید و دو ربات دیگه را روی پیج‌های فیکتون که پیج اصلی رو تبلیغ میکنن فعال میکنید
+              | 89,000 تومن
             a.primary-btn(href='/service/silver') خرید سرویس
-        .col-lg-4.col-md-6.col-sm-6
+        .col-lg-3.col-md-6.col-sm-6
           .pricing__item
-            h4 طلایی
+            h4 سه ماهه
+            h3
+              span 
+              | بیشتر از ۴۰۰۰ فالوور
+            ul
+              +items()
             h3
               span ماه/
-              | 300,000 تومن  
-            ul
-              li .در این سرویس شما میتونید ۵ ربات بصورت هم زمان داشته باشید
-              li .مدت زمان که هر ربات میتونه فعالیت کنه ۳۰ روز هست
-              li .منطق این سرویس به این صورت هست که شما یک ربات را روی پیج اصلیتون فعال میکنید و ۴ ربات دیگه را روی پیج‌های فیکتون که پیج اصلی رو تبلیغ میکنن فعال میکنید
+              | 129,000 تومن
             a.primary-btn(href='/service/golden') خرید سرویس

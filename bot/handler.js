@@ -12,7 +12,7 @@ const path = require('./utils/direction');
 
 exports.login = (page, username, password) => {
   return new Promise(
-    catchAsync(async resolve => {
+    catchAsync(async (resolve) => {
       console.log('login started');
       // await path.goto_page(web.login_URL, '//button[contains(., "Log In")]');
       while (
@@ -31,9 +31,9 @@ exports.login = (page, username, password) => {
   );
 };
 
-exports.getDetail = page => {
+exports.getDetail = (page) => {
   return new Promise(
-    catchAsync(async resolve => {
+    catchAsync(async (resolve) => {
       console.log('start getting details');
       await path.goto_page(
         page,
@@ -42,23 +42,31 @@ exports.getDetail = page => {
         20000
       );
       await page.waitFor(2000);
-      const following = await page.$$('li a span');
-      web.following = await page.evaluate(
-        element => element.textContent * 1,
-        following[1]
+
+      const posts = await page.$$('li span span');
+      web.posts = await page.evaluate(
+        (element) => element.textContent * 1,
+        posts[0]
       );
 
       const followers = await page.$$('li a span');
       web.followers = await page.evaluate(
-        element => element.textContent * 1,
+        (element) => element.textContent * 1,
         followers[0]
+      );
+
+      const following = await page.$$('li a span');
+      web.following = await page.evaluate(
+        (element) => element.textContent * 1,
+        following[1]
       );
 
       process.send({
         pageName: web.pageName,
+        posts: web.posts,
         followers: web.followers,
         following: web.following,
-        modified: 'info'
+        modified: 'info',
       });
       console.log('getDetail is done');
       web.turn = 'follow';
@@ -69,7 +77,7 @@ exports.getDetail = page => {
 
 exports.follow = (page, targets) =>
   new Promise(
-    catchAsync(async resolve => {
+    catchAsync(async (resolve) => {
       const { followCounter } = web;
       // eslint-disable-next-line no-restricted-syntax
       for (const target of targets) {
@@ -96,7 +104,7 @@ exports.follow = (page, targets) =>
         liked: web.likeCounter.hasDone,
         commented: web.hasCommented,
         directed: web.hasSentDirect,
-        modified: 'followed'
+        modified: 'followed',
       });
       console.log('follow is done');
       web.turn = 'unfollow';
@@ -107,9 +115,9 @@ exports.follow = (page, targets) =>
     })
   );
 
-exports.unfollow = page =>
+exports.unfollow = (page) =>
   new Promise(
-    catchAsync(async resolve => {
+    catchAsync(async (resolve) => {
       console.log('start unfollow pro');
       if (web.Unfollowed >= web.unfollowLimit) {
         resolve();
@@ -119,7 +127,7 @@ exports.unfollow = page =>
       process.send({
         pageName: web.pageName,
         unfollowed: web.Unfollowed,
-        modified: 'unfollowed'
+        modified: 'unfollowed',
       });
       console.log('unfollow is done');
       web.turn = 'likeTags';
@@ -129,7 +137,7 @@ exports.unfollow = page =>
 
 exports.likeTags = (page, items) =>
   new Promise(
-    catchAsync(async resolve => {
+    catchAsync(async (resolve) => {
       console.log('start like tag pro');
       if (web.likeCounter.hasDone >= web.likeLimit) {
         resolve();
@@ -140,7 +148,7 @@ exports.likeTags = (page, items) =>
         pageName: web.pageName,
         liked: web.likeCounter.hasDone,
         commented: web.hasCommented,
-        modified: 'liked'
+        modified: 'liked',
       });
       console.log('likeTags is done');
       web.turn = 'follow';

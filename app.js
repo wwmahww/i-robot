@@ -11,7 +11,7 @@ const cookieParser = require('cookie-parser');
 const userRouter = require('./routs/userRouter');
 const botRouter = require('./routs/botRouter');
 const billRouter = require('./routs/billRouter');
-const discountRouter = require('./routs/discountRouter')
+const discountRouter = require('./routs/discountRouter');
 const viewRouter = require('./routs/viewRouter');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorController');
@@ -31,7 +31,7 @@ const limiter = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 1000,
   message:
-    'you reach your limit from this IP to requist to this route. Please try in a hour.'
+    'you reach your limit from this IP to requist to this route. Please try in a hour.',
 });
 app.use('/api', limiter);
 
@@ -48,7 +48,7 @@ app.use(xss());
 // Prevent parameter pullution
 app.use(
   hpp({
-    whitelist: ['']
+    whitelist: [''],
   })
 );
 

@@ -107,8 +107,6 @@ dist
 node_modules/
 chrome-win/
 test/
-.prettierrc
-.eslintrc.json
 test.js
 .git
 todo.txt

@@ -4,7 +4,7 @@ const Bot = require('./../models/botModel');
 const web = require('./../bot/utils/interfaces');
 const catchAsync = require('./../utils/catchAsync');
 
-const save = async data => {
+const save = async (data) => {
   const {
     pageName,
     modified,
@@ -15,7 +15,7 @@ const save = async data => {
     directed,
     posts,
     followers,
-    following
+    following,
   } = data;
   const bot = await Bot.findOne({ pageName });
   bot.details = bot.details ? bot.details : {};
@@ -32,7 +32,7 @@ const save = async data => {
 
   switch (modified) {
     case 'info':
-      console.log('followers');
+      console.log('info');
       bot.pageInfo.posts = posts;
       bot.pageInfo.followers = followers;
       bot.pageInfo.following = following;
@@ -58,21 +58,23 @@ const save = async data => {
   }
 
   console.log('bot details: ', bot.details);
+  console.log('page Info: ', bot.pageInfo);
   console.log('now saving');
   bot.markModified('details');
+  bot.markModified('pageInfo');
   await bot.save({ validateBeforeSave: false });
   console.log('saveing is done');
 };
 
-exports.launch = bot =>
-  new Promise(resolve => {
+exports.launch = (bot) =>
+  new Promise((resolve) => {
     console.log('bot start');
     const child = fork('./bot/index.js');
     child.send(bot);
     // ---------------------------------------------------------------
     web.childs[bot.pageName] = child;
     // --------------------------------------------------------------
-    child.on('error', err => {
+    child.on('error', (err) => {
       console.log('error: ', err);
     });
 
@@ -80,7 +82,7 @@ exports.launch = bot =>
       console.log('cp exited');
     });
 
-    child.on('message', data => {
+    child.on('message', (data) => {
       console.log('received data: ', data);
       if (data.pageName) {
         save(data);
@@ -93,9 +95,9 @@ exports.launch = bot =>
 
 exports.launcher = () =>
   new Promise(
-    catchAsync(async resolve => {
+    catchAsync(async (resolve) => {
       const bots = await Bot.find({ active: true });
-      bots.map(async bot => {
+      bots.map(async (bot) => {
         await this.launch(bot);
       });
       resolve();

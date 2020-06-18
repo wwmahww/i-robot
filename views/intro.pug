@@ -1,5 +1,27 @@
 extends base
 
+mixin items()
+  li.fa.fa-check 
+  | جذب فالوور واقعی
+  br
+  li.fa.fa-check 
+  | فقط جذب فالوور هدف ایرانی
+  br
+  li.fa.fa-check 
+  | کامنت اتوماتیک
+  br
+  li.fa.fa-check 
+  | لایک اتوماتیک
+  br
+  li.fa.fa-check 
+  | دایرکت اتوماتیک
+  br
+  li.fa.fa-check
+  | راه اندازی راحت و سریع
+  br
+  li.fa.fa-check 
+  |امار لحظه‌ای پیشرفت پیج شما
+
 block content
   // Hero Section Begin
   section.hero-section
@@ -8,76 +30,76 @@ block content
         .container
           .row
             .col-lg-6
+              .hero__img
+                img(src='img/hero/hero-right.png', alt='')
+            .col-lg-6
               .hero__text
                 h2
                   | جذب ماهیانه بیشتر از ۱۰۰۰ فالوور
                   br
-                  |  تضمینی و بدون بلاک شدن
-                a.primary-btn(href='#') شروع سرویس
-            .col-lg-6
-              .hero__img
-                img(src='img/hero/hero-right.png', alt='')
+                  |  یک هفته تست رایگان
+                a.primary-btn(href='/pricing') شروع سرویس
+            
       .hero__item.set-bg(data-setbg='img/hero/hero-1.jpg')
         .container
           .row
             .col-lg-6
-              .hero__text
-                h2
-                  | اولین باشید i-robot با
-                a.primary-btn(href='#') شروع سرویس
-            .col-lg-6
               .hero__img
                 img(src='img/hero/hero-right.png', alt='')
+            .col-lg-6
+              .hero__text
+                h2
+                  | دیده شوید i-robot با
+                a.primary-btn(href='/pricing') شروع سرویس
   // Hero Section End
   section.choose-plan-section.spad
     .container
       .row
         .col-lg-6.col-md-6
           img(src='img/choose-plan.png', alt='')
-        .col-lg-6.col-md-6
+        .col-lg-6.col-md-6.text-right
           .plan__text
             h3 آی ربات" چیست؟"
-            p .آی ربات" یک ربات اینستاگرام هست که به شما کمک میکنه تا تعداد فالوور هاتون رو افزایش بدین"
-            p .از ویژگی های این ربات میتوان به فالوو کردن، انفالوو، لایک، ارسال کامنت، و ارسال دایرکت اشاره کرد
-            a.primary-btn(href='#') همین حالا شروع کنید
+            p .آی ربات" قوی ترین ربات اینستاگرام است که با مجموعه‌ای از خدمات شامل فالوو کردن اتوماتیک، انفالوو‌ کردن اتوماتیک، لایک ،‌کامنت و دایرک اتوماتیک; با پیدا کردن فالوور های واقعی هدف شما که کاملا ایرانی هستن در کوتاه ترین زمان ممکن پیج شما را به برترین پیج اینستاگرام در حوضه‌ی کاری شما ارتقا می‌دهد. به شما کمک میکنه تا تعداد فالوور هاتون رو افزایش بدین"
+            a.primary-btn(href='/pricing') همین حالا شروع کنید
   // Services Section Begin
   section.services-section.spad
     .container
       .row
         .col-lg-12
           .section-title
-            h3 Choose the right hosting solution
-      .row
+            h3 امکانات ربات
+      .row.text-right
         .col-lg-4.col-md-4.col-sm-6
           .services__item
-            h5 Shared Hosting
-            span Starts At $1.84
-            p Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            i.fa.fa-user-o
+            h5 فالوو و انفالوو کردن اتوماتیک
+            p ربات بصورت خودکار در ساعات مشخص شروع به فالوو و انفالوو کردن افراد هدف شما میکنه و به این ترتیب فالوور های پیج شمارو افزایش میده
         .col-lg-4.col-md-4.col-sm-6
           .services__item
-            h5 Wordpress Hosting
-            span Starts At $1.84
-            p Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            i.fa.fa-heart-o
+            h5 لایک اتوماتیک 
+            p ربات به صورت اتوماتیک پست‌های دیگران رو لایک میکنه و از این طریق باعت جذف فالوور بیشتر به پیج شما میشه
         .col-lg-4.col-md-4.col-sm-6
           .services__item
-            h5 Dedicated Hosting
-            span Starts At $1.84
-            p Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            i.fa.fa-wechat
+            h5 ارسال کامنت و دایرکت
+            p با کامنت گذاری پست ها و ارسال دایرکت به افراد امکان دیده شدن پیج شما افزایش پیدا خواهد کرد
         .col-lg-4.col-md-4.col-sm-6
           .services__item
-            h5 SSL certificate
-            span Starts At $1.84
-            p Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            i.fa.fa-cog
+            h5 مدیریت آسان
+            p با کنترل پنل ساده و کاملی که برای شما طراحی شده هرچه راحت تر ربات خود را مدیریت کنید تا بیشتری بازدهی رو بدست بیارید
         .col-lg-4.col-md-4.col-sm-6
           .services__item
-            h5 Web Hosting
-            span Starts At $1.84
-            p Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            i.fa.fa-area-chart
+            h5 آمار لحظه‌ای ربات
+            p در طول روز میتونید به راحتی به امار ربات دسترسی داشته باشید و از عملکرد درست ربات مطمئن باشید
         .col-lg-4.col-md-4.col-sm-6
           .services__item
-            h5 Cloud server
-            span Starts At $1.84
-            p Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            i.fa.fa-line-chart
+            h5 آمار پیشرفت پیج
+            p با امار لحظه‌ای پیج ، میتونید هر لحظه از پیشترفت پیجتون لذت ببرید
   // Services Section End
   // Register Domain Section Begin
   section.register-domain.spad
@@ -86,78 +108,75 @@ block content
         .col-lg-8
           .register__text
             .section-title
-              h3 Register Your Domain Now!
-            .register__form
-              form(action='#')
-                input(type='text', placeholder='ex: cloudhost')
-                .change__extension
-                  | .com
-                  ul
-                    li .net
-                    li .org
-                    li .me
-                button.site-btn(type='submit') Search
-            .register__result
-              ul
-                li
-                  | .com 
-                  span $1.95
-                li
-                  | .net 
-                  span $1.95
-                li
-                  | .org 
-                  span $1.95
-                li
-                  | .us 
-                  span $1.95
-                li
-                  | .in 
-                  span $1.95
-            p
-              | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-              | labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.
+              h3 طرح تخفیف
+            .work__text.text-right
+              span .یه طرح ویژه براتون اماده کردیم
+              br
+              span در هنگام ثبت نام شما یک یوزرنیم برای خودتون انتخاب میکنید. این یوزرنیم میتونه به عنوان کد معرف شما عمل کنه. به چه صورت؟
+              br
+              span شما سایت ما رو به دوستاتون معرفی میکنید،‌ بعد دوستان شما هنگام ثبت نام در قسمت کد معرف ، کد شما رو وارد میکنه، با
+              span انجام این کار، دوست شما در اولین خریدش ۲۰ درصد تخفیف میگیری. اما چه سودی برای شما داره؟
+              br
+              span قسمت هیجان انگیزش اینجاست. در ازای هر خریدی که دوستان شما انجام بدن، ۱۰ درصد از مبلغ خرید اونها به حساب شما در سایت واریز میشه 
+              span به این صورت اگه شما ۱۰ نفر از دوستاتون رو به ما معرفی کنید استفاده از خدمات سایت برای شما رایگان میشه
+              
   // Register Domain Section End
   
   // Pricing Section Begin
   section.pricing-section.spad
     .container
       .row
-        .col-lg-7.col-md-7
-          .section-title.normal-title
-            h3 سرویس ها
+        .col-lg-12.col-md-12
+          .section-title.normal-title.text-center
+            h3 اشتراک‌ها
       .row.monthly__plans.active
-        .col-lg-4.col-md-6.col-sm-6
+        .col-lg-3.col-md-6.col-sm-6
           .pricing__item
-            h4 استاندارد
+            h4 رایگان
+            h3
+              span
+              | بیشتر از ۲۰۰ فالوور
+            ul
+              +items()
+            h3
+              span  
+              | رایگان
+            a.primary-btn(href='/service/free') خرید سرویس
+        .col-lg-3.col-md-6.col-sm-6
+          .pricing__item
+            h4 یک ماهه
+            h3
+              span
+              | بیشتر از 1000 فالوور
+            ul
+              +items()
             h3
               span  ماه/
-              | 100,000 تومن
-            ul
-              li .توی این بسته شما میتونید یک ربات برای خودتون بسازید
-              li .مدت زمانی که ربات میتونه فعالیت داشته باشه یک ماه هست
+              | 49,000 تومن
             a.primary-btn(href='/service/standard') خرید سرویس
-        .col-lg-4.col-md-6.col-sm-6
+        .col-lg-3.col-md-6.col-sm-6
           .pricing__item
-            h4 نقره‌ای
+            h4 دو ماهه
+            h3
+              span 
+              | بیشتر از ۲۵۰۰ فالوور
+            ul
+              +items()
             h3
               span ماه/
-              | 200,000 تومن
-            ul
-              li .در این سرویس شما میتونید ۳ ربات بصورت هم زمان داشته باشید
-              li .مدت زمان که هر ربات میتونه فعالیت کنه ۳۰ روز هست
-              li .منطق این سرویس به این صورت هست که شما یک ربات را روی پیج اصلیتون فعال میکنید و دو ربات دیگه را روی پیج‌های فیکتون که پیج اصلی رو تبلیغ میکنن فعال میکنید
+              | 89,000 تومن
             a.primary-btn(href='/service/silver') خرید سرویس
-        .col-lg-4.col-md-6.col-sm-6
+        .col-lg-3.col-md-6.col-sm-6
           .pricing__item
-            h4 طلایی
+            h4 سه ماهه
+            h3
+              span 
+              | بیشتر از ۴۰۰۰ فالوور
+            ul
+              +items()
             h3
               span ماه/
-              | 300,000 تومن  
-            ul
-              li .در این سرویس شما میتونید ۵ ربات بصورت هم زمان داشته باشید
-              li .مدت زمان که هر ربات میتونه فعالیت کنه ۳۰ روز هست
-              li .منطق این سرویس به این صورت هست که شما یک ربات را روی پیج اصلیتون فعال میکنید و ۴ ربات دیگه را روی پیج‌های فیکتون که پیج اصلی رو تبلیغ میکنن فعال میکنید
+              | 129,000 تومن
             a.primary-btn(href='/service/golden') خرید سرویس
 
   // Achievement Section Begin
@@ -167,12 +186,12 @@ block content
         .col-lg-6.col-md-6.col-sm-6
           .achievement__item
             span.fa.fa-user-o
-            h2.achieve-counter 2468
+            h2.achieve-counter= usersNumber
             p مشتری‌ها
         .col-lg-6.col-md-6.col-sm-6
           .achievement__item
             span.fa.fa-cog
-            h2.achieve-counter 2468
+            h2.achieve-counter= botsNumber
             p ربات‌های فعال
   // Achievement Section End
   // Work Section Begin
@@ -186,18 +205,17 @@ block content
             .row
               .col-lg-6
                 .work__item
-                  i.fa.fa-desktop
+                  i.fa.fa-shopping-bag
                   span اولین اکانت خود را خریداری کنید
-                  h3 اکانت استاندارد
+                  h3 اکانت یک ماهه
                   p
-                    | .اکانت استاندارد شامل یک ربات میباشد که به مدت یک ماه میتواند فعالیت کند
-                    | .این ربات قادر به فالوو ، آنفالو،‌ لایک، ارسال کامنت و دایرکت میباشد
+                    | اولین پیشنهادی که برای  شما داریم اکانت یک ماهه هست. در این اکانت شما میتونید به مدت یک ماه از خدمات ربات که شامل فالوو و آنفالوو کردن، لایک اتوماتیک، کامنت اتوماتیک و دایرکت اتوماتیک استفاده کنید
                     br
                     | .اگه پیج اینستا تون رو تازه راه انداختین و نمیخواین خیلی هزینه کنید این بهترین گزینه برای شماست
-                  a.primary-btn(href='#') انتخاب
+                  a.primary-btn(href='/service/standard') انتخاب
               .col-lg-6
                 .work__item
-                  i.fa.fa-shopping-bag
+                  i.fa.fa-money
                   span تازه با ما آشنا شدید. نگران نباشید
                   h3 اکانت رایگان
                   p
@@ -205,7 +223,7 @@ block content
                     | .میتونید از یک هفته اکانت رایگان ما استفاده کنید تا با خیال مطمئن خرید کنید
                     br
                     | .این اکانت درست مثل بقیه اکانت ها عمل میکنه فقط مدت زمانش یک هفته هست
-                  a.primary-btn(href='#') انتخاب
+                  a.primary-btn(href='/service/free') انتخاب
   // Work Section End
   // Choose Plan Section Begin
 

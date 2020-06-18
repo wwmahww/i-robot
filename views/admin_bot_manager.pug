@@ -59,28 +59,28 @@ block content
     .card-body
       .row
         .col-xl-2.col-md-1.mb-5
-          .card.border-left-success.shadow.h-100.py-2
+          .card.border-left-info.shadow.h-100.py-2
             .card-body
               .row.no-gutters.align-items-center
                 .col.mr-2
                   .text-xs.font-weight-bold.text-primary.text-uppercase.mb-1 تعداد پست
                   .h5.mb-0.font-weight-bold.text-gray-800= bot.pageInfo?bot.pageInfo.posts:0
         .col-xl-2.col-md-1.mb-5
-          .card.border-left-danger.shadow.h-100.py-2
+          .card.border-left-primary.shadow.h-100.py-2
             .card-body
               .row.no-gutters.align-items-center
                 .col.mr-2
                   .text-xs.font-weight-bold.text-primary.text-uppercase.mb-1 دنبال کننده‌ها
-                  .h5.mb-0.font-weight-bold.text-gray-800= bot.pageInfo?bot.pageInfo.followrs:0
+                  .h5.mb-0.font-weight-bold.text-gray-800= bot.pageInfo?bot.pageInfo.followers:0
         .col-xl-2.col-md-1.mb-5
-          .card.border-left-primary.shadow.h-100.py-2
+          .card.border-left-danger.shadow.h-100.py-2
             .card-body
               .row.no-gutters.align-items-center
                 .col.mr-2
                   .text-xs.font-weight-bold.text-primary.text-uppercase.mb-1 دنبال شونده‌ها
                   .h5.mb-0.font-weight-bold.text-gray-800= bot.pageInfo?bot.pageInfo.following:0
         .col-xl-2.col-md-1.mb-5
-          .card.border-left-warning.shadow.h-100.py-2
+          .card.border-left-success.shadow.h-100.py-2
             .card-body
               .row.no-gutters.align-items-center
                 .col.mr-2

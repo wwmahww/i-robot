@@ -4,20 +4,18 @@
   .canvas__close
     span.fa.fa-times-circle-o
   .offcanvas__logo
-    a(href='#')
+    a(href='/')
       img(src='img/logo.png', alt='')
   nav.offcanvas__menu.mobile-menu
     ul
+      li
+        a(href='/contact') تماس باما
+      li
+        a(href='/about') درباره‌ما
+      li
+        a(href='/pricing') اشتراک‌ها
       li.active
         a(href='/') خانه
-      li
-        a(href='./about.html') About
-      li
-        a(href='./hosting.html') Hosting
-      li
-        a(href='/pricing') سرویس ها
-      li
-        a(href='./contact.html') Contact
   #mobile-menu-wrap
   .offcanvas__auth
     ul
@@ -27,20 +25,17 @@
             span.fa.fa-user= user.username
         li
           a.logout(href='')
-            span.fa logout
+            span.fa خروج
 
       else
         li
           a(href='/signin')
-            span.fa.fa-user Login / Register
+            span.fa.fa-user ثبت نام/ ورود
   .offcanvas__info
     ul
       li
-        span.icon_phone
-        |  +1 123-456-7890
-      li
         span.fa.fa-envelope
-        |  Support@gmail.com
+        |  i_robot.ir@yahoo.com
 // Offcanvas Menu End
 
 // Header Section Begin
@@ -52,11 +47,8 @@ header.header-section.header-normal
           .header__info-left
             ul
               li
-                span.icon_phone
-                |  +1 123-456-7890
-              li
                 span.fa.fa-envelope
-                |  Support@gmail.com
+                |  i_robot.ir@yahoo.com
         .col-lg-6.col-md-6
           .header__info-right
             ul
@@ -67,40 +59,29 @@ header.header-section.header-normal
                     = user.username
                 li
                   a.logout(href='/logout')
-                    span.fa
-                    | logout
+                    span.fa.fa-sign-out
+                    | خروج
               else
                 li
                   a(href='/signin')
                     span.fa.fa-user
-                    | Login / Register
+                    | ثبت نام/ ورود
   .container
     .row
       .col-lg-3.col-md-3
         .header__logo
-          a(href='./index.html')
+          a(href='/')
             img(src='img/logo.png', alt='')
       .col-lg-9.col-md-9
         nav.header__menu
           ul
+            li
+              a(href='/contact') تماس باما
+            li
+              a(href='/about') درباره ما
+            li
+              a(href='/pricing') اشتراک‌ها
             li.active
               a(href='/') خانه
-            li
-              a(href='./about.html') About
-            li
-              a(href='./hosting.html') Hosting
-            li
-              a(href='#') Pages
-              ul.dropdown
-                li
-                  a(href='./pricing.html') Pricing
-                li
-                  a(href='./blog-details.html') Blog Details
-                li
-                  a(href='./404.html') 404
-            li
-              a(href='/pricing') سرویس ها
-            li
-              a(href='./contact.html') Contact
     .canvas__open
       span.fa.fa-bars

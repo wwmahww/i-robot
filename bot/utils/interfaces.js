@@ -12,6 +12,7 @@ module.exports = {
   whiteList: [],
   comments: [],
   directTexts: [],
+  posts: 0,
   following: 0,
   followers: 0,
   followCounter: { hasDone: 0, round: 0 },

@@ -1,0 +1,23 @@
+extends base
+block content
+  .breadcrumb-section
+    .container
+      .row
+        .col-lg-12
+          .breadcrumb__option
+            a(href='/')
+              span.fa.fa-home
+              |  خانه
+            span تماس باما
+  .contact-form.spad
+    .container
+      .row
+        .col-lg-12
+          .section-title
+              h3 تماس باما
+          form(action='#')
+            .input-list
+              input.w-75(type='text' name='name' placeholder='نام')
+              input.w-75(type='email' name='email' placeholder='ایمیل')
+              textarea.w-75(type='text' name='message' placeholder='پیام تون رو اینجا بنویسید')
+            button#sendMessage.site-btn ارسال

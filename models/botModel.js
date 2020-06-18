@@ -16,7 +16,7 @@ const BotSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
-    required: [true, ' A bot most have an owner']
+    required: [true, ' A bot most have an owner'],
   },
   comments: [],
   directTexts: [],
@@ -50,17 +50,15 @@ const BotSchema = new mongoose.Schema({
     default: Date.now(),
     select: false,
   },
-  timeLeft: Number
+  timeLeft: Number,
 });
 
 const Bot = mongoose.model('Bot', BotSchema);
 
 module.exports = Bot;
 
-
-
 // Query middleware
-BotSchema.pre(/^find/, function(next) {
-  this.populate({path: 'bot', select: 'username'});
+BotSchema.pre(/^find/, function (next) {
+  this.populate({ path: 'bot', select: 'username' });
   next();
 });

@@ -1,10 +1,10 @@
-@font-face{
+@font-face {
   font-family: yekan;
   /* font-size: ; */
-  src: url(./../fonts/Yekan.ttf)
+  src: url(./../fonts/Yekan.ttf);
 }
 
-html *{
+html * {
   font-family: yekan;
 }
 
@@ -27,10 +27,10 @@ html *{
   background-color: rgb(240, 196, 196);
 }
 
-::placeholder{
-  color: gray;
+::placeholder {
+  color: gray !important;
 }
 
-.rtl{
+.rtl {
   direction: rtl;
 }

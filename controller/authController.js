@@ -7,9 +7,9 @@ const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const sendEmail = require('./../utils/email');
 
-const signToken = id =>
+const signToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN
+    expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
 const createSendToken = (user, statusCode, res) => {
@@ -18,7 +18,7 @@ const createSendToken = (user, statusCode, res) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true
+    httpOnly: true,
   };
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
@@ -29,15 +29,15 @@ const createSendToken = (user, statusCode, res) => {
     status: 'success',
     token,
     data: {
-      user
-    }
+      user,
+    },
   });
 };
 
 exports.logout = (req, res, next) => {
   res.cookie('jwt', 'logged out', {
     expires: new Date(Date.now() + 10 + 1000),
-    httpOnly: true
+    httpOnly: true,
   });
   console.log(req.originalUrl);
   res.status(200).json({ status: 'success' });
@@ -69,7 +69,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     role: req.body.role,
-    introducer: req.body.introducer
+    introducer: req.body.introducer,
   });
 
   createSendToken(newUser, 201, res);
@@ -94,6 +94,7 @@ exports.isLoggedIn = async (req, res, next) => {
 
       // There is a logged in user
       res.locals.user = freshUser;
+      req.user = freshUser;
     } catch (err) {
       return next();
     }
@@ -172,13 +173,13 @@ exports.forgetPassword = catchAsync(async (req, res, next) => {
     await sendEmail({
       email: user.email,
       subject: 'your password reset token (valid for 10 minute)',
-      message
+      message,
     });
 
     res.status(200).json({
       status: 'success',
       message: 'Token send to email!',
-      token: resetToken
+      token: resetToken,
     });
   } catch (err) {
     user.passwordResetToken = undefined;
@@ -203,7 +204,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   const user = await User.findOne({
     passwordResetToken: hashedToken,
-    passwordResetExpired: { $gt: Date.now() }
+    passwordResetExpired: { $gt: Date.now() },
   });
   // 2) If the token has not expired, and the user exist, set the password
   if (!user) return next(new AppError('Token is invalid or expired.', 400));
