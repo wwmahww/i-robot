@@ -10,7 +10,7 @@ const DB = process.env.DATABASE.replace(
 );
 
 const dataBase =
-  process.NODE_ENV === 'development' ? DB : process.env.DATABASE_LOCAL;
+  process.env.NODE_ENV === 'development' ? DB : process.env.DATABASE_LOCAL;
 
 const dbConnect = () =>
   new Promise((resolve) => {
