@@ -43,12 +43,14 @@ exports.service = (req, res, next) => {
   const { type } = req.params;
   const data =
     type === 'free'
-      ? { name: 'رایگان', price: 0, number: 1 }
-      : type === 'standard'
-      ? { name: 'استاندارد', price: 49000, number: 1 }
-      : type === 'silver'
-      ? { name: 'نقره‌ای', price: 89000, number: 3 }
-      : { name: 'طلایی', price: 129000, number: 5 };
+      ? { name: 'رایگان', code: 1, price: 0 }
+      : type === 'one'
+      ? { name: 'یک ماهه', code: 2, price: 49000 }
+      : type === 'two'
+      ? { name: 'دو ماهه', code: 3, price: 89000 }
+      : type === 'three'
+      ? { name: 'سه ماهه', code: 4, price: 129000 }
+      : {};
 
   if (req.user) {
     if (req.user.firstTime && req.user.introducer) {
