@@ -46,7 +46,7 @@ export const signUp = async (user) => {
   try {
     const res = await axios({
       method: 'post',
-      url: 'http://localhost:3000/api/v1/users/signup',
+      url: 'http://www.i-robot.ir/api/v1/users/signup',
       data: user
     });
 
@@ -72,7 +72,7 @@ export const login = async (email, password) => {
     console.log(email, password);
     const res = await axios({
       method: 'post',
-      url: 'http://localhost:3000/api/v1/users/login',
+      url: 'http://www.i-robot.ir/api/v1/users/login',
       data: {
         email,
         password
@@ -100,7 +100,7 @@ export const logout = async () => {
   try {
     const res = await axios({
       method: 'get',
-      url: 'http://localhost:3000/api/v1/users/logout'
+      url: 'http://www.i-robot.ir/api/v1/users/logout'
     });
     if (res.data.status === 'success') {
       alert('you logged out successfuly')
@@ -120,7 +120,7 @@ export const botStart = async pageName => {
   try {
     const res = await axios({
       method: 'get',
-      url: `http://localhost:3000/api/v1/bots/start/${pageName}`
+      url: `http://www.i-robot.ir/api/v1/bots/start/${pageName}`
     });
     if (res.data.status === 'success') {
       alert('ربات روشن شد.');
@@ -146,7 +146,7 @@ export const botStop = async pageName => {
   try {
     const res = await axios({
       method: 'get',
-      url: `http://localhost:3000/api/v1/bots/stop/${pageName}`
+      url: `http://www.i-robot.ir/api/v1/bots/stop/${pageName}`
     });
     if (res.data.status === 'success') {
       alert('ربات متوقف شد.');
@@ -169,7 +169,7 @@ export const newbot = async bot => {
   try {
     const res = await axios({
       method: 'post',
-      url: 'http://localhost:3000/api/v1/bots/create',
+      url: 'http://www.i-robot.ir/api/v1/bots/create',
       data: bot
     });
     console.log('status code: ', res.data);
@@ -193,7 +193,7 @@ export const updatebot = async (id, bot) => {
   try {
     const res = await axios({
       method: 'patch',
-      url: `http://localhost:3000/api/v1/bots/update-My-Bot/${id}`,
+      url: `http://www.i-robot.ir/api/v1/bots/update-My-Bot/${id}`,
       data: bot
     });
     if (res.data.status === 'success') {
@@ -216,7 +216,7 @@ export const checkDiscount = async(code, price) => {
   try{
     const res = await axios({
       method: 'post',
-      url: 'http://localhost:3000/api/v1/discounts/check',
+      url: 'http://www.i-robot.ir/api/v1/discounts/check',
       data: {code, price}
     });
     if(res.data.status === 'success') {
