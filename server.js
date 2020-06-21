@@ -13,7 +13,7 @@ dotenv.config({ path: './config.env' });
 
 //  START SERVER
 let server;
-const port = process.NODE_ENV === 'development' ? 3000 : 80;
+const port = process.env.NODE_ENV === 'development' ? 3000 : 80;
 exports.start = () => {
   server = app.listen(port, () => {
     console.log(`app is running on port ${port}`);
