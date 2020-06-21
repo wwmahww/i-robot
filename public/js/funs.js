@@ -4,7 +4,7 @@ import axios from 'axios';
 
 ('use strict');
 
-export const validate = input => {
+export const validate = (input) => {
   if ($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
     if (
       $(input)
@@ -17,23 +17,19 @@ export const validate = input => {
       return false;
     }
   } else {
-    if (
-      $(input)
-        .val()
-        .trim() == ''
-    ) {
+    if ($(input).val().trim() == '') {
       return false;
     }
   }
 };
 
-export const showValidate = input => {
+export const showValidate = (input) => {
   var thisAlert = $(input).parent();
 
   $(thisAlert).addClass('alert-validate');
 };
 
-export const hideValidate = input => {
+export const hideValidate = (input) => {
   var thisAlert = $(input).parent();
 
   $(thisAlert).removeClass('alert-validate');
@@ -47,7 +43,7 @@ export const signUp = async (user) => {
     const res = await axios({
       method: 'post',
       url: 'http://localhost:3000/api/v1/users/signup',
-      data: user
+      data: user,
     });
 
     if (res.data.status === 'success') {
@@ -75,8 +71,8 @@ export const login = async (email, password) => {
       url: 'http://localhost:3000/api/v1/users/login',
       data: {
         email,
-        password
-      }
+        password,
+      },
     });
 
     if (res.data.status === 'success') {
@@ -100,12 +96,12 @@ export const logout = async () => {
   try {
     const res = await axios({
       method: 'get',
-      url: 'http://localhost:3000/api/v1/users/logout'
+      url: 'http://localhost:3000/api/v1/users/logout',
     });
     if (res.data.status === 'success') {
-      alert('you logged out successfuly')
+      alert('you logged out successfuly');
       window.setTimeout(() => {
-        location.assign('/')
+        location.assign('/');
       }, 1500);
     }
   } catch (err) {
@@ -116,11 +112,11 @@ export const logout = async () => {
 /*========================================================
   [bot start] */
 
-export const botStart = async pageName => {
+export const botStart = async (pageName) => {
   try {
     const res = await axios({
       method: 'get',
-      url: `http://localhost:3000/api/v1/bots/start/${pageName}`
+      url: `http://localhost:3000/api/v1/bots/start/${pageName}`,
     });
     if (res.data.status === 'success') {
       alert('ربات روشن شد.');
@@ -142,11 +138,11 @@ export const botStart = async pageName => {
 //---------------------------------------------
 //[stop bot]
 
-export const botStop = async pageName => {
+export const botStop = async (pageName) => {
   try {
     const res = await axios({
       method: 'get',
-      url: `http://localhost:3000/api/v1/bots/stop/${pageName}`
+      url: `http://localhost:3000/api/v1/bots/stop/${pageName}`,
     });
     if (res.data.status === 'success') {
       alert('ربات متوقف شد.');
@@ -165,12 +161,12 @@ export const botStop = async pageName => {
 //---------------------------------------------
 //[newBot]
 
-export const newbot = async bot => {
+export const newbot = async (bot) => {
   try {
     const res = await axios({
       method: 'post',
       url: 'http://localhost:3000/api/v1/bots/create',
-      data: bot
+      data: bot,
     });
     console.log('status code: ', res.data);
     if (res.data.status === 'success') {
@@ -194,7 +190,7 @@ export const updatebot = async (id, bot) => {
     const res = await axios({
       method: 'patch',
       url: `http://localhost:3000/api/v1/bots/update-My-Bot/${id}`,
-      data: bot
+      data: bot,
     });
     if (res.data.status === 'success') {
       alert('ربات اپدیت شد.');
@@ -212,20 +208,22 @@ export const updatebot = async (id, bot) => {
 //---------------------------------------------
 //[discount check]
 
-export const checkDiscount = async(code, price) => {
-  try{
+export const checkDiscount = async (code, price) => {
+  try {
     const res = await axios({
       method: 'post',
       url: 'http://localhost:3000/api/v1/discounts/check',
-      data: {code, price}
+      data: { code, price },
     });
-    if(res.data.status === 'success') {
+    if (res.data.status === 'success') {
       $('#price').css('textDecoration', 'line-through');
-      $('#price2').text(` ${res.data.newPrice} تومن`)
-      data.price = res.data.newPrice
-    };
-  }catch(e){
-    console.log('error:', e.response.data.message)
-    alert('این کد قابل استفاده نمیباشد.')
-  };
-}
+      $('#price2').text(` ${res.data.newPrice} تومن`);
+      data.price = res.data.newPrice;
+    }
+  } catch (e) {
+    console.log('error:', e.response.data.message);
+    alert('این کد قابل استفاده نمیباشد.');
+  }
+  $('#discountCheck').prop('disabled', false);
+  $('#discountCheck .rotator').hide();
+};
