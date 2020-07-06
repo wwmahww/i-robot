@@ -1,0 +1,18 @@
+extends base
+block content
+  section.register-domain.spad#discountPlan
+    .container
+      .row.d-flex.justify-content-center
+        .col-lg-8
+          .register__text
+            .section-title
+              if(Status === 'invalid')
+                h3 درخاست مورد تایید نمی‌باشد
+              if(Status === 'OK')
+                h3 خرید با موفقیت انجام شد
+              else
+                h3 خرید با موفقیت انجام نشد
+  //- if(status === 'ok')
+  //-   span خرید با موافقت انجام شد
+  //- else
+  //-   span خرید با موفقیت انجام نشد

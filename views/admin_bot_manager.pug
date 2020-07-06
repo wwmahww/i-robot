@@ -1,10 +1,20 @@
 extends admin_base
 
 block content
+  script.
+    const bot = !{jsStringify(bot)}
   h1.h3.mb-4.text-gray-800= bot.pageName
   .card.shadow.mb-4
-    .card-header.py-3
+    .card-header.py-3.d-sm-flex.align-items-center.justify-content-between
       h6.m-0.font-weight-bold.text-primary امار ربات
+      .row
+        button#extension.btn.btn-primary.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false') تمدید ربات
+        .dropdown-menu.animated--fade-in(aria-labelledby='extension')
+          a.extension.dropdown-item(href=`#`, name= '1') یک ماهه
+          a.extension.dropdown-item(href=`#`, name= '2') دو ماهه
+          a.extension.dropdown-item(href=`#`, name= '3') سه ماهه
+        h6.ml-3.font-weight-bold.text-primary.text_right= `اعتبار ربات: ${bot.timeLeft} روز`
+     
     .card-body
       div
         if bot.active

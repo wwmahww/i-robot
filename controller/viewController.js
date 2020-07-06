@@ -2,6 +2,7 @@ const jsStringify = require('js-stringify');
 
 const User = require('../models/userModel');
 const Bot = require('../models/botModel');
+const Service = require('../models/serviceModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
@@ -12,10 +13,13 @@ exports.Introduction = catchAsync(async (req, res, next) => {
   let bots = await Bot.find({ active: true });
   bots = bots.length;
 
+  const services = await Service.find();
+
   res.status(200).render('intro', {
     title: 'i-robot',
     usersNumber: users,
     botsNumber: bots,
+    services,
   });
 });
 
@@ -35,51 +39,52 @@ exports.signUp = (req, res, next) => {
   res.status(200).render('signIn');
 };
 
-exports.pricing = (req, res, next) => {
-  res.status(200).render('pricing');
-};
+exports.pricing = catchAsync(async (req, res, next) => {
+  const services = await Service.find();
+  res.status(200).render('pricing', { services });
+});
 
-exports.service = (req, res, next) => {
-  const { type } = req.params;
-  const data =
-    type === 'free'
-      ? { name: 'رایگان', code: 1, price: 0 }
-      : type === 'one'
-      ? { name: 'یک ماهه', code: 2, price: 49000 }
-      : type === 'two'
-      ? { name: 'دو ماهه', code: 3, price: 89000 }
-      : type === 'three'
-      ? { name: 'سه ماهه', code: 4, price: 129000 }
-      : {};
+exports.service = catchAsync(async (req, res, next) => {
+  const { code } = req.params;
+  const service = await Service.findOne({ code });
 
   if (req.user) {
     if (req.user.firstTime && req.user.introducer) {
-      data.priec2 = (data.price * 80) / 100;
+      service.priec2 = (service.price * 80) / 100;
     }
   }
-  res.status(200).render('service', { jsStringify, data });
+  res.status(200).render('service', { jsStringify, service });
+});
+
+exports.payResult = (req, res, next) => {
+  const { Status } = req.query;
+  console.log('query:', Status);
+
+  res.status(200).render('payResult', { Status });
 };
 
 exports.myProfile = (req, res, next) => {
   res.status(200).render('admin_profile');
 };
 
-exports.bot = (req, res, next) => {
-  res.status(200).render('admin_bot');
+exports.mybots = (req, res, next) => {
+  const { user } = req;
+  res.status(200).render('myBots', { user });
 };
 
 exports.botManager = (req, res, next) => {
-  const { id } = req.params;
+  const { pageName } = req.params;
   const bot = req.user.bots.find((b) => {
-    return b.pageName === id;
+    return b.pageName === pageName;
   });
   if (!bot) {
     return next(new AppError('you do not have a bot with this name.', 401));
   }
   console.log('bot: ', bot);
-  res.status(200).render('admin_bot_manager', { bot });
+  res.status(200).render('admin_bot_manager', { jsStringify, bot });
 };
 
 exports.newbot = (req, res, next) => {
-  res.status(200).render('admin_newBot');
+  const { timeLimit } = req.params;
+  res.status(200).render('admin_newBot', { timeLimit });
 };

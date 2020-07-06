@@ -1,0 +1,40 @@
+mixin items()
+  li.fa.fa-check 
+  | جذب فالوور واقعی
+  br
+  li.fa.fa-check 
+  | فقط جذب فالوور هدف ایرانی
+  br
+  li.fa.fa-check 
+  | کامنت اتوماتیک
+  br
+  li.fa.fa-check 
+  | لایک اتوماتیک
+  br
+  li.fa.fa-check 
+  | دایرکت اتوماتیک
+  br
+  li.fa.fa-check
+  | راه اندازی راحت و سریع
+  br
+  li.fa.fa-check 
+  |امار لحظه‌ای پیشرفت پیج شما
+
+
+mixin services(service)
+  .col-lg-3.col-md-6.col-sm-6
+    .pricing__item
+      h4=service.name
+      h3
+        span
+        =service.description
+      ul
+        +items()
+      h3.rtl
+        if(service.price)
+          =service.price
+          span تومان
+        else
+          span 
+          | رایگان
+      a.primary-btn(href=`/service/${service.code}`) خرید سرویس

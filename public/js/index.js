@@ -12,6 +12,7 @@ var showPass = 0;
 // functions
 const getBotData = () => {
   const bot = {};
+  bot.timeLeft = timeLimit;
   bot.pageName = $('input[name="pageName"]').val();
   bot.pagePassword = $('input[name="pagePassword"]').val();
   bot.botPace = $('#botpace').text();
@@ -119,6 +120,7 @@ $('#signup').click((e) => {
   user.password = $('input[name="password"]').val();
   user.passwordConfirm = $('input[name="passwordConfirm"]').val();
   user.introducer = $('input[name="introducer"]').val();
+  console.log('user: ', user);
   funs.signUp(user);
 });
 
@@ -178,7 +180,7 @@ $('#updatebot').click((e) => {
 $('#discountCheck').click((e) => {
   e.preventDefault();
   $('#discountCheck').prop('disabled', true);
-  $('#discountCheck  .rotator').show();
+  $('#discountCheck .rotator').show();
   const code = $('input[name="discountCode"]').val();
   console.log(code);
   funs.checkDiscount(code, data.price);
@@ -188,5 +190,19 @@ $('#discountCheck').click((e) => {
   [pay ]*/
 $('#pay').click((e) => {
   e.preventDefault();
-  console.log('new price:', data.price);
+  $('#pay').prop('disabled', true);
+  e.target.textContent = '. . . درحال انتقال';
+  console.log('code: ', service);
+  console.log('code type: ', typeof service.code);
+  funs.pay(service.code);
+});
+
+/*==================================================================
+    [ Extension ]*/
+
+$('.extension').click((e) => {
+  e.preventDefault();
+  const serviceCode = e.target.name;
+  const botPagename = bot.pageName;
+  funs.extension(serviceCode, botPagename);
 });

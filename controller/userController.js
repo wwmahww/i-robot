@@ -1,11 +1,11 @@
-const User = require('./../models/userModel');
-const catchAsync = require('./../utils/catchAsync');
-const AppError = require('./../utils/appError');
+const User = require('../models/userModel');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
-  Object.keys(obj).forEach(el => {
+  Object.keys(obj).forEach((el) => {
     if (allowedFields.includes(el)) newObj[el] = obj[el];
   });
   return newObj;
@@ -20,7 +20,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
       )
     );
 
-  const filteredBody = filterObj(req.body, 'username', 'email');
+  const filteredBody = filterObj(req.body, 'name', 'username', 'email');
   const updatedUser = await User.findByIdAndUpdate(
     { id: req.user.id },
     filteredBody,
@@ -29,7 +29,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
-    user: updatedUser
+    user: updatedUser,
   });
 });
 
@@ -45,7 +45,7 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   user.save({ validateBeforeSave: false });
 
   res.status(204).json({
-    status: 'success'
+    status: 'success',
   });
 });
 

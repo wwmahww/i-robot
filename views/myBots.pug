@@ -1,0 +1,27 @@
+extends admin_base
+
+mixin botcard(bot)
+  .card.shadow.mb-4
+    .card-header.py-3
+      h6.m-0.font-weight-bold.text-primary= bot.pageName
+    .card-body
+      a.btn.btn-info.btn-icon-split.ml-2(href=`/bot/${bot.pageName}` name='manage')
+        span.icon.text-white-50 manage
+
+mixin reservedService(service)
+  a.dropdown-item(href=`/newBot/${service.timeLimit}`)= `سرویس ${service.name} `
+
+block content
+  .d-sm-flex.align-items-center.justify-content-between.mb-4
+    h1.h3.mb-4.text-gray-800 Bots
+    .dropdown.mb-4
+      button#reserveServices.btn.btn-primary.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+        if(user.services.length)
+          span.badge.badge-danger.badge-counter=user.services.length
+        span سرویس‌های رزرو شما
+          // dropDown box
+      .dropdown-menu.animated--fade-in(aria-labelledby='reserveServices')
+        each service in user.services
+          +reservedService(service)
+  each bot in user.bots
+    +botcard(bot)

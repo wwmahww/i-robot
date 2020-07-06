@@ -1,26 +1,6 @@
 extends base
 
-mixin items()
-  li.fa.fa-check 
-  | جذب فالوور واقعی
-  br
-  li.fa.fa-check 
-  | فقط جذب فالوور هدف ایرانی
-  br
-  li.fa.fa-check 
-  | کامنت اتوماتیک
-  br
-  li.fa.fa-check 
-  | لایک اتوماتیک
-  br
-  li.fa.fa-check 
-  | دایرکت اتوماتیک
-  br
-  li.fa.fa-check
-  | راه اندازی راحت و سریع
-  br
-  li.fa.fa-check 
-  |امار لحظه‌ای پیشرفت پیج شما
+include mixins/mixinPricing
 
 block content
   // Hero Section Begin
@@ -126,58 +106,12 @@ block content
   section.pricing-section.spad
     .container
       .row
-        .col-lg-12.col-md-12
-          .section-title.normal-title.text-center
+        .col-lg-7.col-md-7
+          .section-title.normal-title
             h3 اشتراک‌ها
       .row.monthly__plans.active
-        .col-lg-3.col-md-6.col-sm-6
-          .pricing__item
-            h4 رایگان
-            h3
-              span
-              | بیشتر از ۲۰۰ فالوور
-            ul
-              +items()
-            h3
-              span  
-              | رایگان
-            a.primary-btn(href='/service/free') خرید سرویس
-        .col-lg-3.col-md-6.col-sm-6
-          .pricing__item
-            h4 یک ماهه
-            h3
-              span
-              | بیشتر از 1000 فالوور
-            ul
-              +items()
-            h3
-              span  ماه/
-              | 49,000 تومن
-            a.primary-btn(href='/service/standard') خرید سرویس
-        .col-lg-3.col-md-6.col-sm-6
-          .pricing__item
-            h4 دو ماهه
-            h3
-              span 
-              | بیشتر از ۲۵۰۰ فالوور
-            ul
-              +items()
-            h3
-              span ماه/
-              | 89,000 تومن
-            a.primary-btn(href='/service/silver') خرید سرویس
-        .col-lg-3.col-md-6.col-sm-6
-          .pricing__item
-            h4 سه ماهه
-            h3
-              span 
-              | بیشتر از ۴۰۰۰ فالوور
-            ul
-              +items()
-            h3
-              span ماه/
-              | 129,000 تومن
-            a.primary-btn(href='/service/golden') خرید سرویس
+        each service in services
+          +services(service)
 
   // Achievement Section Begin
   section.achievement-section.set-bg.spad(data-setbg='img/achievement-bg.jpg')

@@ -10,6 +10,7 @@ const factory = require('./handlerFactory');
 const delay = require('../bot/utils/delay');
 const web = require('../bot/utils/interfaces');
 const botLauncher = require('../utils/botLauncher');
+const { newbot } = require('./viewController');
 
 // ==========================================================
 
@@ -19,10 +20,8 @@ exports.start = catchAsync(async (req, res, next) => {
     return b.pageName === id;
   });
 
-  if(!bot){
-    return next(
-      new AppError('you do not have a bot with this name.', 401)
-    );
+  if (!bot) {
+    return next(new AppError('you do not have a bot with this name.', 401));
   }
 
   await botLauncher.launch(bot);
@@ -57,18 +56,36 @@ exports.stop = catchAsync(async (req, res, next) => {
 });
 
 exports.create = catchAsync(async (req, res, next) => {
+  let serviceIndex;
+  const bot = req.body;
+  bot.owner = req.user.id;
   const user = await User.findById(req.user.id);
-  if (user.role === 'user' && user.bots.length >= 1) {
-    console.log('hear');
-    return res.status(400).json({
-      status: 'success',
-      message: 'نمیتوانید بیشتر از یک ربات داشته باشید.',
-    });
+  const service = user.services.find((item, index) => {
+    console.log('item: ', item);
+    serviceIndex = index;
+    return item.timeLimit === req.body.timeLeft * 1;
+  });
+  console.log('service: ', service);
+  if (!service) {
+    return next(new AppError('این سرویس برای شما فعال نمی‌باشد', 401));
   }
-  const newBot = await Bot.create(req.body);
-  user.bots[user.bots.length] = newBot.id;
-  user.markModified('bots');
-  await user.save({ validateBeforeSave: false });
+
+  const newBot = await Bot.create(bot);
+
+  if (!newBot) {
+    return next(
+      new AppError('مشکلی در ساخت ربات ایجاد شد. لطفا دوباره امتحان کنید', 401)
+    );
+  }
+
+  user.services.splice(serviceIndex, 1);
+
+  console.log('user.services:', user.services);
+
+  user.bots.push(newBot);
+  // user.markModified('bots');
+  await user.updateOne({ $set: { services: user.services, bots: user.bots } });
+  // user.save({ validateBeforeSave: false });
 
   res.status(201).json({
     status: 'success',
@@ -81,15 +98,15 @@ exports.create = catchAsync(async (req, res, next) => {
 
 exports.updateMyBot = catchAsync(async (req, res, next) => {
   console.log('request came.');
-  const { id } = req.params;
-  const bot = req.user.bots.find((b) => {
-    return b.pageName === id;
+  const { pageName } = req.params;
+  let index;
+  const bot = req.user.bots.find((b, i) => {
+    index = i;
+    return b.pageName === pageName;
   });
 
-  if(!bot){
-    return next(
-      new AppError('you do not have a bot with this name.', 401)
-    );
+  if (!bot) {
+    return next(new AppError('you do not have a bot with this name.', 401));
   }
 
   bot.pageName = req.body.pageName;
@@ -105,6 +122,9 @@ exports.updateMyBot = catchAsync(async (req, res, next) => {
 
   await bot.markModified('details');
   await bot.save({ validateBeforeSave: false });
+
+  req.user.bots[index] = bot;
+  await User.updateOne(req.user.id, { bots: req.user.bots });
 
   res.status(200).json({
     status: 'success',

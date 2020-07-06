@@ -4,18 +4,15 @@ const mongoose = require('mongoose');
 const BotSchema = new mongoose.Schema({
   pageName: {
     type: String,
-    required: [true, 'A bot must have a page.'],
     unique: true,
     trim: true,
   },
   pagePassword: {
     type: String,
-    required: [true, 'A page must have an password.'],
     trim: true,
   },
   owner: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User',
+    type: String,
     required: [true, ' A bot most have an owner'],
   },
   comments: [],
@@ -50,7 +47,10 @@ const BotSchema = new mongoose.Schema({
     default: Date.now(),
     select: false,
   },
-  timeLeft: Number,
+  timeLeft: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const Bot = mongoose.model('Bot', BotSchema);

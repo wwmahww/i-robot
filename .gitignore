@@ -107,6 +107,8 @@ dist
 node_modules/
 chrome-win/
 test/
+public/js/bundle.js
+public/js/bundle.js.map
 test.js
 .git
 todo.txt

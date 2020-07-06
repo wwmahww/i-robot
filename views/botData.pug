@@ -1,10 +1,10 @@
 form.user
   .input-group.mb-3
-    input.bg-light.border-1.form-control(name='pageName' aria-label="With textarea" value=bot?bot.pageName:'')
+    input.bg-light.border-1.form-control(name='pageName' aria-label="With textarea" value=bot?bot.pageName:'' required)
     .input-group-prepend
       span.input-group-text :یوزرنیم/ ایمیل
   .input-group.mb-3
-    input.bg-light.border-1.form-control(type= "password" name='pagePassword' aria-label="With textarea" value=bot?bot.pagePassword:'')
+    input.bg-light.border-1.form-control(type= "password" name='pagePassword' aria-label="With textarea" value=bot?bot.pagePassword:'' required)
     .input-group-prepend
       span.input-group-text :پسورد
   .input-group.mb-3

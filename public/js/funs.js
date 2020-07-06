@@ -42,7 +42,7 @@ export const signUp = async (user) => {
   try {
     const res = await axios({
       method: 'post',
-      url: 'http://localhost:3000/api/v1/users/signup',
+      url: 'http://localhost:3000/api/v1/user/signup',
       data: user,
     });
 
@@ -50,7 +50,7 @@ export const signUp = async (user) => {
       alert('You successfully signed up');
       window.setTimeout(() => {
         location.assign('/');
-      }, 1500);
+      }, 500);
     }
   } catch (err) {
     alert(`error: ${err.response.data.message}`);
@@ -68,7 +68,7 @@ export const login = async (email, password) => {
     console.log(email, password);
     const res = await axios({
       method: 'post',
-      url: 'http://localhost:3000/api/v1/users/login',
+      url: 'http://localhost:3000/api/v1/user/login',
       data: {
         email,
         password,
@@ -79,7 +79,7 @@ export const login = async (email, password) => {
       alert('You successfully logged in');
       window.setTimeout(() => {
         location.assign('/');
-      }, 1500);
+      }, 500);
     }
   } catch (err) {
     alert(`error: ${err.response.data.message}`);
@@ -96,13 +96,13 @@ export const logout = async () => {
   try {
     const res = await axios({
       method: 'get',
-      url: 'http://localhost:3000/api/v1/users/logout',
+      url: 'http://localhost:3000/api/v1/user/logout',
     });
     if (res.data.status === 'success') {
       alert('you logged out successfuly');
       window.setTimeout(() => {
         location.assign('/');
-      }, 1500);
+      }, 500);
     }
   } catch (err) {
     alert('error logging out! try again.');
@@ -116,7 +116,7 @@ export const botStart = async (pageName) => {
   try {
     const res = await axios({
       method: 'get',
-      url: `http://localhost:3000/api/v1/bots/start/${pageName}`,
+      url: `http://localhost:3000/api/v1/bot/start/${pageName}`,
     });
     if (res.data.status === 'success') {
       alert('ربات روشن شد.');
@@ -142,7 +142,7 @@ export const botStop = async (pageName) => {
   try {
     const res = await axios({
       method: 'get',
-      url: `http://localhost:3000/api/v1/bots/stop/${pageName}`,
+      url: `http://localhost:3000/api/v1/bot/stop/${pageName}`,
     });
     if (res.data.status === 'success') {
       alert('ربات متوقف شد.');
@@ -165,15 +165,15 @@ export const newbot = async (bot) => {
   try {
     const res = await axios({
       method: 'post',
-      url: 'http://localhost:3000/api/v1/bots/create',
+      url: 'http://localhost:3000/api/v1/bot/create',
       data: bot,
     });
     console.log('status code: ', res.data);
     if (res.data.status === 'success') {
       alert(res.data.message);
       window.setTimeout(() => {
-        location.assign('/bot');
-      }, 1500);
+        location.assign('/mybots');
+      }, 500);
     }
   } catch (err) {
     console.log(err.response.data.message);
@@ -189,14 +189,14 @@ export const updatebot = async (id, bot) => {
   try {
     const res = await axios({
       method: 'patch',
-      url: `http://localhost:3000/api/v1/bots/update-My-Bot/${id}`,
+      url: `http://localhost:3000/api/v1/bot/update-My-Bot/${id}`,
       data: bot,
     });
     if (res.data.status === 'success') {
       alert('ربات اپدیت شد.');
       window.setTimeout(() => {
         location.reload();
-      }, 1500);
+      }, 500);
     }
   } catch (err) {
     alert('خطا در اپدیت ربات.');
@@ -212,13 +212,13 @@ export const checkDiscount = async (code, price) => {
   try {
     const res = await axios({
       method: 'post',
-      url: 'http://localhost:3000/api/v1/discounts/check',
+      url: 'http://localhost:3000/api/v1/discount/check',
       data: { code, price },
     });
     if (res.data.status === 'success') {
       $('#price').css('textDecoration', 'line-through');
       $('#price2').text(` ${res.data.newPrice} تومن`);
-      data.price = res.data.newPrice;
+      data.price2 = res.data.newPrice;
     }
   } catch (e) {
     console.log('error:', e.response.data.message);
@@ -226,4 +226,45 @@ export const checkDiscount = async (code, price) => {
   }
   $('#discountCheck').prop('disabled', false);
   $('#discountCheck .rotator').hide();
+};
+
+//---------------------------------------------
+//[pay]
+
+export const pay = async (serviceCode) => {
+  try {
+    const res = await axios({
+      method: 'get',
+      url: `http://localhost:3000/api/v1/bill/pay/?serviceCode=${serviceCode}`,
+    });
+    if (res.data.status === 'success') {
+      console.log('success');
+      console.log(res.data.session);
+      window.location.replace(res.data.session.url);
+    }
+  } catch (e) {
+    console.log('error:', e.response.data.message);
+    alert('مشکلی در پرداخت وجود دارد.');
+  }
+  $('#pay').prop('disabled', false);
+  $('#pay').text('پرداخت');
+};
+
+//---------------------------------------------
+//[extension]
+export const extension = async (serviceCode, botPagename) => {
+  try {
+    const res = await axios({
+      method: 'get',
+      url: `http://localhost:3000/api/v1/bill/pay/?serviceCode=${serviceCode}&botPagename=${botPagename}`,
+    });
+    if (res.data.status === 'success') {
+      console.log('success');
+      console.log(res.data.session);
+      window.location.replace(res.data.session.url);
+    }
+  } catch (e) {
+    console.log('error:', e.response.data.message);
+    alert('مشکلی در تمدید اکانت وجود دارد.');
+  }
 };

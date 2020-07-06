@@ -21,8 +21,10 @@
     ul
       if(user)
         li
-          a(href='/me')
-            span.fa.fa-user= user.username
+          span.fa.fa-user کیف‌ پول:
+        li
+          a(href='/profile')
+            span.fa.fa-user کنترل پنل
         li
           a.logout(href='')
             span.fa خروج
@@ -60,9 +62,13 @@ header.header-section.header-normal
             ul
               if(user)
                 li
-                  a(href='/me')
+                  span
+                  | کیف پول: 
+                  =`${user.credit} تومان`
+                li
+                  a(href='/profile')
                     span.fa.fa-user
-                    = user.username
+                    | کنترل پنل
                 li
                   a.logout(href='/logout')
                     span.fa.fa-sign-out

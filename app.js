@@ -12,6 +12,7 @@ const userRouter = require('./routs/userRouter');
 const botRouter = require('./routs/botRouter');
 const billRouter = require('./routs/billRouter');
 const discountRouter = require('./routs/discountRouter');
+const serviceRouter = require('./routs/serviceRouter');
 const viewRouter = require('./routs/viewRouter');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorController');
@@ -59,10 +60,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ROUTES
-app.use('/api/v1/users', userRouter);
-app.use('/api/v1/bots', botRouter);
-app.use('/api/v1/bills', billRouter);
-app.use('/api/v1/discounts', discountRouter);
+app.use('/api/v1/user', userRouter);
+app.use('/api/v1/bot', botRouter);
+app.use('/api/v1/bill', billRouter);
+app.use('/api/v1/discount', discountRouter);
+app.use('/api/v1/service', serviceRouter);
 app.use('/', viewRouter);
 
 // Takeing care of unhandled routes

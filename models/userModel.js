@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
-const catchAsync = require('./../utils/catchAsync');
+const catchAsync = require('../utils/catchAsync');
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -55,12 +55,7 @@ const UserSchema = new mongoose.Schema({
     },
   },
   introducer: String,
-  bots: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Bot',
-    },
-  ],
+  bots: [{}],
   bills: [
     {
       type: mongoose.Schema.ObjectId,
@@ -75,6 +70,11 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  botExtension: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Bot',
+  },
+  services: [{}],
   credit: {
     type: Number,
     default: 0,
@@ -148,21 +148,21 @@ UserSchema.pre(/^find/, function (next) {
   next();
 });
 
-UserSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: 'bots',
-    select: '-__v -owner',
-  });
-  next();
-});
+// UserSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: 'bills',
+//     select: ['service', 'amount', 'isPayed', 'createAt'],
+//   });
+//   next();
+// });
 
-UserSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: 'bills',
-    select: ['code', 'amount', 'description', 'isPayed'],
-  });
-  next();
-});
+// UserSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: 'services',
+//     select: '-_id -__v',
+//   });
+//   next();
+// });
 
 const User = mongoose.model('User', UserSchema);
 

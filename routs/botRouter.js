@@ -10,8 +10,7 @@ Router.get('/start/:id', botController.start);
 Router.get('/stop/:id', botController.stop);
 Router.post('/create', botController.create);
 
-
-Router.patch('/update-my-bot/:id', botController.updateMyBot);
+Router.patch('/update-my-bot/:pageName', botController.updateMyBot);
 
 // Ristrict all routes after this point
 Router.use(authController.restrictTo('admin'));
