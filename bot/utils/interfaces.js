@@ -38,4 +38,6 @@ module.exports = {
   childs: {}, // do not delete it. child process use this
   turn: 'getDetail',
   test: 'hello',
+  sixHours: 0,
+  quarterCounter: 0,
 };

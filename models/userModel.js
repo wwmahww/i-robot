@@ -4,6 +4,7 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
 const catchAsync = require('../utils/catchAsync');
+const Bot = require('./botModel');
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -55,7 +56,12 @@ const UserSchema = new mongoose.Schema({
     },
   },
   introducer: String,
-  bots: [{}],
+  bots: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Bot',
+    },
+  ],
   bills: [
     {
       type: mongoose.Schema.ObjectId,
@@ -75,11 +81,15 @@ const UserSchema = new mongoose.Schema({
     ref: 'Bot',
   },
   services: [{}],
+  serivceInCreation: String,
   credit: {
     type: Number,
     default: 0,
   },
-  firstTime: Boolean,
+  firstPurchase: {
+    type: Boolean,
+    default: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now(),

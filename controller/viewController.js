@@ -48,11 +48,12 @@ exports.service = catchAsync(async (req, res, next) => {
   const { code } = req.params;
   const service = await Service.findOne({ code });
 
-  if (req.user) {
-    if (req.user.firstTime && req.user.introducer) {
-      service.priec2 = (service.price * 80) / 100;
-    }
+  if (req.user && req.user.firstPurchase && req.user.introducer) {
+    service.price2 = service.price * 0.8;
+    console.log('first purchase');
   }
+  console.log('service: ', service);
+
   res.status(200).render('service', { jsStringify, service });
 });
 
@@ -84,7 +85,7 @@ exports.botManager = (req, res, next) => {
   res.status(200).render('admin_bot_manager', { jsStringify, bot });
 };
 
-exports.newbot = (req, res, next) => {
+exports.newbot = catchAsync(async (req, res, next) => {
   const { timeLimit } = req.params;
   res.status(200).render('admin_newBot', { timeLimit });
-};
+});

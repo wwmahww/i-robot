@@ -42,8 +42,11 @@ exports.stop = catchAsync(async (req, res, next) => {
     return b.pageName === id;
   });
 
-  web.childs[id].kill();
-  web.childs[id] = undefined;
+  web.childs[id].send('finish');
+  setTimeout(() => {
+    web.childs[id].kill();
+    web.childs[id] = undefined;
+  }, 2000);
 
   bot.active = false;
   bot.markModified('active');
@@ -59,9 +62,9 @@ exports.create = catchAsync(async (req, res, next) => {
   let serviceIndex;
   const bot = req.body;
   bot.owner = req.user.id;
-  const user = await User.findById(req.user.id);
+  bot.timeLeft *= 86400000;
+  const { user } = req;
   const service = user.services.find((item, index) => {
-    console.log('item: ', item);
     serviceIndex = index;
     return item.timeLimit === req.body.timeLeft * 1;
   });
@@ -82,16 +85,14 @@ exports.create = catchAsync(async (req, res, next) => {
 
   console.log('user.services:', user.services);
 
-  user.bots.push(newBot);
-  // user.markModified('bots');
+  user.bots.push(newBot._id);
   await user.updateOne({ $set: { services: user.services, bots: user.bots } });
-  // user.save({ validateBeforeSave: false });
 
   res.status(201).json({
     status: 'success',
     message: 'ربات ساخته شد.',
     date: {
-      // newBot
+      newBot,
     },
   });
 });
@@ -99,9 +100,8 @@ exports.create = catchAsync(async (req, res, next) => {
 exports.updateMyBot = catchAsync(async (req, res, next) => {
   console.log('request came.');
   const { pageName } = req.params;
-  let index;
-  const bot = req.user.bots.find((b, i) => {
-    index = i;
+
+  const bot = req.user.bots.find((b) => {
     return b.pageName === pageName;
   });
 
@@ -122,9 +122,6 @@ exports.updateMyBot = catchAsync(async (req, res, next) => {
 
   await bot.markModified('details');
   await bot.save({ validateBeforeSave: false });
-
-  req.user.bots[index] = bot;
-  await User.updateOne(req.user.id, { bots: req.user.bots });
 
   res.status(200).json({
     status: 'success',

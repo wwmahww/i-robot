@@ -13,7 +13,9 @@ block content
           a.extension.dropdown-item(href=`#`, name= '1') یک ماهه
           a.extension.dropdown-item(href=`#`, name= '2') دو ماهه
           a.extension.dropdown-item(href=`#`, name= '3') سه ماهه
-        h6.ml-3.font-weight-bold.text-primary.text_right= `اعتبار ربات: ${bot.timeLeft} روز`
+        - const days = Math.floor(bot.timeLeft/86400000)
+        - const hours = Math.round((a % 86400000) / 3600000)
+        h6.ml-3.font-weight-bold.text-primary.text_right= `اعتبار ربات:  ${days}روز ${hours}  ساعت `
      
     .card-body
       div

@@ -102,12 +102,8 @@ exports.checkout = catchAsync(async (req, res, next) => {
     await Bot.updateOne(
       { _id: botExtension },
       {
-        $inc: { timeLeft: service.timeLimit },
+        $inc: { timeLeft: service.timeLimit * 86400000 },
       }
-    );
-    await User.updateOne(
-      { 'bots._id': botExtension },
-      { $inc: { 'bots.$.timeLeft': service.timeLimit } }
     );
   } else {
     //  New service--------
@@ -121,10 +117,11 @@ exports.checkout = catchAsync(async (req, res, next) => {
       bills: req.user.bills,
       botExtension: null,
       services: req.user.services,
+      firstPurchase: false,
     },
   });
 
-  //      updaet bill------------------------------------
+  //      update bill------------------------------------
   bill.refID = result.refID;
   bill.isPayed = true;
   bill.payedAt = Date.now();

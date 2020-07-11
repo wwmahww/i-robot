@@ -144,6 +144,19 @@ $('.logout').click((e) => {
 });
 
 /*==================================================================
+    [ send message ]*/
+$('#sendMessage').click((e) => {
+  e.preventDefault();
+  const message = {};
+  message.name = $('input[name="name"]').val();
+  message.email = $('input[name="email"]').val();
+  message.message = $('textarea[name="message"]').val();
+  console.log('message: ', message);
+
+  funs.sendMessage(message);
+});
+
+/*==================================================================
   [Bot functions]*/
 $('#trigger').on('click', (e) => {
   e.preventDefault();

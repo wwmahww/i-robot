@@ -13671,597 +13671,7 @@ module.exports.default = axios;
 
 },{"./utils":"../node_modules/axios/lib/utils.js","./helpers/bind":"../node_modules/axios/lib/helpers/bind.js","./core/Axios":"../node_modules/axios/lib/core/Axios.js","./core/mergeConfig":"../node_modules/axios/lib/core/mergeConfig.js","./defaults":"../node_modules/axios/lib/defaults.js","./cancel/Cancel":"../node_modules/axios/lib/cancel/Cancel.js","./cancel/CancelToken":"../node_modules/axios/lib/cancel/CancelToken.js","./cancel/isCancel":"../node_modules/axios/lib/cancel/isCancel.js","./helpers/spread":"../node_modules/axios/lib/helpers/spread.js"}],"../node_modules/axios/index.js":[function(require,module,exports) {
 module.exports = require('./lib/axios');
-},{"./lib/axios":"../node_modules/axios/lib/axios.js"}],"funs.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.extension = exports.pay = exports.checkDiscount = exports.updatebot = exports.newbot = exports.botStop = exports.botStart = exports.logout = exports.login = exports.signUp = exports.hideValidate = exports.showValidate = exports.validate = void 0;
-
-var _axios = _interopRequireDefault(require("axios"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-'use strict';
-
-var validate = function validate(input) {
-  if ($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
-    if ($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
-      return false;
-    }
-  } else {
-    if ($(input).val().trim() == '') {
-      return false;
-    }
-  }
-};
-
-exports.validate = validate;
-
-var showValidate = function showValidate(input) {
-  var thisAlert = $(input).parent();
-  $(thisAlert).addClass('alert-validate');
-};
-
-exports.showValidate = showValidate;
-
-var hideValidate = function hideValidate(input) {
-  var thisAlert = $(input).parent();
-  $(thisAlert).removeClass('alert-validate');
-}; // ======================================================
-// [sginUp]
-
-
-exports.hideValidate = hideValidate;
-
-var signUp = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(user) {
-    var res;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            _context.prev = 0;
-            _context.next = 3;
-            return (0, _axios.default)({
-              method: 'post',
-              url: 'http://localhost:3000/api/v1/user/signup',
-              data: user
-            });
-
-          case 3:
-            res = _context.sent;
-
-            if (res.data.status === 'success') {
-              alert('You successfully signed up');
-              window.setTimeout(function () {
-                location.assign('/');
-              }, 500);
-            }
-
-            _context.next = 11;
-            break;
-
-          case 7:
-            _context.prev = 7;
-            _context.t0 = _context["catch"](0);
-            alert("error: ".concat(_context.t0.response.data.message));
-            console.log(_context.t0);
-
-          case 11:
-            $('#signup').prop('disabled', false);
-            $('.rotator').hide();
-
-          case 13:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee, null, [[0, 7]]);
-  }));
-
-  return function signUp(_x) {
-    return _ref.apply(this, arguments);
-  };
-}();
-/*========================================================
-  [login] */
-
-
-exports.signUp = signUp;
-
-var login = /*#__PURE__*/function () {
-  var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(email, password) {
-    var res;
-    return regeneratorRuntime.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            _context2.prev = 0;
-            console.log(email, password);
-            _context2.next = 4;
-            return (0, _axios.default)({
-              method: 'post',
-              url: 'http://localhost:3000/api/v1/user/login',
-              data: {
-                email: email,
-                password: password
-              }
-            });
-
-          case 4:
-            res = _context2.sent;
-
-            if (res.data.status === 'success') {
-              alert('You successfully logged in');
-              window.setTimeout(function () {
-                location.assign('/');
-              }, 500);
-            }
-
-            _context2.next = 12;
-            break;
-
-          case 8:
-            _context2.prev = 8;
-            _context2.t0 = _context2["catch"](0);
-            alert("error: ".concat(_context2.t0.response.data.message));
-            console.log(_context2.t0);
-
-          case 12:
-            $('#signin').prop('disabled', false);
-            $('.rotator').hide();
-
-          case 14:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2, null, [[0, 8]]);
-  }));
-
-  return function login(_x2, _x3) {
-    return _ref2.apply(this, arguments);
-  };
-}();
-/*========================================================
-  [logout] */
-
-
-exports.login = login;
-
-var logout = /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-    var res;
-    return regeneratorRuntime.wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            _context3.prev = 0;
-            _context3.next = 3;
-            return (0, _axios.default)({
-              method: 'get',
-              url: 'http://localhost:3000/api/v1/user/logout'
-            });
-
-          case 3:
-            res = _context3.sent;
-
-            if (res.data.status === 'success') {
-              alert('you logged out successfuly');
-              window.setTimeout(function () {
-                location.assign('/');
-              }, 500);
-            }
-
-            _context3.next = 10;
-            break;
-
-          case 7:
-            _context3.prev = 7;
-            _context3.t0 = _context3["catch"](0);
-            alert('error logging out! try again.');
-
-          case 10:
-          case "end":
-            return _context3.stop();
-        }
-      }
-    }, _callee3, null, [[0, 7]]);
-  }));
-
-  return function logout() {
-    return _ref3.apply(this, arguments);
-  };
-}();
-/*========================================================
-  [bot start] */
-
-
-exports.logout = logout;
-
-var botStart = /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(pageName) {
-    var res;
-    return regeneratorRuntime.wrap(function _callee4$(_context4) {
-      while (1) {
-        switch (_context4.prev = _context4.next) {
-          case 0:
-            _context4.prev = 0;
-            _context4.next = 3;
-            return (0, _axios.default)({
-              method: 'get',
-              url: "http://localhost:3000/api/v1/bot/start/".concat(pageName)
-            });
-
-          case 3:
-            res = _context4.sent;
-
-            if (res.data.status === 'success') {
-              alert('ربات روشن شد.');
-              $('#trigger > span').text('توقف');
-              $('#trigger').removeClass('btn-success').addClass('btn-danger').attr({
-                name: 'stop'
-              });
-            } else {
-              console.log(res.data);
-            }
-
-            _context4.next = 10;
-            break;
-
-          case 7:
-            _context4.prev = 7;
-            _context4.t0 = _context4["catch"](0);
-            alert('خطا در روشن کردن ربات.');
-
-          case 10:
-            $('#trigger').prop('disabled', false);
-            $('#trigger  .rotator').hide();
-
-          case 12:
-          case "end":
-            return _context4.stop();
-        }
-      }
-    }, _callee4, null, [[0, 7]]);
-  }));
-
-  return function botStart(_x4) {
-    return _ref4.apply(this, arguments);
-  };
-}(); //---------------------------------------------
-//[stop bot]
-
-
-exports.botStart = botStart;
-
-var botStop = /*#__PURE__*/function () {
-  var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(pageName) {
-    var res;
-    return regeneratorRuntime.wrap(function _callee5$(_context5) {
-      while (1) {
-        switch (_context5.prev = _context5.next) {
-          case 0:
-            _context5.prev = 0;
-            _context5.next = 3;
-            return (0, _axios.default)({
-              method: 'get',
-              url: "http://localhost:3000/api/v1/bot/stop/".concat(pageName)
-            });
-
-          case 3:
-            res = _context5.sent;
-
-            if (res.data.status === 'success') {
-              alert('ربات متوقف شد.');
-              $('#trigger > span').text('شروع');
-              $('#trigger').removeClass('btn-danger').addClass('btn-success').attr({
-                name: 'start'
-              });
-            }
-
-            _context5.next = 10;
-            break;
-
-          case 7:
-            _context5.prev = 7;
-            _context5.t0 = _context5["catch"](0);
-            alert('مشکل در متوقف کردن ربات.');
-
-          case 10:
-            $('#trigger').prop('disabled', false);
-            $('#trigger  .rotator').hide();
-
-          case 12:
-          case "end":
-            return _context5.stop();
-        }
-      }
-    }, _callee5, null, [[0, 7]]);
-  }));
-
-  return function botStop(_x5) {
-    return _ref5.apply(this, arguments);
-  };
-}(); //---------------------------------------------
-//[newBot]
-
-
-exports.botStop = botStop;
-
-var newbot = /*#__PURE__*/function () {
-  var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(bot) {
-    var res;
-    return regeneratorRuntime.wrap(function _callee6$(_context6) {
-      while (1) {
-        switch (_context6.prev = _context6.next) {
-          case 0:
-            _context6.prev = 0;
-            _context6.next = 3;
-            return (0, _axios.default)({
-              method: 'post',
-              url: 'http://localhost:3000/api/v1/bot/create',
-              data: bot
-            });
-
-          case 3:
-            res = _context6.sent;
-            console.log('status code: ', res.data);
-
-            if (res.data.status === 'success') {
-              alert(res.data.message);
-              window.setTimeout(function () {
-                location.assign('/mybots');
-              }, 500);
-            }
-
-            _context6.next = 12;
-            break;
-
-          case 8:
-            _context6.prev = 8;
-            _context6.t0 = _context6["catch"](0);
-            console.log(_context6.t0.response.data.message);
-            alert(_context6.t0.response.data.message);
-
-          case 12:
-            $('#newbot').prop('disabled', false);
-            $('#newbot .rotator').hide();
-
-          case 14:
-          case "end":
-            return _context6.stop();
-        }
-      }
-    }, _callee6, null, [[0, 8]]);
-  }));
-
-  return function newbot(_x6) {
-    return _ref6.apply(this, arguments);
-  };
-}(); //---------------------------------------------
-//[updateBot]
-
-
-exports.newbot = newbot;
-
-var updatebot = /*#__PURE__*/function () {
-  var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(id, bot) {
-    var res;
-    return regeneratorRuntime.wrap(function _callee7$(_context7) {
-      while (1) {
-        switch (_context7.prev = _context7.next) {
-          case 0:
-            _context7.prev = 0;
-            _context7.next = 3;
-            return (0, _axios.default)({
-              method: 'patch',
-              url: "http://localhost:3000/api/v1/bot/update-My-Bot/".concat(id),
-              data: bot
-            });
-
-          case 3:
-            res = _context7.sent;
-
-            if (res.data.status === 'success') {
-              alert('ربات اپدیت شد.');
-              window.setTimeout(function () {
-                location.reload();
-              }, 500);
-            }
-
-            _context7.next = 10;
-            break;
-
-          case 7:
-            _context7.prev = 7;
-            _context7.t0 = _context7["catch"](0);
-            alert('خطا در اپدیت ربات.');
-
-          case 10:
-            $('#updatebot').prop('disabled', false);
-            $('#updatebot .rotator').hide();
-
-          case 12:
-          case "end":
-            return _context7.stop();
-        }
-      }
-    }, _callee7, null, [[0, 7]]);
-  }));
-
-  return function updatebot(_x7, _x8) {
-    return _ref7.apply(this, arguments);
-  };
-}(); //---------------------------------------------
-//[discount check]
-
-
-exports.updatebot = updatebot;
-
-var checkDiscount = /*#__PURE__*/function () {
-  var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(code, price) {
-    var res;
-    return regeneratorRuntime.wrap(function _callee8$(_context8) {
-      while (1) {
-        switch (_context8.prev = _context8.next) {
-          case 0:
-            _context8.prev = 0;
-            _context8.next = 3;
-            return (0, _axios.default)({
-              method: 'post',
-              url: 'http://localhost:3000/api/v1/discount/check',
-              data: {
-                code: code,
-                price: price
-              }
-            });
-
-          case 3:
-            res = _context8.sent;
-
-            if (res.data.status === 'success') {
-              $('#price').css('textDecoration', 'line-through');
-              $('#price2').text(" ".concat(res.data.newPrice, " \u062A\u0648\u0645\u0646"));
-              data.price2 = res.data.newPrice;
-            }
-
-            _context8.next = 11;
-            break;
-
-          case 7:
-            _context8.prev = 7;
-            _context8.t0 = _context8["catch"](0);
-            console.log('error:', _context8.t0.response.data.message);
-            alert('این کد قابل استفاده نمیباشد.');
-
-          case 11:
-            $('#discountCheck').prop('disabled', false);
-            $('#discountCheck .rotator').hide();
-
-          case 13:
-          case "end":
-            return _context8.stop();
-        }
-      }
-    }, _callee8, null, [[0, 7]]);
-  }));
-
-  return function checkDiscount(_x9, _x10) {
-    return _ref8.apply(this, arguments);
-  };
-}(); //---------------------------------------------
-//[pay]
-
-
-exports.checkDiscount = checkDiscount;
-
-var pay = /*#__PURE__*/function () {
-  var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(serviceCode) {
-    var res;
-    return regeneratorRuntime.wrap(function _callee9$(_context9) {
-      while (1) {
-        switch (_context9.prev = _context9.next) {
-          case 0:
-            _context9.prev = 0;
-            _context9.next = 3;
-            return (0, _axios.default)({
-              method: 'get',
-              url: "http://localhost:3000/api/v1/bill/pay/?serviceCode=".concat(serviceCode)
-            });
-
-          case 3:
-            res = _context9.sent;
-
-            if (res.data.status === 'success') {
-              console.log('success');
-              console.log(res.data.session);
-              window.location.replace(res.data.session.url);
-            }
-
-            _context9.next = 11;
-            break;
-
-          case 7:
-            _context9.prev = 7;
-            _context9.t0 = _context9["catch"](0);
-            console.log('error:', _context9.t0.response.data.message);
-            alert('مشکلی در پرداخت وجود دارد.');
-
-          case 11:
-            $('#pay').prop('disabled', false);
-            $('#pay').text('پرداخت');
-
-          case 13:
-          case "end":
-            return _context9.stop();
-        }
-      }
-    }, _callee9, null, [[0, 7]]);
-  }));
-
-  return function pay(_x11) {
-    return _ref9.apply(this, arguments);
-  };
-}(); //---------------------------------------------
-//[extension]
-
-
-exports.pay = pay;
-
-var extension = /*#__PURE__*/function () {
-  var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(serviceCode, botPagename) {
-    var res;
-    return regeneratorRuntime.wrap(function _callee10$(_context10) {
-      while (1) {
-        switch (_context10.prev = _context10.next) {
-          case 0:
-            _context10.prev = 0;
-            _context10.next = 3;
-            return (0, _axios.default)({
-              method: 'get',
-              url: "http://localhost:3000/api/v1/bill/pay/?serviceCode=".concat(serviceCode, "&botPagename=").concat(botPagename)
-            });
-
-          case 3:
-            res = _context10.sent;
-
-            if (res.data.status === 'success') {
-              console.log('success');
-              console.log(res.data.session);
-              window.location.replace(res.data.session.url);
-            }
-
-            _context10.next = 11;
-            break;
-
-          case 7:
-            _context10.prev = 7;
-            _context10.t0 = _context10["catch"](0);
-            console.log('error:', _context10.t0.response.data.message);
-            alert('مشکلی در تمدید اکانت وجود دارد.');
-
-          case 11:
-          case "end":
-            return _context10.stop();
-        }
-      }
-    }, _callee10, null, [[0, 7]]);
-  }));
-
-  return function extension(_x12, _x13) {
-    return _ref10.apply(this, arguments);
-  };
-}();
-
-exports.extension = extension;
-},{"axios":"../node_modules/axios/index.js"}],"../node_modules/jquery/dist/jquery.js":[function(require,module,exports) {
+},{"./lib/axios":"../node_modules/axios/lib/axios.js"}],"../node_modules/jquery/dist/jquery.js":[function(require,module,exports) {
 var global = arguments[3];
 var process = require("process");
 var define;
@@ -25138,7 +24548,651 @@ if ( typeof noGlobal === "undefined" ) {
 return jQuery;
 } );
 
-},{"process":"../../node_modules/process/browser.js"}],"index.js":[function(require,module,exports) {
+},{"process":"../../node_modules/process/browser.js"}],"funs.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.extension = exports.pay = exports.checkDiscount = exports.updatebot = exports.newbot = exports.botStop = exports.botStart = exports.sendMessage = exports.logout = exports.login = exports.signUp = exports.hideValidate = exports.showValidate = exports.validate = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _jquery = require("jquery");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+'use strict';
+
+var validate = function validate(input) {
+  if ($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
+    if ($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
+      return false;
+    }
+  } else {
+    if ($(input).val().trim() == '') {
+      return false;
+    }
+  }
+};
+
+exports.validate = validate;
+
+var showValidate = function showValidate(input) {
+  var thisAlert = $(input).parent();
+  $(thisAlert).addClass('alert-validate');
+};
+
+exports.showValidate = showValidate;
+
+var hideValidate = function hideValidate(input) {
+  var thisAlert = $(input).parent();
+  $(thisAlert).removeClass('alert-validate');
+}; // ======================================================
+// [sginUp]
+
+
+exports.hideValidate = hideValidate;
+
+var signUp = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(user) {
+    var res;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            _context.next = 3;
+            return (0, _axios.default)({
+              method: 'post',
+              url: 'http://localhost:3000/api/v1/user/signup',
+              data: user
+            });
+
+          case 3:
+            res = _context.sent;
+
+            if (res.data.status === 'success') {
+              alert('You successfully signed up');
+              window.setTimeout(function () {
+                location.assign('/');
+              }, 500);
+            }
+
+            _context.next = 11;
+            break;
+
+          case 7:
+            _context.prev = 7;
+            _context.t0 = _context["catch"](0);
+            alert("error: ".concat(_context.t0.response.data.message));
+            console.log(_context.t0);
+
+          case 11:
+            $('#signup').prop('disabled', false);
+            $('.rotator').hide();
+
+          case 13:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[0, 7]]);
+  }));
+
+  return function signUp(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+/*========================================================
+  [login] */
+
+
+exports.signUp = signUp;
+
+var login = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(email, password) {
+    var res;
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            console.log(email, password);
+            _context2.next = 4;
+            return (0, _axios.default)({
+              method: 'post',
+              url: 'http://localhost:3000/api/v1/user/login',
+              data: {
+                email: email,
+                password: password
+              }
+            });
+
+          case 4:
+            res = _context2.sent;
+
+            if (res.data.status === 'success') {
+              alert('You successfully logged in');
+              window.setTimeout(function () {
+                location.assign('/');
+              }, 500);
+            }
+
+            _context2.next = 12;
+            break;
+
+          case 8:
+            _context2.prev = 8;
+            _context2.t0 = _context2["catch"](0);
+            alert("error: ".concat(_context2.t0.response.data.message));
+            console.log(_context2.t0);
+
+          case 12:
+            $('#signin').prop('disabled', false);
+            $('.rotator').hide();
+
+          case 14:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, null, [[0, 8]]);
+  }));
+
+  return function login(_x2, _x3) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+/*========================================================
+  [logout] */
+
+
+exports.login = login;
+
+var logout = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+    var res;
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.prev = 0;
+            _context3.next = 3;
+            return (0, _axios.default)({
+              method: 'get',
+              url: 'http://localhost:3000/api/v1/user/logout'
+            });
+
+          case 3:
+            res = _context3.sent;
+
+            if (res.data.status === 'success') {
+              alert('you logged out successfuly');
+              window.setTimeout(function () {
+                location.assign('/');
+              }, 500);
+            }
+
+            _context3.next = 10;
+            break;
+
+          case 7:
+            _context3.prev = 7;
+            _context3.t0 = _context3["catch"](0);
+            alert('error logging out! try again.');
+
+          case 10:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3, null, [[0, 7]]);
+  }));
+
+  return function logout() {
+    return _ref3.apply(this, arguments);
+  };
+}();
+/*========================================================
+  [send message] */
+
+
+exports.logout = logout;
+
+var sendMessage = /*#__PURE__*/function () {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(message) {
+    var res;
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.prev = 0;
+            _context4.next = 3;
+            return (0, _axios.default)({
+              method: 'post',
+              url: 'http://localhost:3000/api/v1/message',
+              data: message
+            });
+
+          case 3:
+            res = _context4.sent;
+
+            if (res.data.status === 'success') {
+              alert('پیام ارسال شد.');
+              $('input[name="name"]').val('');
+              $('input[name="email"]').val('');
+              $('textarea[name="message"]').val('');
+            }
+
+            _context4.next = 11;
+            break;
+
+          case 7:
+            _context4.prev = 7;
+            _context4.t0 = _context4["catch"](0);
+            console.log('error: ', _context4.t0);
+            alert('پیام ارسال نشد. دوباره امتحان کنید');
+
+          case 11:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4, null, [[0, 7]]);
+  }));
+
+  return function sendMessage(_x4) {
+    return _ref4.apply(this, arguments);
+  };
+}();
+/*========================================================
+  [bot start] */
+
+
+exports.sendMessage = sendMessage;
+
+var botStart = /*#__PURE__*/function () {
+  var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(pageName) {
+    var res;
+    return regeneratorRuntime.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.prev = 0;
+            _context5.next = 3;
+            return (0, _axios.default)({
+              method: 'get',
+              url: "http://localhost:3000/api/v1/bot/start/".concat(pageName)
+            });
+
+          case 3:
+            res = _context5.sent;
+
+            if (res.data.status === 'success') {
+              alert('ربات روشن شد.');
+              $('#trigger > span').text('توقف');
+              $('#trigger').removeClass('btn-success').addClass('btn-danger').attr({
+                name: 'stop'
+              });
+            } else {
+              console.log(res.data);
+            }
+
+            _context5.next = 10;
+            break;
+
+          case 7:
+            _context5.prev = 7;
+            _context5.t0 = _context5["catch"](0);
+            alert('خطا در روشن کردن ربات.');
+
+          case 10:
+            $('#trigger').prop('disabled', false);
+            $('#trigger  .rotator').hide();
+
+          case 12:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5, null, [[0, 7]]);
+  }));
+
+  return function botStart(_x5) {
+    return _ref5.apply(this, arguments);
+  };
+}(); //---------------------------------------------
+//[stop bot]
+
+
+exports.botStart = botStart;
+
+var botStop = /*#__PURE__*/function () {
+  var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(pageName) {
+    var res;
+    return regeneratorRuntime.wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            _context6.prev = 0;
+            _context6.next = 3;
+            return (0, _axios.default)({
+              method: 'get',
+              url: "http://localhost:3000/api/v1/bot/stop/".concat(pageName)
+            });
+
+          case 3:
+            res = _context6.sent;
+
+            if (res.data.status === 'success') {
+              alert('ربات متوقف شد.');
+              $('#trigger > span').text('شروع');
+              $('#trigger').removeClass('btn-danger').addClass('btn-success').attr({
+                name: 'start'
+              });
+            }
+
+            _context6.next = 10;
+            break;
+
+          case 7:
+            _context6.prev = 7;
+            _context6.t0 = _context6["catch"](0);
+            alert('مشکل در متوقف کردن ربات.');
+
+          case 10:
+            $('#trigger').prop('disabled', false);
+            $('#trigger  .rotator').hide();
+
+          case 12:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6, null, [[0, 7]]);
+  }));
+
+  return function botStop(_x6) {
+    return _ref6.apply(this, arguments);
+  };
+}(); //---------------------------------------------
+//[newBot]
+
+
+exports.botStop = botStop;
+
+var newbot = /*#__PURE__*/function () {
+  var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(bot) {
+    var res;
+    return regeneratorRuntime.wrap(function _callee7$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            _context7.prev = 0;
+            _context7.next = 3;
+            return (0, _axios.default)({
+              method: 'post',
+              url: 'http://localhost:3000/api/v1/bot/create',
+              data: bot
+            });
+
+          case 3:
+            res = _context7.sent;
+            console.log('status code: ', res.data);
+
+            if (res.data.status === 'success') {
+              alert(res.data.message);
+              window.setTimeout(function () {
+                location.assign('/mybots');
+              }, 500);
+            }
+
+            _context7.next = 12;
+            break;
+
+          case 8:
+            _context7.prev = 8;
+            _context7.t0 = _context7["catch"](0);
+            console.log(_context7.t0.response.data.message);
+            alert(_context7.t0.response.data.message);
+
+          case 12:
+            $('#newbot').prop('disabled', false);
+            $('#newbot .rotator').hide();
+
+          case 14:
+          case "end":
+            return _context7.stop();
+        }
+      }
+    }, _callee7, null, [[0, 8]]);
+  }));
+
+  return function newbot(_x7) {
+    return _ref7.apply(this, arguments);
+  };
+}(); //---------------------------------------------
+//[updateBot]
+
+
+exports.newbot = newbot;
+
+var updatebot = /*#__PURE__*/function () {
+  var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(id, bot) {
+    var res;
+    return regeneratorRuntime.wrap(function _callee8$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            _context8.prev = 0;
+            _context8.next = 3;
+            return (0, _axios.default)({
+              method: 'patch',
+              url: "http://localhost:3000/api/v1/bot/update-My-Bot/".concat(id),
+              data: bot
+            });
+
+          case 3:
+            res = _context8.sent;
+
+            if (res.data.status === 'success') {
+              alert('ربات اپدیت شد.');
+              window.setTimeout(function () {
+                location.reload();
+              }, 500);
+            }
+
+            _context8.next = 10;
+            break;
+
+          case 7:
+            _context8.prev = 7;
+            _context8.t0 = _context8["catch"](0);
+            alert('خطا در اپدیت ربات.');
+
+          case 10:
+            $('#updatebot').prop('disabled', false);
+            $('#updatebot .rotator').hide();
+
+          case 12:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, _callee8, null, [[0, 7]]);
+  }));
+
+  return function updatebot(_x8, _x9) {
+    return _ref8.apply(this, arguments);
+  };
+}(); //---------------------------------------------
+//[discount check]
+
+
+exports.updatebot = updatebot;
+
+var checkDiscount = /*#__PURE__*/function () {
+  var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(code, price) {
+    var res;
+    return regeneratorRuntime.wrap(function _callee9$(_context9) {
+      while (1) {
+        switch (_context9.prev = _context9.next) {
+          case 0:
+            _context9.prev = 0;
+            _context9.next = 3;
+            return (0, _axios.default)({
+              method: 'post',
+              url: 'http://localhost:3000/api/v1/discount/check',
+              data: {
+                code: code,
+                price: price
+              }
+            });
+
+          case 3:
+            res = _context9.sent;
+
+            if (res.data.status === 'success') {
+              $('#price').css('textDecoration', 'line-through');
+              $('#price2').text(" ".concat(res.data.newPrice, " \u062A\u0648\u0645\u0646"));
+              data.price2 = res.data.newPrice;
+            }
+
+            _context9.next = 11;
+            break;
+
+          case 7:
+            _context9.prev = 7;
+            _context9.t0 = _context9["catch"](0);
+            console.log('error:', _context9.t0.response.data.message);
+            alert('این کد قابل استفاده نمیباشد.');
+
+          case 11:
+            $('#discountCheck').prop('disabled', false);
+            $('#discountCheck .rotator').hide();
+
+          case 13:
+          case "end":
+            return _context9.stop();
+        }
+      }
+    }, _callee9, null, [[0, 7]]);
+  }));
+
+  return function checkDiscount(_x10, _x11) {
+    return _ref9.apply(this, arguments);
+  };
+}(); //---------------------------------------------
+//[pay]
+
+
+exports.checkDiscount = checkDiscount;
+
+var pay = /*#__PURE__*/function () {
+  var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(serviceCode) {
+    var res;
+    return regeneratorRuntime.wrap(function _callee10$(_context10) {
+      while (1) {
+        switch (_context10.prev = _context10.next) {
+          case 0:
+            _context10.prev = 0;
+            _context10.next = 3;
+            return (0, _axios.default)({
+              method: 'get',
+              url: "http://localhost:3000/api/v1/bill/pay/?serviceCode=".concat(serviceCode)
+            });
+
+          case 3:
+            res = _context10.sent;
+
+            if (res.data.status === 'success') {
+              console.log('success');
+              console.log(res.data.session);
+              window.location.replace(res.data.session.url);
+            }
+
+            _context10.next = 11;
+            break;
+
+          case 7:
+            _context10.prev = 7;
+            _context10.t0 = _context10["catch"](0);
+            console.log('error:', _context10.t0.response.data.message);
+            alert('مشکلی در پرداخت وجود دارد.');
+
+          case 11:
+            $('#pay').prop('disabled', false);
+            $('#pay').text('پرداخت');
+
+          case 13:
+          case "end":
+            return _context10.stop();
+        }
+      }
+    }, _callee10, null, [[0, 7]]);
+  }));
+
+  return function pay(_x12) {
+    return _ref10.apply(this, arguments);
+  };
+}(); //---------------------------------------------
+//[extension]
+
+
+exports.pay = pay;
+
+var extension = /*#__PURE__*/function () {
+  var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11(serviceCode, botPagename) {
+    var res;
+    return regeneratorRuntime.wrap(function _callee11$(_context11) {
+      while (1) {
+        switch (_context11.prev = _context11.next) {
+          case 0:
+            _context11.prev = 0;
+            _context11.next = 3;
+            return (0, _axios.default)({
+              method: 'get',
+              url: "http://localhost:3000/api/v1/bill/pay/?serviceCode=".concat(serviceCode, "&botPagename=").concat(botPagename)
+            });
+
+          case 3:
+            res = _context11.sent;
+
+            if (res.data.status === 'success') {
+              console.log('success');
+              console.log(res.data.session);
+              window.location.replace(res.data.session.url);
+            }
+
+            _context11.next = 11;
+            break;
+
+          case 7:
+            _context11.prev = 7;
+            _context11.t0 = _context11["catch"](0);
+            console.log('error:', _context11.t0.response.data.message);
+            alert('مشکلی در تمدید اکانت وجود دارد.');
+
+          case 11:
+          case "end":
+            return _context11.stop();
+        }
+      }
+    }, _callee11, null, [[0, 7]]);
+  }));
+
+  return function extension(_x13, _x14) {
+    return _ref11.apply(this, arguments);
+  };
+}();
+
+exports.extension = extension;
+},{"axios":"../node_modules/axios/index.js","jquery":"../node_modules/jquery/dist/jquery.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 require("core-js/stable");
@@ -25278,6 +25332,18 @@ console.log('heelllo form parcel');
   funs.logout();
 });
 /*==================================================================
+    [ send message ]*/
+
+(0, _jquery.default)('#sendMessage').click(function (e) {
+  e.preventDefault();
+  var message = {};
+  message.name = (0, _jquery.default)('input[name="name"]').val();
+  message.email = (0, _jquery.default)('input[name="email"]').val();
+  message.message = (0, _jquery.default)('textarea[name="message"]').val();
+  console.log('message: ', message);
+  funs.sendMessage(message);
+});
+/*==================================================================
   [Bot functions]*/
 
 (0, _jquery.default)('#trigger').on('click', function (e) {
@@ -25369,7 +25435,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "2576" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "2523" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

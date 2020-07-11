@@ -13,6 +13,7 @@ const botRouter = require('./routs/botRouter');
 const billRouter = require('./routs/billRouter');
 const discountRouter = require('./routs/discountRouter');
 const serviceRouter = require('./routs/serviceRouter');
+const messageRouter = require('./routs/messageRouter');
 const viewRouter = require('./routs/viewRouter');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorController');
@@ -65,6 +66,7 @@ app.use('/api/v1/bot', botRouter);
 app.use('/api/v1/bill', billRouter);
 app.use('/api/v1/discount', discountRouter);
 app.use('/api/v1/service', serviceRouter);
+app.use('/api/v1/message', messageRouter);
 app.use('/', viewRouter);
 
 // Takeing care of unhandled routes

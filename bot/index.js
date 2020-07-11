@@ -104,20 +104,39 @@ const manager = (order) => {
   }
 };
 
-process.on('message', (obj) => {
-  ({ pageName, pagePassword, targetTags, targetPages } = obj);
+process.on('message', (data) => {
+  if (data === 'finish') {
+    process.send({
+      pageName: web.pageName,
+      decreaseTimeBy: web.quarterCounter * 900000,
+    });
+    return;
+  }
+  const bot = data;
+  ({ pageName, pagePassword, targetTags, targetPages } = bot);
   web.pageName = pageName;
-  web.comments = obj.comments;
-  web.directTexts = obj.directTexts;
-  web.whiteList = obj.whiteList;
-  web.followPrivate = obj.followPrivate;
-  web.likeLastPost = obj.likeLastPost;
-  web.processPace = obj.botPace;
-  console.log(pageName);
+  web.comments = bot.comments;
+  web.directTexts = bot.directTexts;
+  web.whiteList = bot.whiteList;
+  web.followPrivate = bot.followPrivate;
+  web.likeLastPost = bot.likeLastPost;
+  web.processPace = bot.botPace;
+
   process.send(`started`);
 
-  console.log('like last post: ', web.likeLastPost);
-  console.log('follow private: ', web.followPrivate);
+  // Time duration for bot. it send the decrease command evry 6 hour
+  const timer = bot.timeLeft < 21600000 ? bot.timeLeft : 21600000;
+  setInterval(() => {
+    web.sixHours += 1;
+    web.quarterCounter = 0;
+    process.send({ pageName: web.pageName, decreaseTimeBy: timer });
+  }, 21600000);
+
+  //-----------------------
+  // this will count times under 6 hour
+  setInterval(() => {
+    web.quarterCounter += 1;
+  }, 900000);
 
   // manager('sequence');
   sequence();

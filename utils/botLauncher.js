@@ -1,12 +1,20 @@
 const { fork } = require('child_process');
 
-const Bot = require('./../models/botModel');
-const web = require('./../bot/utils/interfaces');
-const catchAsync = require('./../utils/catchAsync');
+const Bot = require('../models/botModel');
+const web = require('../bot/utils/interfaces');
+const catchAsync = require('./catchAsync');
 
 const save = async (data) => {
+  const bot = await Bot.findOne({ pageName: data.pageName });
+  // Update bot just for timeLeft
+  if (data.decreaseTimeBy) {
+    console.log('update time');
+    const { decreaseTimeBy } = data;
+    await bot.updateOne({ $inc: { timeLeft: decreaseTimeBy * -1 } });
+    return;
+  }
+  // Update othe items of bot
   const {
-    pageName,
     modified,
     followed,
     unfollowed,
@@ -17,19 +25,19 @@ const save = async (data) => {
     followers,
     following,
   } = data;
-  const bot = await Bot.findOne({ pageName });
-  bot.details = bot.details ? bot.details : {};
-  bot.pageInfo = bot.pageInfo ? bot.pageInfo : {};
 
+  bot.details = bot.details || {};
+  bot.pageInfo = bot.pageInfo || {};
+
+  // it this is the first time , this items needed to be initielized
   bot.details.hasFollowed = bot.details.hasFollowed || 0;
   bot.details.hasUnfollowed = bot.details.hasUnfollowed || 0;
   bot.details.hasLiked = bot.details.hasLiked || 0;
   bot.details.hasCommented = bot.details.hasCommented || 0;
   bot.details.hasDirected = bot.details.hasDirected || 0;
+  //==============================================================
 
-  console.log('bot hasfollowed: ', bot.details.hasFollowed);
-  console.log('recieved followed: ', followed);
-
+  // Identify the change and update the bot
   switch (modified) {
     case 'info':
       console.log('info');
@@ -57,12 +65,10 @@ const save = async (data) => {
       console.log('nothing');
   }
 
-  console.log('bot details: ', bot.details);
-  console.log('page Info: ', bot.pageInfo);
-  console.log('now saving');
   bot.markModified('details');
   bot.markModified('pageInfo');
   await bot.save({ validateBeforeSave: false });
+
   console.log('saveing is done');
 };
 

@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import axios from 'axios';
+import { post } from 'jquery';
 
 ('use strict');
 
@@ -106,6 +107,27 @@ export const logout = async () => {
     }
   } catch (err) {
     alert('error logging out! try again.');
+  }
+};
+
+/*========================================================
+  [send message] */
+export const sendMessage = async (message) => {
+  try {
+    const res = await axios({
+      method: 'post',
+      url: 'http://localhost:3000/api/v1/message',
+      data: message,
+    });
+    if (res.data.status === 'success') {
+      alert('پیام ارسال شد.');
+      $('input[name="name"]').val('');
+      $('input[name="email"]').val('');
+      $('textarea[name="message"]').val('');
+    }
+  } catch (e) {
+    console.log('error: ', e);
+    alert('پیام ارسال نشد. دوباره امتحان کنید');
   }
 };
 
