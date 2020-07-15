@@ -158,6 +158,14 @@ UserSchema.pre(/^find/, function (next) {
   next();
 });
 
+UserSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'bots',
+    select: '-__v -_id',
+  });
+  next();
+});
+
 // UserSchema.pre(/^find/, function (next) {
 //   this.populate({
 //     path: 'bills',

@@ -1,19 +1,19 @@
 const AppError = require('./../utils/appError');
 
-const handleCastErrirDB = err => {
+const handleCastErrirDB = (err) => {
   const message = `invalid ${err.path}: ${err.value}.`;
   return new AppError(message, 404);
 };
 
-const handleDuplicateFeildDB = err => {
+const handleDuplicateFeildDB = (err) => {
   const value = err.errmsg.match(/(["'])(?:\\.|[^\\])*?\1/)[0];
   const message = `Duplicate feild value:${value}. please use another value!`;
 
   return new AppError(message, 400);
 };
 
-const handleValidationErrorDB = err => {
-  const errors = Object.values(err.errors).map(el => el.message);
+const handleValidationErrorDB = (err) => {
+  const errors = Object.values(err.errors).map((el) => el.message);
 
   const message = `Invalid input data. ${errors.join('. ')}`;
   return new AppError(message, 400);
@@ -33,14 +33,14 @@ const sendErrorDev = (err, req, res) => {
       status: err.status,
       err,
       message: err.message,
-      stack: err.stack
+      stack: err.stack,
     });
   }
   console.error('Error💥', err);
   // B) RENDERED WEBSITE
   res.status(err.statusCode).render('error', {
     title: 'something went wrong',
-    msg: err.message
+    msg: err.message,
   });
 };
 
@@ -52,13 +52,13 @@ const sendErrorProd = (err, req, res) => {
     if (err.isOperational) {
       return res.status(err.statusCode).json({
         status: err.status,
-        message: err.message
+        message: err.message,
       });
     }
     // 2) programming or other unknown error
     return res.status(500).json({
       status: 'error',
-      message: 'something went very wrong!'
+      message: 'something went very wrong!',
     });
   }
   // B) RENDERED WEBSITE
@@ -66,13 +66,13 @@ const sendErrorProd = (err, req, res) => {
   if (err.isOperational) {
     return res.status(err.statusCode).render('error', {
       title: 'something went wrong',
-      msg: err.message
+      msg: err.message,
     });
   }
   // 2) programming or other unknown error
   return res.status(err.statusCode).render('error', {
     title: 'something went wrong',
-    msg: 'please try again later.'
+    msg: 'please try again later.',
   });
 };
 

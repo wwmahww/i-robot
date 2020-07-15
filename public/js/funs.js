@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 import { post } from 'jquery';
+import { token } from 'morgan';
 
 ('use strict');
 
@@ -238,6 +239,7 @@ export const checkDiscount = async (code, price) => {
       data: { code, price },
     });
     if (res.data.status === 'success') {
+      console.log('data:', res.data);
       $('#price').css('textDecoration', 'line-through');
       $('#price2').text(` ${res.data.newPrice} تومن`);
       data.price2 = res.data.newPrice;
@@ -288,5 +290,131 @@ export const extension = async (serviceCode, botPagename) => {
   } catch (e) {
     console.log('error:', e.response.data.message);
     alert('مشکلی در تمدید اکانت وجود دارد.');
+  }
+};
+
+//---------------------------------------------
+//[username checker]
+export const usernameChecher = async (username) => {
+  try {
+    const res = await axios({
+      method: 'post',
+      url: 'http://localhost:3000/api/v1/user/usernameChecker',
+      data: { username },
+    });
+    if (res.status === 200) {
+      console.log('true');
+      $('#message').text('نام کاربری مورد تاییداست');
+    }
+  } catch (e) {
+    if (e.response.status === 422) {
+      console.log('false');
+      $('#message').text('نام کاربری قبلا استفاده شده است');
+    }
+  }
+};
+
+//---------------------------------------------
+//[save edited name or email]
+
+export const saveEdit = async (name, email) => {
+  try {
+    const res = await axios({
+      method: 'patch',
+      url: 'http://localhost:3000/api/v1/user/updateMe',
+      data: { name, email },
+    });
+    if (res.data.status === 'success') {
+      alert('اطلاعات به درستی ذخیره شد');
+      $('input[name="name"').prop('disabled', true);
+      $('input[name="email"').prop('disabled', true);
+      $('#save').hide();
+      $('#cancel1').hide();
+    }
+  } catch (e) {
+    alert('مشکلی در ذخیره تغییرات دجود داشت');
+    console.log('error: ', e.message);
+  }
+  $('.rotator').hide();
+};
+
+//---------------------------------------------
+//[save changed password]
+
+export const changePassword = async (
+  currentPassword,
+  newPassword,
+  passwordConfirm
+) => {
+  try {
+    const res = await axios({
+      method: 'patch',
+      url: 'http://localhost:3000/api/v1/user/updateMyPassword',
+      data: { currentPassword, newPassword, passwordConfirm },
+    });
+    if (res.data.status === 'success') {
+      alert('پسورد با موفقیت تغییر کرد');
+      $('.changePassword').hide();
+      $('#savePassword').hide();
+      $('#cancel2').hide();
+    }
+  } catch (e) {
+    console.log(e.response.data.message);
+    alert(e.response.data.message);
+  }
+};
+
+//---------------------------------------------
+//[forgetPassword]
+export const forgetPassword = async (email) => {
+  try {
+    const res = await axios({
+      method: 'post',
+      url: 'http://localhost:3000/api/v1/user/forgetPassword',
+      data: { email },
+    });
+    if (res.data.status === 'success') {
+      $('#recovery').hide();
+      $('#message').show();
+    }
+  } catch (e) {
+    alert('این ایمیل در سیستم ثبت نشده است');
+  }
+};
+
+export const resetPassword = async (token, password, passwordConfirm) => {
+  try {
+    const res = await axios({
+      method: 'patch',
+      url: `http://localhost:3000/api/v1/user/resetPassword/${token}`,
+      data: { password, passwordConfirm },
+    });
+    if (res.data.status === 'success') {
+      alert('رمز با موفقیت تغییر کرد');
+      setTimeout(() => {
+        window.location.replace('http://localhost:3000/');
+      }, 5);
+    }
+  } catch (e) {
+    console.log('error: ', e.response.data.message);
+    alert(e.response.data.message);
+  }
+};
+
+//---------------------------------------------
+//[adminLogin]
+export const adminLogin = async (email, password) => {
+  try {
+    const res = await axios({
+      method: 'post',
+      url: 'http://localhost:3000/api/v1/user/login',
+      data: { email, password, admin: 'admin' },
+    });
+    if (res.data.status === 'seccess') {
+      window.location.replace('http://localhost:3000/GodPanel');
+    }
+  } catch (e) {
+    console.log(e.response.data.message);
+    alert(e.response.data.message);
   }
 };

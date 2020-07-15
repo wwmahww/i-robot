@@ -44,7 +44,12 @@ exports.logout = (req, res, next) => {
 };
 
 exports.login = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, role } = req.body;
+  const filter = { email: email };
+  console.log('login body: ', email, password);
+
+  if (role) filter.role = role;
+  console.log('filter: ', filter);
 
   // 1) Check if the email and password is exist.
   if (!email || !password) {
@@ -52,7 +57,7 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   // 2) check if the password is correct.
-  const user = await User.findOne({ email }).select('+password');
+  const user = await User.findOne(filter).select('+password');
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Incorrect email or password', 401));
   }
@@ -160,14 +165,17 @@ exports.forgetPassword = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user)
     return next(new AppError('There is no user with this email.', 404));
+
   // 2) Generate reset token
   const resetToken = user.createPasswordResetToken();
+  console.log('token: ', resetToken);
   await user.save({ validateBeforeSave: false });
+
   // 3) Send it to the user email
   const resetURL = `${req.protocol}://${req.get(
     'host'
-  )}/api/v1/users/resetPassword/${resetToken}`;
-  const message = `Forget your password? Submit a patch request with your new password and confirmPassword to: ${resetURL}.\n If you didn't please ignore this email.`;
+  )}/resetPassword/${resetToken}`;
+  const message = `Forget your password? Submit a patch request with your new password and confirmPassword to:\n ${resetURL}\n If you didn't please ignore this email.`;
 
   try {
     await sendEmail({
@@ -196,18 +204,28 @@ exports.forgetPassword = catchAsync(async (req, res, next) => {
 });
 
 exports.resetPassword = catchAsync(async (req, res, next) => {
+  console.log('body: ', req.body);
   // 1) get user base on the token
   const hashedToken = crypto
     .createHash('sha256')
     .update(req.params.token)
     .digest('hex');
 
+  console.log('hashed token: ', hashedToken);
   const user = await User.findOne({
     passwordResetToken: hashedToken,
     passwordResetExpired: { $gt: Date.now() },
   });
+
   // 2) If the token has not expired, and the user exist, set the password
   if (!user) return next(new AppError('Token is invalid or expired.', 400));
+
+  // await user.updateOne({
+  //   password: req.body.password,
+  //   passwordConfirm: req.body.passwordConfirm,
+  //   passwordResetToken: undefined,
+  //   passwordResetExpired: undefined,
+  // });
 
   user.password = req.body.password;
   user.passwordConfirm = req.body.passwordConfirm;
@@ -222,17 +240,20 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
+  console.log('body: ', req.body);
   // 1) Get user from collection
   const user = await User.findById(req.user.id).select('+password');
 
   // 2) Check if POSTed current password is correct
-  if (!user.correctPassword(req.body.passwordCurrent, user.password))
+  if (!(await user.correctPassword(req.body.currentPassword, user.password))) {
     return next(
       new AppError('password is not correct. Please try again.', 401)
     );
+  }
 
   // 3) If so update password
-  user.password = req.body.password;
+
+  user.password = req.body.newPassword;
   user.passwordConfirm = req.body.passwordConfirm;
   await user.save();
 

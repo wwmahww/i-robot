@@ -132,6 +132,7 @@ $('#signin').click((e) => {
   $('.rotator').show();
   const email = $('input[name="email1"]').val();
   const password = $('input[name="password1"]').val();
+  console.log(email, password);
   funs.login(email, password);
 });
 
@@ -196,7 +197,8 @@ $('#discountCheck').click((e) => {
   $('#discountCheck .rotator').show();
   const code = $('input[name="discountCode"]').val();
   console.log(code);
-  funs.checkDiscount(code, data.price);
+  console.log(service);
+  funs.checkDiscount(code, service.price);
 });
 
 /*==================================================================
@@ -218,4 +220,97 @@ $('.extension').click((e) => {
   const serviceCode = e.target.name;
   const botPagename = bot.pageName;
   funs.extension(serviceCode, botPagename);
+});
+
+/*==================================================================
+    [ username checker ]*/
+$('input[name="username"]').keyup((e) => {
+  const username = e.target.value;
+  console.log('username: ', username);
+  funs.usernameChecher(username);
+});
+
+/*==================================================================
+    [ edit name and email ]*/
+$('#edit').click((e) => {
+  e.preventDefault();
+  $('input[name="name"').prop('disabled', false);
+  $('input[name="email"').prop('disabled', false);
+  $('#save').show();
+  $('#cancel1').show();
+});
+
+$('#save').click((e) => {
+  e.preventDefault();
+  $('.rotator').show();
+  const name = $('input[name="name"]').val();
+  const email = $('input[name="email"]').val();
+  funs.saveEdit(name, email);
+});
+
+/*==================================================================
+    [ change password ]*/
+$('#editPassword').click((e) => {
+  e.preventDefault();
+  $('.changePassword').show();
+  $('#savePassword').show();
+  $('#cancel2').show();
+});
+
+$('#savePassword').click((e) => {
+  e.preventDefault();
+  const currentPassword = $('input[name="currentPassword"]').val();
+  const newPassword = $('input[name="newPassword"]').val();
+  const passwordConfirm = $('input[name="passwordConfirm"]').val();
+  if (newPassword & (newPassword === passwordConfirm)) {
+    funs.changePassword(currentPassword, newPassword, passwordConfirm);
+  } else {
+    alert('پسورد و تکرار پسورد یکسان نیستند');
+  }
+});
+
+/*==================================================================
+    [ password recovery ]*/
+$('#passwordRecovery').click((e) => {
+  e.preventDefault();
+  const email = $('input[name="email"]').val();
+  funs.forgetPassword(email);
+});
+
+$('#resetPassword').click((e) => {
+  e.preventDefault();
+  console.log('clicked on reset password button');
+  const password = $('input[name="password"]').val();
+  const passwordConfirm = $('input[name="passwordConfirm"]').val();
+  if (!password || !passwordConfirm) {
+    alert('پسورد و تکرار پسورد نمیتواند خالی باشد');
+    return;
+  }
+  funs.resetPassword(token, password, passwordConfirm);
+});
+
+/*==================================================================
+    [ cancel edit name and email and password]*/
+$('#cancel1').click((e) => {
+  e.preventDefault();
+  $('input[name="name"').prop('disabled', true);
+  $('input[name="email"').prop('disabled', true);
+  $('#save').hide();
+  $('#cancel1').hide();
+});
+
+$('#cancel2').click((e) => {
+  $('.changePassword').hide();
+  $('#savePassword').hide();
+  $('#cancel2').hide();
+});
+
+/*==================================================================
+    [ admin login]*/
+
+$('#adminLogin').click((e) => {
+  e.preventDefault();
+  const email = $('input[name="email"]').val();
+  const password = $('input[name="password"]').val();
+  funs.adminLogin(email, password);
 });

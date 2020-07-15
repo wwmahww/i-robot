@@ -39,9 +39,9 @@ exports.signUp = (req, res, next) => {
   res.status(200).render('signIn');
 };
 
-exports.pricing = catchAsync(async (req, res, next) => {
+exports.services = catchAsync(async (req, res, next) => {
   const services = await Service.find();
-  res.status(200).render('pricing', { services });
+  res.status(200).render('services', { services });
 });
 
 exports.service = catchAsync(async (req, res, next) => {
@@ -85,7 +85,25 @@ exports.botManager = (req, res, next) => {
   res.status(200).render('admin_bot_manager', { jsStringify, bot });
 };
 
-exports.newbot = catchAsync(async (req, res, next) => {
+exports.newbot = (req, res, next) => {
   const { timeLimit } = req.params;
   res.status(200).render('admin_newBot', { timeLimit });
+};
+
+exports.passwordRecovery = catchAsync(async (req, res, next) => {
+  res.status(200).render('passwordRecovery');
 });
+
+exports.resetPassword = catchAsync(async (req, res, next) => {
+  console.log('hear in reset password view');
+  const { token } = req.params;
+  res.status(200).render('resetPassword', { jsStringify, token });
+});
+
+exports.GodLogin = (req, res, next) => {
+  res.status(200).render('GodLogin');
+};
+
+exports.GodPanel = (req, res, next) => {
+  res.status(200).render('GodPanel');
+};

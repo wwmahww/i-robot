@@ -16,8 +16,8 @@ const dbConnect = () =>
   new Promise((resolve) => {
     mongoose
       .connect(
-        dataBase,
-        // process.env.DATABASE_LOCAL,
+        // dataBase,
+        process.env.DATABASE_LOCAL,
         {
           useNewUrlParser: true,
           useCreateIndex: true,

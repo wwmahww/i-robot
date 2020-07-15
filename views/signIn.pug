@@ -8,10 +8,11 @@ block content
           .section-title
               h3 ثبت نام
           form(action='#')
-            .row
+            .row  
               .col-lg-12
                 .input-list
                   input.w-75(type='text' name='name' placeholder='نام')
+                  p#message
                   input.w-75(type='text' name='username' placeholder='نام کاربری')
                   input.w-75(type='email' name='email' placeholder='ایمیل')
                   input.w-75(type='password' name='password' placeholder='پسورد')
@@ -27,4 +28,5 @@ block content
                 .input-list
                   input.w-75(type='text' name='email1' placeholder='ایمیل')
                   input.w-75(type='password' name='password1' placeholder='پسورد')
-            button#signin.site-btn ورود
+            button#signin.site-btn.mr-3 ورود
+            a(href='passwordRecovery') رمز عبور خود را فراموش کرده اید؟

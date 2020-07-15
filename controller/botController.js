@@ -60,15 +60,17 @@ exports.stop = catchAsync(async (req, res, next) => {
 
 exports.create = catchAsync(async (req, res, next) => {
   let serviceIndex;
+  const { timeLeft } = req.body;
+
   const bot = req.body;
   bot.owner = req.user.id;
   bot.timeLeft *= 86400000;
+
   const { user } = req;
   const service = user.services.find((item, index) => {
     serviceIndex = index;
-    return item.timeLimit === req.body.timeLeft * 1;
+    return item.timeLimit === timeLeft * 1;
   });
-  console.log('service: ', service);
   if (!service) {
     return next(new AppError('این سرویس برای شما فعال نمی‌باشد', 401));
   }

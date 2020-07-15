@@ -1,6 +1,6 @@
 const express = require('express');
-const userController = require('./../controller/userController');
-const authController = require('./../controller/authController');
+const userController = require('../controller/userController');
+const authController = require('../controller/authController');
 
 const Router = express.Router();
 
@@ -9,6 +9,7 @@ Router.post('/login', authController.login);
 Router.get('/logout', authController.logout);
 Router.post('/forgetPassword', authController.forgetPassword);
 Router.patch('/resetPassword/:token', authController.resetPassword);
+Router.post('/usernameChecker', userController.usernameChecker);
 
 // Protect all routes after this point
 

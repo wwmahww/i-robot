@@ -4,6 +4,7 @@ const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
 
 const filterObj = (obj, ...allowedFields) => {
+  console.log('hear in fillter');
   const newObj = {};
   Object.keys(obj).forEach((el) => {
     if (allowedFields.includes(el)) newObj[el] = obj[el];
@@ -12,6 +13,7 @@ const filterObj = (obj, ...allowedFields) => {
 };
 
 exports.updateMe = catchAsync(async (req, res, next) => {
+  console.log('body: ', req.body);
   if (req.body.password || req.body.passwordConfirm)
     return next(
       new AppError(
@@ -19,13 +21,20 @@ exports.updateMe = catchAsync(async (req, res, next) => {
         400
       )
     );
+  console.log('befre save');
+  console.log('user: ', req.user);
 
-  const filteredBody = filterObj(req.body, 'name', 'username', 'email');
-  const updatedUser = await User.findByIdAndUpdate(
-    { id: req.user.id },
-    filteredBody,
-    { new: true, runValidators: true }
-  );
+  const filteredBody = filterObj(req.body, 'name', 'email');
+  console.log('after filter');
+  console.log('filterd', filteredBody);
+
+  // const updatedUser = await User.findByIdAndUpdate(
+  //   { id: req.user._id },
+  //   filteredBody,
+  //   { new: true, runValidators: true }
+  // );
+  const updatedUser = await req.user.updateOne(filteredBody);
+  console.log('after save');
 
   res.status(200).json({
     status: 'success',
@@ -47,6 +56,19 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   res.status(204).json({
     status: 'success',
   });
+});
+
+exports.usernameChecker = catchAsync(async (req, res, next) => {
+  console.log('body: ', req.body);
+  const { username } = req.body;
+  const user = await User.findOne({ username });
+  if (user) {
+    console.log('found');
+    res.status(422).end();
+  } else {
+    console.log('not found');
+    res.status(200).end();
+  }
 });
 
 exports.getUser = factory.getOne(User);

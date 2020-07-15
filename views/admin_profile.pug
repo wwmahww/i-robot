@@ -3,17 +3,39 @@ extends admin_base
 block content
   .card.shadow.mb-4
     .card-header.py-3
-      h6.m-0.font-weight-bold.text-primary profile
+      h5.m-0.font-weight-bold.text-primary.text-right پروفایل
     .card-body
-      .text-center
-        img.rounded-circle.img-fluid.px-3.px-sm-4.mt-3.mb-4(style='width: 10rem; height: 10rem' src='img/pickle-Rick.jpg' alt='')
-      .col-lg-7
+      .col-lg-12
         .p-5
-          .user
-            h4.small.font-weight-bold username:
+          .user.text-right
+            h4.small.font-weight-bold : اسم
               .form-group
-                input.form-control.bg-light.border-0.small(type='text' placeholder=`${user.username}` aria-describedby='basic-addon2' disabled)
-            h4.small.font-weight-bold email:
+                input.form-control.bg-light.border-0.small.text-right(type='text' name='name' value=`${user.name}` aria-describedby='basic-addon2' disabled)
+            h4.small.font-weight-bold : نام کاربری
               .form-group
-                input.form-control.bg-light.border-0.small(type='text' placeholder=`${user.email}` aria-describedby='basic-addon2' disabled)
-            button.btn.btn-primary change
+                input.form-control.bg-light.border-0.small.text-right(type='text' name='username' value=`${user.username}` aria-describedby='basic-addon2' disabled)
+            h4.small.font-weight-bold : ایمیل
+              .form-group
+                input.form-control.bg-light.border-0.small.text-right(type='text' name='email' value=`${user.email}` aria-describedby='basic-addon2' disabled)
+            div
+              button#cancel1.btn.btn-danger.mr-2(style="display:none") لغو
+              button#save.btn.btn-success.mr-2(style="display:none") ذخیره
+                .rotator(style="display:none")
+              button#edit.btn.btn-primary ویرایش
+              // change passwrod--------------------------------
+      .col-lg-12
+        .p-5
+          .user.text-right
+            h4.changePassword.small.font-weight-bold(style="display:none") : پسورد کنونی
+              .form-group
+                input.form-control.bg-light.border-0.small.text-right(type='password' name='currentPassword' aria-describedby='basic-addon2' required)
+            h4.changePassword.small.font-weight-bold(style="display:none") : پسورد جدید
+              .form-group
+                input.form-control.bg-light.border-0.small.text-right(type='password' name='newPassword' aria-describedby='basic-addon2' required)
+            h4.changePassword.small.font-weight-bold(style="display:none") : تکرار پسورد
+              .form-group
+                input.form-control.bg-light.border-0.small.text-right(type='password' name='passwordConfirm' aria-describedby='basic-addon2' required)
+            div
+              button#cancel2.btn.btn-danger.mr-2(style="display:none") لغو
+              button#savePassword.btn.btn-success.mr-2(style="display:none") ذخیره
+              button#editPassword.btn.btn-primary تغییر پسورد
