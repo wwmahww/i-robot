@@ -17,11 +17,11 @@ block content
     .dropdown.mb-4
       button#reserveServices.btn.btn-primary.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
         if(user.services.length)
-          span.badge.badge-danger.badge-counter=user.services.length
+          span.badge.badge-danger.badge-counter=user.readyServices.length
         span سرویس‌های رزرو شما
           // dropDown box
       .dropdown-menu.animated--fade-in(aria-labelledby='reserveServices')
-        each service in user.services
+        each service in user.readyServices
           +reservedService(service)
   each bot in user.bots
     +botcard(bot)

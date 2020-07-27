@@ -3,8 +3,103 @@
 import axios from 'axios';
 import { post } from 'jquery';
 import { token } from 'morgan';
+import { bot } from '../../controller/viewController';
 
 ('use strict');
+
+// Get tables ready
+export const getTable = (format) => {
+  // Message table-----------
+  if ($('#message_table').length) {
+    console.log('message table');
+    var table = $('#message_table').DataTable({
+      data: messages,
+      columns: [
+        {
+          className: 'details-control',
+          orderable: false,
+          data: null,
+          defaultContent: '',
+        },
+        { data: 'name' },
+        { data: 'email' },
+        { data: 'phone' },
+      ],
+      order: [[1, 'asc']],
+    });
+    // Submessage table
+    $('#message_table tbody').on('click', 'td.details-control', function () {
+      var tr = $(this).closest('tr');
+      var row = table.row(tr);
+
+      if (row.child.isShown()) {
+        // This row is already open - close it
+        row.child.hide();
+        tr.removeClass('shown');
+      } else {
+        // Open this row
+        row.child(format(row.data())).show();
+        tr.addClass('shown');
+      }
+    });
+    // Bot table----------
+  } else if ($('#bot_table').length) {
+    console.log('bot table');
+    $('#bot_table').DataTable({
+      data: bots,
+      columns: [{ data: 'pageName' }, { data: 'owner' }, { data: 'daysLeft' }],
+      order: [[1, 'asc']],
+    });
+    // Bill table----------
+  } else if ($('#bill_table').length) {
+    console.log('bill table');
+    let table = $('#bill_table').DataTable({
+      data: bills,
+      columns: [
+        {
+          className: 'details-control',
+          orderable: false,
+          data: null,
+          defaultContent: '',
+        },
+        { data: 'service' },
+        { data: 'refID' },
+        { data: 'userEmail' },
+        { data: 'amount' },
+        { data: 'isPayed' },
+      ],
+      order: [[1, 'asc']],
+    });
+    // Submessage table
+    $('#bill_table tbody').on('click', 'td.details-control', function () {
+      var tr = $(this).closest('tr');
+      var row = table.row(tr);
+
+      if (row.child.isShown()) {
+        // This row is already open - close it
+        row.child.hide();
+        tr.removeClass('shown');
+      } else {
+        // Open this row
+        row.child(format(row.data())).show();
+        tr.addClass('shown');
+      }
+    });
+    // User table----------
+  } else if ($('#user_table').length) {
+    console.log('user table');
+    $('#user_table').DataTable({
+      data: users,
+      columns: [
+        { data: 'name' },
+        { data: 'username' },
+        { data: 'email' },
+        { data: 'bots.length' },
+      ],
+      order: [[1, 'asc']],
+    });
+  }
+};
 
 export const validate = (input) => {
   if ($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
@@ -242,7 +337,6 @@ export const checkDiscount = async (code, price) => {
       console.log('data:', res.data);
       $('#price').css('textDecoration', 'line-through');
       $('#price2').text(` ${res.data.newPrice} تومن`);
-      data.price2 = res.data.newPrice;
     }
   } catch (e) {
     console.log('error:', e.response.data.message);
@@ -255,11 +349,11 @@ export const checkDiscount = async (code, price) => {
 //---------------------------------------------
 //[pay]
 
-export const pay = async (serviceCode) => {
+export const pay = async (serviceCode, offCode) => {
   try {
     const res = await axios({
       method: 'get',
-      url: `http://localhost:3000/api/v1/bill/pay/?serviceCode=${serviceCode}`,
+      url: `http://localhost:3000/api/v1/bill/pay/?serviceCode=${serviceCode}&offCode=${offCode}`,
     });
     if (res.data.status === 'success') {
       console.log('success');
@@ -267,6 +361,7 @@ export const pay = async (serviceCode) => {
       window.location.replace(res.data.session.url);
     }
   } catch (e) {
+    console.log('error: ', e);
     console.log('error:', e.response.data.message);
     alert('مشکلی در پرداخت وجود دارد.');
   }
@@ -408,13 +503,49 @@ export const adminLogin = async (email, password) => {
     const res = await axios({
       method: 'post',
       url: 'http://localhost:3000/api/v1/user/login',
-      data: { email, password, admin: 'admin' },
+      data: { email, password, role: 'admin' },
     });
-    if (res.data.status === 'seccess') {
-      window.location.replace('http://localhost:3000/GodPanel');
+    if (res.data.status === 'success') {
+      alert('you are loged in successfully');
+      window.location.replace('http://localhost:3000/godPanel');
     }
   } catch (e) {
     console.log(e.response.data.message);
+    alert(e.response.data.message);
+  }
+};
+
+//---------------------------------------------
+//[saveUser]
+export const saveUser = async (user, id) => {
+  try {
+    const res = await axios({
+      method: 'patch',
+      url: `http://localhost:3000/api/v1/user/${id}`,
+      data: user,
+    });
+    if (res.data.status === 'success') {
+      alert('data saved');
+    }
+  } catch (e) {
+    console.log('error:', e.response.data);
+    alert(e.response.data.message);
+  }
+};
+//---------------------------------------------
+//[saveBot]
+export const saveBot = async (bot, id) => {
+  try {
+    const res = await axios({
+      method: 'patch',
+      url: `http://localhost:3000/api/v1/bot/${id}`,
+      data: bot,
+    });
+    if (res.data.status === 'success') {
+      alert('data saved');
+    }
+  } catch (e) {
+    console.log('error:', e.response.data);
     alert(e.response.data.message);
   }
 };

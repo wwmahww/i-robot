@@ -13,7 +13,6 @@ const filterObj = (obj, ...allowedFields) => {
 };
 
 exports.updateMe = catchAsync(async (req, res, next) => {
-  console.log('body: ', req.body);
   if (req.body.password || req.body.passwordConfirm)
     return next(
       new AppError(
@@ -21,20 +20,9 @@ exports.updateMe = catchAsync(async (req, res, next) => {
         400
       )
     );
-  console.log('befre save');
-  console.log('user: ', req.user);
 
   const filteredBody = filterObj(req.body, 'name', 'email');
-  console.log('after filter');
-  console.log('filterd', filteredBody);
-
-  // const updatedUser = await User.findByIdAndUpdate(
-  //   { id: req.user._id },
-  //   filteredBody,
-  //   { new: true, runValidators: true }
-  // );
   const updatedUser = await req.user.updateOne(filteredBody);
-  console.log('after save');
 
   res.status(200).json({
     status: 'success',
@@ -71,7 +59,10 @@ exports.usernameChecker = catchAsync(async (req, res, next) => {
   }
 });
 
-exports.getUser = factory.getOne(User);
+exports.getUser = factory.getOne(User, {
+  path: 'bots',
+  select: '-__v -_id',
+});
 exports.getAllUsers = factory.getAll(User);
 exports.deleteUser = factory.deleteOne(User);
 exports.updateUser = factory.updateOne(User);

@@ -14,6 +14,10 @@ const MessageSchema = new mongoose.Schema({
     //   validator: validator.isEmail
     // }
   },
+  phone: {
+    type: Number,
+    default: 0,
+  },
   message: {
     type: String,
     required: [true, 'a message most have a message.'],

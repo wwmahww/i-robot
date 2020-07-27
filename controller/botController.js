@@ -10,7 +10,6 @@ const factory = require('./handlerFactory');
 const delay = require('../bot/utils/delay');
 const web = require('../bot/utils/interfaces');
 const botLauncher = require('../utils/botLauncher');
-const { newbot } = require('./viewController');
 
 // ==========================================================
 
@@ -63,17 +62,21 @@ exports.create = catchAsync(async (req, res, next) => {
   const { timeLeft } = req.body;
 
   const bot = req.body;
-  bot.owner = req.user.id;
-  bot.timeLeft *= 86400000;
 
   const { user } = req;
   const service = user.services.find((item, index) => {
     serviceIndex = index;
-    return item.timeLimit === timeLeft * 1;
+    return item.timeLimit === timeLeft * 1 && item.status === 'ready';
   });
   if (!service) {
     return next(new AppError('این سرویس برای شما فعال نمی‌باشد', 401));
   }
+
+  bot.owner = req.user.id;
+  bot.timeLeft *= 86400000;
+  bot.refID = service.refID;
+
+  console.log('hear befor create bot');
 
   const newBot = await Bot.create(bot);
 
@@ -83,11 +86,13 @@ exports.create = catchAsync(async (req, res, next) => {
     );
   }
 
+  // change service status
+  service.status = 'active';
   user.services.splice(serviceIndex, 1);
-
-  console.log('user.services:', user.services);
+  user.services.push(service);
 
   user.bots.push(newBot._id);
+  console.log('bots: ', user.bots);
   await user.updateOne({ $set: { services: user.services, bots: user.bots } });
 
   res.status(201).json({

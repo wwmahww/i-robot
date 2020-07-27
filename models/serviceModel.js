@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const stringify = require('js-stringify');
+const { ready } = require('jquery');
 
 const serviceSchema = new mongoose.Schema({
   name: {
@@ -20,6 +22,14 @@ const serviceSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+  refID: Number,
+  status: {
+    type: String,
+    enum: ['inpay', 'ready', 'active', 'unactive'],
+    message:
+      'status most be one of the "inpay"m, "ready", "active", "unactive"',
+  },
+  offCode: String,
 });
 
 const Service = mongoose.model('Service', serviceSchema);

@@ -1,0 +1,44 @@
+extends God_base
+
+block content
+  script.
+    const bot = !{jsStringify(bot)}
+  .card.shadow.mb-4
+    .card-header.py-3
+      h5.m-0.font-weight-bold.text-primary.text-right=bot.pageName
+    .card-body
+      form.user
+        .row
+          .col-lg-12
+            include botData
+            .input-group.mb-3
+              input.adminEdit.bg-light.border-1.form-control(type= "text" name='timeLeft' aria-label="With textarea" value=bot?bot.timeLeft:'' disabled)
+              .input-group-prepend
+                span.input-group-text :time left
+            .input-group.mb-3
+              input.bg-light.border-1.form-control(type= "text" name='id' aria-label="With textarea" value=bot?bot._id:'' disabled)
+              .input-group-prepend
+                span.input-group-text :id
+            .input-group.mb-3
+              input.bg-light.border-1.form-control(type= "text" name='owner' aria-label="With textarea" value=bot?bot.owner:'' disabled)
+              .input-group-prepend
+                span.input-group-text :owner
+            .input-group.mb-3
+              input.bg-light.border-1.form-control(type= "text" name='daysLeft' aria-label="With textarea" value=bot?bot.daysLeft:'' disabled)
+              .input-group-prepend
+                span.input-group-text :days left
+            .input-group.mb-3
+              input.bg-light.border-1.form-control(type= "text" name='hoursLeft' aria-label="With textarea" value=bot?bot.hoursLeft:'' disabled)
+              .input-group-prepend
+                span.input-group-text :hours left
+            .input-group.mb-3
+              input.bg-light.border-1.form-control(type= "text" name='active' aria-label="With textarea" value=bot?bot.active.toString():'' disabled)
+              .input-group-prepend
+                span.input-group-text :active
+
+          .col-lg-6.text-right
+            button#adminCancelSaveBot.btn.btn-danger.mr-2(style="display:none") لغو
+            button#adminSaveBot.btn.btn-success.mr-2(style="display:none") ذخیره
+              .rotator(style="display:none")
+            button#adminEditBot.btn.btn-primary ویرایش
+            

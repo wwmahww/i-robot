@@ -34,3 +34,20 @@ html * {
 .rtl {
   direction: rtl;
 }
+
+.ltr {
+  direction: ltr;
+}
+
+tbody > tr:hover {
+  background-color: rgb(195, 216, 233) !important;
+}
+
+/* DataTable css */
+td.details-control {
+  background: url('../images/add.png') no-repeat center center;
+  cursor: pointer;
+}
+tr.shown td.details-control {
+  background: url('../images/minus.png') no-repeat center center;
+}

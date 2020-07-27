@@ -46,7 +46,7 @@ exports.logout = (req, res, next) => {
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password, role } = req.body;
   const filter = { email: email };
-  console.log('login body: ', email, password);
+  console.log('login body: ', req.body);
 
   if (role) filter.role = role;
   console.log('filter: ', filter);
@@ -129,7 +129,10 @@ exports.protect = catchAsync(async (req, res, next) => {
   const decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   // 3) Check if user still exist
-  const freshUser = await User.findById(decode.id);
+  const freshUser = await User.findById(decode.id).populate({
+    path: 'bots',
+    select: '-__v -_id',
+  });
   if (!freshUser)
     return next(
       new AppError('The user blongin to this user no longer exist.', 401)
@@ -219,13 +222,6 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   // 2) If the token has not expired, and the user exist, set the password
   if (!user) return next(new AppError('Token is invalid or expired.', 400));
-
-  // await user.updateOne({
-  //   password: req.body.password,
-  //   passwordConfirm: req.body.passwordConfirm,
-  //   passwordResetToken: undefined,
-  //   passwordResetExpired: undefined,
-  // });
 
   user.password = req.body.password;
   user.passwordConfirm = req.body.passwordConfirm;

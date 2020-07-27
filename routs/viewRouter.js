@@ -28,6 +28,12 @@ Router.get('/payResult', billController.checkout, viewController.payResult);
 
 Router.use(authController.restrictTo('admin'));
 
-Router.get('/GodPanel', viewController.GodPanel);
+Router.get('/godPanel', viewController.GodPanel);
+Router.get('/god_view_users', viewController.allUsers);
+Router.get('/god_view_user/:username', viewController.user);
+Router.get('/god_view_messages', viewController.allMessges);
+Router.get('/god_view_bots', viewController.allBots);
+Router.get('/god_view_bot/:pageName', viewController.bot);
+Router.get('/god_view_bills', viewController.allBills);
 
 module.exports = Router;

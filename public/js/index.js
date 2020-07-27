@@ -2,17 +2,75 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import * as funs from './funs';
-import $ from 'jquery';
 
 // DOM ELEMENTS
 var input = $('.validate-input .input100');
 // VALUES
 var showPass = 0;
 
+// DataTable
+
+function format(d) {
+  // `d` is the original data object for the row
+  if ($('#message_table').length) {
+    return (
+      '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+      '<tr>' +
+      '<td>message:</td>' +
+      '<td>' +
+      d.message +
+      '</td>' +
+      '</tr>' +
+      '<tr>' +
+      '<td>create at:</td>' +
+      '<td>' +
+      d.createAt +
+      '</td>' +
+      '</tr>' +
+      '</table>'
+    );
+  } else if ($('#bill_table').length) {
+    return (
+      '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+      '<tr>' +
+      '<td>description:</td>' +
+      '<td>' +
+      d.description +
+      '</td>' +
+      '</tr>' +
+      '<tr>' +
+      '<td>create at:</td>' +
+      '<td>' +
+      d.createAt +
+      '</td>' +
+      '</tr>' +
+      '<tr>' +
+      '<td>payed at:</td>' +
+      '<td>' +
+      d.payedAt +
+      '</td>' +
+      '</tr>' +
+      '<tr>' +
+      '<td>offCode:</td>' +
+      '<td>' +
+      d.offCode +
+      '</td>' +
+      '</tr>' +
+      '</table>'
+    );
+  }
+}
+
+$(document).ready(function () {
+  funs.getTable(format);
+});
+
 // functions
+
 const getBotData = () => {
   const bot = {};
-  bot.timeLeft = timeLimit;
+  console.log('hear in update bot');
+  if (typeof timeLimit !== 'undefined') bot.timeLeft = timeLimit;
   bot.pageName = $('input[name="pageName"]').val();
   bot.pagePassword = $('input[name="pagePassword"]').val();
   bot.botPace = $('#botpace').text();
@@ -206,10 +264,10 @@ $('#discountCheck').click((e) => {
 $('#pay').click((e) => {
   e.preventDefault();
   $('#pay').prop('disabled', true);
+  const offCode = $('input[name="discountCode"]').val();
   e.target.textContent = '. . . درحال انتقال';
-  console.log('code: ', service);
-  console.log('code type: ', typeof service.code);
-  funs.pay(service.code);
+  console.log('service: ', service);
+  funs.pay(service.code, offCode);
 });
 
 /*==================================================================
@@ -300,6 +358,7 @@ $('#cancel1').click((e) => {
 });
 
 $('#cancel2').click((e) => {
+  e.preventDefault();
   $('.changePassword').hide();
   $('#savePassword').hide();
   $('#cancel2').hide();
@@ -310,7 +369,94 @@ $('#cancel2').click((e) => {
 
 $('#adminLogin').click((e) => {
   e.preventDefault();
+  console.log('it clicked');
   const email = $('input[name="email"]').val();
   const password = $('input[name="password"]').val();
   funs.adminLogin(email, password);
+});
+
+/*==================================================================
+    [ God - edit user ]*/
+$('#adminEditUser').click((e) => {
+  e.preventDefault();
+  $('.adminEdit').prop('disabled', false);
+  $('#adminSaveUser').show();
+  $('#adminCancelSaveUser').show();
+});
+
+//---------
+$('#adminCancelSaveUser').click((e) => {
+  e.preventDefault();
+  $('.adminEdit').prop('disabled', true);
+  $('#adminSaveUser').hide();
+  $('#adminCancelSaveUser').hide();
+});
+
+//-----------
+$('#adminSaveUser').click((e) => {
+  e.preventDefault();
+  const list = ['bots', 'bills', 'services'];
+  const id = $('input[name="_id"]').val();
+  console.log('id: ', id);
+  const user = {};
+  $('.adminEdit').map(function () {
+    const key = this.name;
+    if (list.includes(key)) {
+      user[key] = this.value.split(',').filter((el) => {
+        if (el !== ' ') return el;
+      });
+    } else {
+      user[key] = this.value;
+    }
+  });
+  console.log('user: ', user);
+  funs.saveUser(user, id);
+});
+
+/*==================================================================
+    [ God - edit bot ]*/
+
+$('#adminEditBot').click((e) => {
+  e.preventDefault();
+  $('.adminEdit').prop('disabled', false);
+  $('#adminSaveBot').show();
+  $('#adminCancelSaveBot').show();
+});
+//-----------------
+
+$('#adminCancelSaveBot').click((e) => {
+  e.preventDefault();
+  $('.adminEdit').prop('disabled', true);
+  $('#adminSaveBot').hide();
+  $('#adminCancelSaveBot').hide();
+});
+
+//---------------------
+$('#adminSaveBot').click((e) => {
+  e.preventDefault();
+  const id = bot._id;
+  console.log('id: ', id);
+  const updatedBot = getBotData();
+  updatedBot.timeLeft = $('input[name="timeLeft').val();
+  console.log('updated bot: ', updatedBot);
+  funs.saveBot(updatedBot, id);
+});
+
+/*---------------------------------------------
+    [ God view user - click on table row]*/
+$(document).on('click', '#user_table tbody tr', function (event) {
+  console.log('element : ', this);
+  console.log('element2 : ', this.getElementsByTagName('td')[1].innerText);
+  const username = this.getElementsByTagName('td')[1].innerText;
+  console.log('username : ', username);
+  window.location.replace(`http://localhost:3000/god_view_user/${username}`);
+});
+
+/*---------------------------------------------
+    [ God view bot - click on table row]*/
+$(document).on('click', '#bot_table tbody tr', function (event) {
+  console.log('element : ', this);
+  const pageName = this.getElementsByTagName('td')[0].innerText;
+  console.log('username : ', pageName);
+  window.location.replace(`http://localhost:3000/god_view_bot/${pageName}`);
 });

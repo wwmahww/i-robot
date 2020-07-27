@@ -1,0 +1,33 @@
+extends God_base
+
+mixin field(val, key)
+  .input-group.mb-3
+    .input-group-prepend
+      span.input-group-text= key
+    - const list = ['username','_id','passwordChangeAt','createdAt','firstPurchase']
+    if(list.includes(key)) 
+      input.bg-light.border-1.form-control(name= key aria-label="With textarea" value=val required disabled)
+    else if(key === 'bots' || key === 'bills' || key === 'services')
+      textarea.adminEdit.bg-light.border-1.form-control(name= key aria-label="With textarea" required disabled)= val
+    else
+      input.adminEdit.bg-light.border-1.form-control(name= key aria-label="With textarea" value=val required disabled)
+
+block content
+  script.
+    const user = !{jsStringify(copyUser)}
+  .card.shadow.mb-4
+    .card-header.py-3
+      h5.m-0.font-weight-bold.text-primary.text-right=copyUser.name
+    .card-body
+      form.user
+        .row
+          .col-lg-6
+            each val, key in copyUser
+              -console.log(key, val)
+              +field(val, key)
+          .col-lg-6.text-right
+            button#adminCancelSaveUser.btn.btn-danger.mr-2(style="display:none") لغو
+            button#adminSaveUser.btn.btn-success.mr-2(style="display:none") ذخیره
+              .rotator(style="display:none")
+            button#adminEditUser.btn.btn-primary ویرایش
+            

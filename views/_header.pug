@@ -18,10 +18,14 @@
         a(href='/') خانه
   #mobile-menu-wrap
   .offcanvas__auth
-    ul
+    ul  
       if(user)
         li
           span.fa.fa-user کیف‌ پول:
+        if(user.role === 'admin')
+          li
+            a(href='/GodPanel')
+              span.fa.fa-th God panel
         li
           a(href='/profile')
             span.fa.fa-user کنترل پنل
@@ -65,6 +69,11 @@ header.header-section.header-normal
                   span
                   | کیف پول: 
                   =`${user.credit} تومان`
+                if(user.role === 'admin')
+                  li
+                    a(href='/GodPanel')
+                      span.fa.fa-th 
+                      | God panel
                 li
                   a(href='/profile')
                     span.fa.fa-user

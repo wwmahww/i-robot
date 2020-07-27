@@ -20,7 +20,7 @@ exports.checkDiscount = catchAsync(async (req, res, next) => {
 
   console.log(discount);
 
-  if (!Discount) {
+  if (!discount) {
     return next(new AppError('this discount code does not exist.', 400));
   }
   // check discount expired time

@@ -6,6 +6,7 @@ const BillSchema = new mongoose.Schema({
   service: String,
   userEmail: String,
   amount: Number,
+  finalPay: Number,
   description: String,
   createAt: {
     type: Date,

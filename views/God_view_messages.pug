@@ -1,0 +1,37 @@
+extends God_base
+block head
+  script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+  link(rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css")
+
+block content
+  script.
+    const messages = !{jsStringify(messages)}
+
+  .container-fluid
+    // Page Heading
+    h1.h3.mb-2.text-gray-800 Tables
+    // DataTales Example
+    .card.shadow.mb-4
+      .card-header.py-3
+        h6.m-0.font-weight-bold.text-primary DataTables Example
+      .card-body
+        .table-responsive
+          table#message_table.table.table-bordered(width="100%" cellspacing="0")
+            thead
+              tr
+                th
+                th Name
+                th email
+                th phone
+
+            tfoot
+              tr
+                th
+                th Name
+                th email
+                th phone
+
+  // /.container-fluid
+
+block script
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>

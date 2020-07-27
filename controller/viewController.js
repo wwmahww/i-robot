@@ -2,6 +2,8 @@ const jsStringify = require('js-stringify');
 
 const User = require('../models/userModel');
 const Bot = require('../models/botModel');
+const Message = require('../models/messageModel');
+const Bills = require('../models/billModel');
 const Service = require('../models/serviceModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
@@ -107,3 +109,43 @@ exports.GodLogin = (req, res, next) => {
 exports.GodPanel = (req, res, next) => {
   res.status(200).render('GodPanel');
 };
+
+exports.allUsers = catchAsync(async (req, res, next) => {
+  const users = await User.find();
+  res.status(200).render('god_view_users', { jsStringify, users });
+});
+
+exports.user = catchAsync(async (req, res, next) => {
+  const { username } = req.params;
+  const user = await User.findOne({ username }).select('-__v');
+  const copyUser = {};
+  for (const [key, val] of Object.entries(user['_doc'])) {
+    copyUser[key] = val;
+  }
+  console.log('copyUser: ', copyUser);
+  res.status(200).render('god_view_user', { jsStringify, copyUser });
+});
+
+exports.allMessges = catchAsync(async (req, res, next) => {
+  const messages = await Message.find().select('-__v');
+  res.status(200).render('god_view_messages', { jsStringify, messages });
+});
+
+exports.allBots = catchAsync(async (req, res, next) => {
+  const bots = await Bot.find().select('-__v');
+  console.log('bots: ', bots);
+  res.status(200).render('god_view_bots', { jsStringify, bots });
+});
+
+exports.bot = catchAsync(async (req, res, next) => {
+  const { pageName } = req.params;
+  console.log('pageName: ', pageName);
+  let bot = await Bot.findOne({ pageName }).select('-__v');
+  console.log(bot);
+  res.status(200).render('god_view_bot', { jsStringify, bot });
+});
+
+exports.allBills = catchAsync(async (req, res, next) => {
+  const bills = await Bills.find().select('-__v');
+  res.status(200).render('god_view_bills', { jsStringify, bills });
+});

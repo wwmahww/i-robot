@@ -2,10 +2,12 @@ const Bill = require('../models/billModel');
 const User = require('../models/userModel');
 const Service = require('../models/serviceModel');
 const Bot = require('../models/botModel');
+const Discount = require('../models/discountModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
 const zarinpalCheckout = require('../zarinpal/zarinpal');
+const { ready } = require('jquery');
 
 const zarinpal = zarinpalCheckout.create(process.env.MERCHANT_CODE, true);
 
@@ -14,13 +16,51 @@ exports.pay = catchAsync(async (req, res, next) => {
   const {
     query: { serviceCode, botPagename },
   } = req;
-  console.log('code: ', serviceCode, 'botPagename: ', botPagename);
-  const service = await Service.findOne({ code: serviceCode });
+  let { offCode } = req.query;
+  let bot = {};
 
-  // const service = await Service.findOne({name: })
+  console.log(
+    'code: ',
+    serviceCode,
+    'botPagename: ',
+    botPagename,
+    'offcode: ',
+    offCode
+  );
+  if (botPagename) {
+    bot = await Bot.findOne({ pageName: botPagename });
+    req.user.services.find((serv) => {
+      if (serv.refID === bot.refID) {
+        offCode = serv.offCode;
+      }
+    });
+  }
+  console.log('offCOde: ', offCode);
+
+  const service = await Service.findOne({ code: serviceCode });
+  let { price } = service;
+
+  // effect discount code
+  const discount = await Discount.findOne({ code: offCode });
+  console.log('discount: ', discount);
+  console.log('include', discount.blackList.includes(req.user.email));
+  console.log(
+    'expired',
+    discount.expiredAt ? discount.expiredAt > Date.now() : true
+  );
+  if (
+    discount && discount.expiredAt
+      ? discount.expiredAt > Date.now()
+      : true && !discount.blackList.includes(req.user.email)
+  ) {
+    console.log('hear in discont');
+    price = (price * (100 - discount.percentage)) / 100;
+  }
+
+  console.log('price: ', price);
 
   const params = {
-    Amount: service.price,
+    Amount: price,
     CallbackURL: `${req.protocol}://${req.get('host')}/payResult`,
     Description: `اکانت ${service.name}`,
     Email: 'i_robot.ir@yahoo.com',
@@ -44,14 +84,24 @@ exports.pay = catchAsync(async (req, res, next) => {
     service: service.name,
     userEmail: req.user.email,
     amount: service.price,
+    finalPay: price,
     description: `اکانت ${service.name}`,
+    offCode: offCode,
   });
 
+  // bot extension
   if (botPagename) {
     console.log('Extension');
-    const bot = await Bot.findOne({ pageName: botPagename });
     await req.user.updateOne({ $set: { botExtension: bot._id } });
   }
+
+  // Add service
+  service.status = 'inpay';
+  service.offCode = offCode;
+  req.user.services.push(service);
+  console.log('service: ', service);
+  console.log('req.user.services: ', req.user.services);
+  await req.user.updateOne({ $set: { services: req.user.services } });
 
   res.status(200).json({
     status: 'success',
@@ -73,12 +123,19 @@ exports.checkout = catchAsync(async (req, res, next) => {
 
   //      check for result----------------------------------------------------------------------------------
   const result = await zarinpal.PaymentVerification({
-    Amount: bill.amount,
+    Amount: bill.finalPay,
     Authority: Authority,
   });
+  console.log('result: ', result);
 
   if (result.status !== 100) {
     await Bill.findByIdAndDelete(bill._id);
+    const index = req.user.services.findIndex(
+      (service) => service.status === 'inpay'
+    );
+    req.user.services.splice(index, 1);
+    req.user.markModified('services');
+    req.user.save({ validateBeforeSave: false });
     return next();
   }
 
@@ -107,7 +164,13 @@ exports.checkout = catchAsync(async (req, res, next) => {
     );
   } else {
     //  New service--------
-    req.user.services.push(service);
+    console.log('services', req.user.services);
+    const service1 = req.user.services.find((serv) => serv.status === 'inpay');
+    console.log('service1', service1);
+    service1.status = 'ready';
+    service1.refID = result.RefID;
+    req.user.services.pop();
+    req.user.services.push(service1);
   }
 
   //    update user-------------------------------------------
@@ -122,7 +185,7 @@ exports.checkout = catchAsync(async (req, res, next) => {
   });
 
   //      update bill------------------------------------
-  bill.refID = result.refID;
+  bill.refID = result.RefID;
   bill.isPayed = true;
   bill.payedAt = Date.now();
   bill.save({ validateBeforeSave: false });
