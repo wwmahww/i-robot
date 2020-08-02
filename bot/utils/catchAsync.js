@@ -1,9 +1,9 @@
 const web = require('./interfaces');
 const index = require('./../index');
 
-module.exports = fn => {
+module.exports = (fn) => {
   return (...args) => {
-    fn(...args).catch(async err => {
+    fn(...args).catch(async (err) => {
       if (err) console.log('catchAsync Error💥:', err);
       if (Object.keys(web.page2).length !== 0 && !web.page2.isClosed())
         web.page2.close();

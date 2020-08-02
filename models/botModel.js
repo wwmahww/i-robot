@@ -5,11 +5,13 @@ const BotSchema = new mongoose.Schema(
   {
     pageName: {
       type: String,
+      required: [true, 'a bot most have a pagename'],
       unique: true,
       trim: true,
     },
     pagePassword: {
       type: String,
+      required: [true, 'a bot most have a passsword'],
       trim: true,
     },
     owner: {

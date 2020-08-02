@@ -12,7 +12,7 @@ exports.followTag = (page, tag, counter) =>
     catchAsync(async (resolve, reject) => {
       console.log('follow tag');
       let login = false;
-      await act.loginCheck(page).then(res => (login = res));
+      await act.loginCheck(page).then((res) => (login = res));
       console.log('login: ', login);
       console.log('success');
       // Go to tag page
@@ -40,7 +40,7 @@ exports.followTag = (page, tag, counter) =>
 
         // Check if page was already used
         let title = page.$('header > div:nth-child(2) a:nth-child(1)');
-        title = page.evaluate(title => title.textContent, title);
+        title = page.evaluate((title) => title.textContent, title);
 
         used = methods.check(page, title, web.used_pages);
         if (!used) break;
@@ -63,7 +63,7 @@ exports.followTag = (page, tag, counter) =>
             10000,
             'load'
           )
-          .then(res => {
+          .then((res) => {
             permission = res;
             console.log('res: ', res);
           });
@@ -81,7 +81,7 @@ exports.followTag = (page, tag, counter) =>
 
 exports.followPage = (page, Ipage, counter) =>
   new Promise(
-    catchAsync(async resolve => {
+    catchAsync(async (resolve) => {
       console.log('follow page');
       let permission = false;
       let round = 0;
@@ -109,7 +109,7 @@ exports.followPage = (page, Ipage, counter) =>
             'load'
           )
           // eslint-disable-next-line no-loop-func
-          .then(res => {
+          .then((res) => {
             permission = res;
             console.log('res: ', res);
           });

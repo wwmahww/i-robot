@@ -1,6 +1,5 @@
 /* eslint-disable default-case */
 /* eslint-disable no-await-in-loop */
-const puppeteer = require('puppeteer');
 
 const web = require('./utils/interfaces');
 const follow = require('./controller/processes/followPro');
@@ -78,6 +77,7 @@ exports.getDetail = (page) => {
 exports.follow = (page, targets) =>
   new Promise(
     catchAsync(async (resolve) => {
+      console.log('follow started');
       const { followCounter } = web;
       // eslint-disable-next-line no-restricted-syntax
       for (const target of targets) {

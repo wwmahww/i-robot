@@ -31,7 +31,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteMe = catchAsync(async (req, res, next) => {
-  const user = await User.findById(req.user.id).select('+password');
+  const user = await User.findById(req.user._id).select('+password');
 
   if (!user.correctPassword(req.body.password, user.password))
     return next(
@@ -61,7 +61,7 @@ exports.usernameChecker = catchAsync(async (req, res, next) => {
 
 exports.getUser = factory.getOne(User, {
   path: 'bots',
-  select: '-__v -_id',
+  select: '-__v',
 });
 exports.getAllUsers = factory.getAll(User);
 exports.deleteUser = factory.deleteOne(User);

@@ -38,7 +38,7 @@ exports.updateOne = (Model) =>
 
 exports.getOne = (Model, popOptions) =>
   catchAsync(async (req, res, next) => {
-    const id = req.params.id || req.user.id;
+    const id = req.params.id || req.user._id;
     let query = Model.findById(id);
     if (popOptions) query = query.populate(popOptions);
     const doc = await query;

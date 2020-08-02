@@ -172,22 +172,6 @@ UserSchema.pre(/^find/, function (next) {
 //   next();
 // });
 
-// UserSchema.pre(/^find/, function (next) {
-//   this.populate({
-//     path: 'bills',
-//     select: ['service', 'amount', 'isPayed', 'createAt'],
-//   });
-//   next();
-// });
-
-// UserSchema.pre(/^find/, function (next) {
-//   this.populate({
-//     path: 'services',
-//     select: '-_id -__v',
-//   });
-//   next();
-// });
-
 const User = mongoose.model('User', UserSchema);
 
 module.exports = User;

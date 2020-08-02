@@ -68,46 +68,46 @@ $(document).ready(function () {
 // functions
 
 const getBotData = () => {
-  const bot = {};
+  const updatedBot = {};
   console.log('hear in update bot');
-  if (typeof timeLimit !== 'undefined') bot.timeLeft = timeLimit;
-  bot.pageName = $('input[name="pageName"]').val();
-  bot.pagePassword = $('input[name="pagePassword"]').val();
-  bot.botPace = $('#botpace').text();
-  bot.followPrivate = $('#followPrivate').prop('checked');
-  bot.likeLastPost = $('#likeLastPost').prop('checked');
-  bot.targetPages = $('textarea[name="targetPages"]')
+  if (typeof timeLimit !== 'undefined') updatedBot.timeLeft = timeLimit;
+  updatedBot.pageName = $('input[name="pageName"]').val();
+  updatedBot.pagePassword = $('input[name="pagePassword"]').val();
+  updatedBot.botPace = $('#botpace').text();
+  updatedBot.followPrivate = $('#followPrivate').prop('checked');
+  updatedBot.likeLastPost = $('#likeLastPost').prop('checked');
+  updatedBot.targetPages = $('textarea[name="targetPages"]')
     .val()
     .split(' ')
     .filter((el) => {
       if (el !== ' ') return el;
     });
-  bot.targetTags = $('textarea[name="targetTags"]')
+  updatedBot.targetTags = $('textarea[name="targetTags"]')
     .val()
     .split(' ')
     .filter((el) => {
       if (el !== ' ') return el;
     });
-  bot.comments = $('textarea[name="comments"]')
+  updatedBot.comments = $('textarea[name="comments"]')
     .val()
     .split('*')
     .filter((el) => {
       if (el !== ' ') return el;
     });
-  bot.directTexts = $('textarea[name="directTexts"]')
+  updatedBot.directTexts = $('textarea[name="directTexts"]')
     .val()
     .split('*')
     .filter((el) => {
       if (el !== ' ') return el;
     });
-  bot.whiteList = $('textarea[name="whitelist"]')
+  updatedBot.whiteList = $('textarea[name="whitelist"]')
     .val()
     .split(' ')
     .filter((el) => {
       if (el !== ' ') return el;
     });
 
-  return bot;
+  return updatedBot;
 };
 
 // DELEGATION
@@ -233,6 +233,7 @@ $('#newbot').click((e) => {
   $('#newbot').prop('disabled', true);
   $('#newbot .rotator').show();
   const bot = getBotData();
+  console.log('bot: ', bot);
   funs.newbot(bot);
 });
 /*==================================================================
@@ -242,9 +243,9 @@ $('#updatebot').click((e) => {
   $('#updatebot').prop('disabled', true);
   $('#updatebot .rotator').show();
   console.log('clicked');
-  const id = $('input[name="pageName"]').val();
-  const bot = getBotData();
-  funs.updatebot(id, bot);
+  const id = bot.pageName;
+  const updatedBot = getBotData();
+  funs.updatebot(id, updatedBot);
 });
 
 /*==================================================================

@@ -41,20 +41,20 @@ exports.pay = catchAsync(async (req, res, next) => {
   let { price } = service;
 
   // effect discount code
-  const discount = await Discount.findOne({ code: offCode });
-  console.log('discount: ', discount);
-  console.log('include', discount.blackList.includes(req.user.email));
-  console.log(
-    'expired',
-    discount.expiredAt ? discount.expiredAt > Date.now() : true
-  );
-  if (
-    discount && discount.expiredAt
-      ? discount.expiredAt > Date.now()
-      : true && !discount.blackList.includes(req.user.email)
-  ) {
-    console.log('hear in discont');
-    price = (price * (100 - discount.percentage)) / 100;
+  let discount;
+  if (offCode) {
+    console.log('in search of discount');
+    discount = await Discount.findOne({ code: offCode });
+
+    if (
+      discount && discount.expiredAt
+        ? discount.expiredAt > Date.now()
+        : true && !discount.blackList.includes(req.user.email)
+    ) {
+      console.log('hear in discont');
+      price = (price * (100 - discount.percentage)) / 100;
+    }
+    console.log('discount: ', discount);
   }
 
   console.log('price: ', price);
@@ -195,7 +195,7 @@ exports.checkout = catchAsync(async (req, res, next) => {
 
 exports.createBill = catchAsync(async (req, res, next) => {
   const newBill = Bill.create({
-    user: req.user.id,
+    user: req.user._id,
     amount: req.body.amount,
     description: req.body.description,
   });
@@ -209,7 +209,7 @@ exports.updateBill = catchAsync(async (req, res, next) => {
 });
 
 exports.myBills = catchAsync(async (req, res, next) => {
-  const feature = new APIFeatures(Bill.find({ user: req.user.id }), req.query)
+  const feature = new APIFeatures(Bill.find({ user: req.user._id }), req.query)
     .filter()
     .sort()
     .limitFields()

@@ -312,11 +312,10 @@ export const updatebot = async (id, bot) => {
     });
     if (res.data.status === 'success') {
       alert('ربات اپدیت شد.');
-      window.setTimeout(() => {
-        location.reload();
-      }, 500);
     }
   } catch (err) {
+    console.log('error: ', err.response.data.message);
+    console.log('error2: ', err.response.data);
     alert('خطا در اپدیت ربات.');
   }
   $('#updatebot').prop('disabled', false);

@@ -10,7 +10,7 @@ exports.goto_page = (
   waitUntil = 'load'
 ) => {
   return new Promise(
-    catchAsync(async resolve => {
+    catchAsync(async (resolve) => {
       // Goto the url
       console.log('loading page');
       let done = false;
@@ -64,7 +64,7 @@ exports.click = (
       await page.waitFor(2000);
       await Promise.all([
         page.waitForNavigation({ waitUntil: waitUntil, timeout: timeout }),
-        link[click]()
+        link[click](),
       ]).catch(() => {
         console.log('navigation error!');
       });
@@ -75,7 +75,7 @@ exports.click = (
           .then(() => {
             success = true;
           })
-          .catch(err => {
+          .catch((err) => {
             console.log('error in finding check element');
           });
       await page.waitFor(1000);

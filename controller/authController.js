@@ -77,6 +77,8 @@ exports.signup = catchAsync(async (req, res, next) => {
     introducer: req.body.introducer,
   });
 
+  console.log('newUser: ', newUser.id);
+
   createSendToken(newUser, 201, res);
 });
 
@@ -131,7 +133,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   // 3) Check if user still exist
   const freshUser = await User.findById(decode.id).populate({
     path: 'bots',
-    select: '-__v -_id',
+    select: '-__v',
   });
   if (!freshUser)
     return next(
@@ -238,7 +240,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 exports.updatePassword = catchAsync(async (req, res, next) => {
   console.log('body: ', req.body);
   // 1) Get user from collection
-  const user = await User.findById(req.user.id).select('+password');
+  const user = await User.findById(req.user._id).select('+password');
 
   // 2) Check if POSTed current password is correct
   if (!(await user.correctPassword(req.body.currentPassword, user.password))) {

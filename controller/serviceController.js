@@ -7,6 +7,8 @@ exports.createService = catchAsync(async (req, res, next) => {
   console.log('in service controller');
   const service = await Service.create(req.body);
 
+  console.log('new service: ', service);
+
   res.status(201).json({
     status: 'success',
     service,

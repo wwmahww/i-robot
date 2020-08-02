@@ -22,7 +22,7 @@ const reload = (page, currentPage) =>
         await path
           .click(page, '//a[contains(., "followers")]', 'li canvas', 10000)
           // eslint-disable-next-line no-loop-func
-          .then(res => {
+          .then((res) => {
             permission = res;
             console.log('res: ', permission);
           });
@@ -46,11 +46,11 @@ module.exports = (page, counter, currentPage) => {
           console.log('buttons lenght: ', buttons.length);
 
           const buttonText = await page.evaluate(
-            element => element.textContent,
+            (element) => element.textContent,
             buttons[counter.round]
           );
           const pageName = await page.evaluate(
-            element => element.textContent,
+            (element) => element.textContent,
             pageLinks[counter.round]
           );
 
@@ -77,7 +77,10 @@ module.exports = (page, counter, currentPage) => {
         }
         console.log('ttt!');
         const elementscroll = await page.$('html');
-        await page.evaluate(element => element.scrollBy(0, 500), elementscroll);
+        await page.evaluate(
+          (element) => element.scrollBy(0, 500),
+          elementscroll
+        );
       }
       await page2.close();
       resolve(counter);

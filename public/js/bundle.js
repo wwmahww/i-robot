@@ -102416,11 +102416,13 @@ var mongoose = require('mongoose'); // const validator = require('validator');
 var BotSchema = new mongoose.Schema({
   pageName: {
     type: String,
+    required: [true, 'a bot most have a pagename'],
     unique: true,
     trim: true
   },
   pagePassword: {
     type: String,
+    required: [true, 'a bot most have a passsword'],
     trim: true
   },
   owner: {
@@ -102726,20 +102728,6 @@ UserSchema.pre(/^find/, function (next) {
 //   this.populate({
 //     path: 'bots',
 //     select: '-__v -_id',
-//   });
-//   next();
-// });
-// UserSchema.pre(/^find/, function (next) {
-//   this.populate({
-//     path: 'bills',
-//     select: ['service', 'amount', 'isPayed', 'createAt'],
-//   });
-//   next();
-// });
-// UserSchema.pre(/^find/, function (next) {
-//   this.populate({
-//     path: 'services',
-//     select: '-_id -__v',
 //   });
 //   next();
 // });
@@ -114794,24 +114782,23 @@ var updatebot = /*#__PURE__*/function () {
 
             if (res.data.status === 'success') {
               alert('ربات اپدیت شد.');
-              window.setTimeout(function () {
-                location.reload();
-              }, 500);
             }
 
-            _context8.next = 10;
+            _context8.next = 12;
             break;
 
           case 7:
             _context8.prev = 7;
             _context8.t0 = _context8["catch"](0);
+            console.log('error: ', _context8.t0.response.data.message);
+            console.log('error2: ', _context8.t0.response.data);
             alert('خطا در اپدیت ربات.');
 
-          case 10:
+          case 12:
             $('#updatebot').prop('disabled', false);
             $('#updatebot .rotator').hide();
 
-          case 12:
+          case 14:
           case "end":
             return _context8.stop();
         }
@@ -115436,30 +115423,30 @@ $(document).ready(function () {
 }); // functions
 
 var getBotData = function getBotData() {
-  var bot = {};
+  var updatedBot = {};
   console.log('hear in update bot');
-  if (typeof timeLimit !== 'undefined') bot.timeLeft = timeLimit;
-  bot.pageName = $('input[name="pageName"]').val();
-  bot.pagePassword = $('input[name="pagePassword"]').val();
-  bot.botPace = $('#botpace').text();
-  bot.followPrivate = $('#followPrivate').prop('checked');
-  bot.likeLastPost = $('#likeLastPost').prop('checked');
-  bot.targetPages = $('textarea[name="targetPages"]').val().split(' ').filter(function (el) {
+  if (typeof timeLimit !== 'undefined') updatedBot.timeLeft = timeLimit;
+  updatedBot.pageName = $('input[name="pageName"]').val();
+  updatedBot.pagePassword = $('input[name="pagePassword"]').val();
+  updatedBot.botPace = $('#botpace').text();
+  updatedBot.followPrivate = $('#followPrivate').prop('checked');
+  updatedBot.likeLastPost = $('#likeLastPost').prop('checked');
+  updatedBot.targetPages = $('textarea[name="targetPages"]').val().split(' ').filter(function (el) {
     if (el !== ' ') return el;
   });
-  bot.targetTags = $('textarea[name="targetTags"]').val().split(' ').filter(function (el) {
+  updatedBot.targetTags = $('textarea[name="targetTags"]').val().split(' ').filter(function (el) {
     if (el !== ' ') return el;
   });
-  bot.comments = $('textarea[name="comments"]').val().split('*').filter(function (el) {
+  updatedBot.comments = $('textarea[name="comments"]').val().split('*').filter(function (el) {
     if (el !== ' ') return el;
   });
-  bot.directTexts = $('textarea[name="directTexts"]').val().split('*').filter(function (el) {
+  updatedBot.directTexts = $('textarea[name="directTexts"]').val().split('*').filter(function (el) {
     if (el !== ' ') return el;
   });
-  bot.whiteList = $('textarea[name="whitelist"]').val().split(' ').filter(function (el) {
+  updatedBot.whiteList = $('textarea[name="whitelist"]').val().split(' ').filter(function (el) {
     if (el !== ' ') return el;
   });
-  return bot;
+  return updatedBot;
 }; // DELEGATION
 
 
@@ -115583,6 +115570,7 @@ $('#newbot').click(function (e) {
   $('#newbot').prop('disabled', true);
   $('#newbot .rotator').show();
   var bot = getBotData();
+  console.log('bot: ', bot);
   funs.newbot(bot);
 });
 /*==================================================================
@@ -115593,9 +115581,9 @@ $('#updatebot').click(function (e) {
   $('#updatebot').prop('disabled', true);
   $('#updatebot .rotator').show();
   console.log('clicked');
-  var id = $('input[name="pageName"]').val();
-  var bot = getBotData();
-  funs.updatebot(id, bot);
+  var id = bot.pageName;
+  var updatedBot = getBotData();
+  funs.updatebot(id, updatedBot);
 });
 /*==================================================================
     [discount check ]*/
@@ -115832,7 +115820,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "3692" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "1395" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

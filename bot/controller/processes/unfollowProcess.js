@@ -7,9 +7,9 @@ const methods = require('../../utils/methods');
 const _error = require('../../utils/errorClass');
 const catchAsync = require('../../utils/catchAsync');
 
-module.exports = page =>
+module.exports = (page) =>
   new Promise(
-    catchAsync(async resolve => {
+    catchAsync(async (resolve) => {
       console.log('in unfollowed');
 
       await path.goto_page(
@@ -22,7 +22,7 @@ module.exports = page =>
       // Unfollow if the following number was more than a certain number
       let following = await page.$$('li a span');
       following = await page.evaluate(
-        element => element.textContent,
+        (element) => element.textContent,
         following[1]
       );
 
@@ -43,11 +43,12 @@ module.exports = page =>
       // scroll tha page to the bottom
       while (true) {
         await page.evaluate(
-          element => Promise.resolve(element.scrollBy(0, element.scrollHeight)),
+          (element) =>
+            Promise.resolve(element.scrollBy(0, element.scrollHeight)),
           bodyElement
         );
         await page.waitFor(3000);
-        const finish = await page.evaluate(element => {
+        const finish = await page.evaluate((element) => {
           return Promise.resolve(
             element.scrollHeight - element.clientHeight ===
               Math.round(element.scrollTop)
@@ -72,11 +73,11 @@ module.exports = page =>
           // eslint-disable-next-line no-plusplus
           const button = buttons[i - 1];
           const name = await page.evaluate(
-            element => element.textContent,
+            (element) => element.textContent,
             names[i - 1]
           );
           const buttonText = await page.evaluate(
-            element => element.textContent,
+            (element) => element.textContent,
             button
           );
           await page.waitFor(2000);
@@ -103,7 +104,7 @@ module.exports = page =>
             return;
           }
         }
-        const finish = await page.evaluate(element => {
+        const finish = await page.evaluate((element) => {
           if (element.scrollTop === 0) return true;
           bodyElement.scrollBy(0, -500);
           return false;

@@ -29,6 +29,8 @@ const save = async (data) => {
   bot.details = bot.details || {};
   bot.pageInfo = bot.pageInfo || {};
 
+  console.log('bot : ', bot);
+
   // it this is the first time , this items needed to be initielized
   bot.details.hasFollowed = bot.details.hasFollowed || 0;
   bot.details.hasUnfollowed = bot.details.hasUnfollowed || 0;
@@ -65,6 +67,8 @@ const save = async (data) => {
       console.log('nothing');
   }
 
+  console.log('bot update: ', bot);
+
   bot.markModified('details');
   bot.markModified('pageInfo');
   await bot.save({ validateBeforeSave: false });
@@ -76,7 +80,9 @@ exports.launch = (bot) =>
   new Promise((resolve) => {
     console.log('bot start');
     const child = fork('./bot/index.js');
+    console.log('hear after fork');
     child.send(bot);
+    console.log('hear send message');
     // ---------------------------------------------------------------
     web.childs[bot.pageName] = child;
     // --------------------------------------------------------------
